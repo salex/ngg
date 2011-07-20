@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  group_id: 1
+  email: MyString
+  last_name: MyString
+  fist_name: MyString
+  phone: MyString
+  cell: MyString
+  address: MyText
+  list_contact: false
+  status: MyString
+
+two:
+  group_id: 1
+  email: MyString
+  last_name: MyString
+  fist_name: MyString
+  phone: MyString
+  cell: MyString
+  address: MyText
+  list_contact: false
+  status: MyString

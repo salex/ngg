@@ -1,0 +1,37 @@
+<fieldset>
+  <legend>Listing members <%= link_to 'New Member', new_member_path, :class => "button-link" if can? :create, Member %></legend>
+
+  <table class="g-table">
+    <tr class="hdr">
+      <th>Name</th>
+      <th>eMail</th>
+      <th>Phone</th>
+      <th>Cell</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+
+  <% @members.each do |member| %>
+  <% altswitch = !altswitch %>
+  <% altclass = altswitch ? "" : "class=\"alt\"".html_safe %>
+    <tr <%= altclass %>>
+      <td><%= member.name %></td>
+      <td><%= member.email %></td>
+      <td><%= member.phone %></td>
+      <td><%= member.cell %></td>
+      <td><%= member.status %></td>
+      <td>
+        <%= link_to 'Show', member, :class => "button-link" if can? :read, Member %>
+        <%= link_to 'Edit', edit_member_path(member), :class => "button-link"  if (can? :update, Member ) && is_my_group?(member.group_id)%>
+        <%= link_to 'Destroy', member, confirm: 'Are you sure?', method: :delete, :class => "button-link" if (can? :destroy, Member) && is_my_group?(member.group_id)  %>
+        <% if (can? :invite, Member) && (member.email != "") && member.user.nil?%>
+            <%= link_to 'Invite', invite_member_path(member), :class => "button-link" %>
+
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+
+</fieldset>
+

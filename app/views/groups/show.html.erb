@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @group.name %>
+</p>
+
+<p>
+  <b>Subdomain:</b>
+  <%= @group.subdomain %>
+</p>
+
+
+<%= link_to 'Edit', edit_group_path(@group) if (can? :update, Group ) && is_my_group?(@group.id) %> |
+<%= link_to 'Back', groups_path %>

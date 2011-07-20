@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag :defaults %>
+    <%= csrf_meta_tag %>
+    <%= yield(:head) %>
+  </head>
+  <body>
+    <div id="container">
+			<div class="f-right">
+				<% if current_user %>  
+			    Logged in as <%= current_user.name %> 
+			 		| <%= link_to "Edit profile", edit_user_path("current") %>  
+			    |
+			    <%= link_to "Log out", logout_path %>  
+			  <% else %>  
+			    <%= link_to "Sign up", signup_path %> or   
+			    <%= link_to "Log in", login_path %>  
+			  <% end %>  
+			  
+			</div>
+			<div class="f-clear"></div>
+
+	    <div id="header">
+	      <%= image_tag("flygooseL.gif",:height => '50', :class => 'f-left', :style => 'margin-top:-5px') %>
+
+	      <%= image_tag("flygooseR.gif",:height => '50', :class => 'f-right', :style => 'margin-top:-5px') %>
+	      Welcome to <%= (@current_group.subdomain + ".") if @current_group  %>GolfGaggle.com
+
+	    </div>
+	    <div id="navbar">
+	      <%#=raw menuBar%>
+
+	      <div class="clear"></div>
+	    </div>
+	    <div id="content">
+				<%= flash_messages %>
+				
+	      <%= content_tag :h1, yield(:title) if show_title? %>
+	      <%= yield %>
+	    </div>
+	    <div id="footer">
+	      <%if @current_group.nil?%>
+	      <%else%>
+	      <%= @current_group.name%> is a member of <a href="http://golfgaggle.com">GolfGaggle.com</a>
+	      <%end%>
+	    </div>
+	
+    </div>
+  </body>
+</html>

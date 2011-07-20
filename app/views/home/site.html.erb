@@ -1,0 +1,9 @@
+<fieldset>
+  <legend>Hi Site</legend>
+ <%= current_group.name%>
+<%=  SecureRandom.urlsafe_base64%>
+<%= session.inspect%>
+<%= current_user.inspect if logged_in? %>
+<br />
+<%= can? :update, User %>
+</fieldset>

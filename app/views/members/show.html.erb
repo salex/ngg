@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Group:</b>
+  <%= @member.group_id %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @member.email %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%= @member.last_name %>
+</p>
+
+<p>
+  <b>First name:</b>
+  <%= @member.first_name %>
+</p>
+
+<p>
+  <b>Phone:</b>
+  <%= @member.phone %>
+</p>
+
+<p>
+  <b>Cell:</b>
+  <%= @member.cell %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @member.address %>
+</p>
+
+<p>
+  <b>List contact:</b>
+  <%= @member.list_contact %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @member.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_member_path(@member) if can? :update, Member  %> |
+<%= link_to 'Back', members_path %>

@@ -1,0 +1,45 @@
+<%= form_for(@group) do |f| %>
+<fieldset class="form-list">
+	<legend>New Group Signup</legend>
+
+  <% if @group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+
+      <ul>
+      <% @group.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="label-data">
+    <tr><td colspan="2"><h4 class="small-caps">Group Name and Subdomain name</h4></td></tr>
+    <%= label_data_row(f.label( :name), f.text_field( :name),"<br />Name of group, e.g., Twin Bridges Golf Club")%>
+    <%= label_data_row(f.label( :subdomain), f.text_field( :subdomain),"<br />shortname for group, e.g., \"twinbridges\" would access their group by <br /> http://twinbridges.golfgaggle.com")%>
+  
+    <%= f.fields_for :users do |m| %>
+    <tr><td colspan="2"><h4 class="small-caps">Group Admin login information</h4></td></tr>
+  
+      <%= label_data_row(m.label( :username), m.text_field( :username))%>
+      <%= label_data_row(m.label( :email, "Email Address"), m.text_field( :email))%>
+      <%= label_data_row(m.label( :password), m.password_field( :password))%>
+      <%= label_data_row(m.label( :password_confirmation, "Confirm Password"), m.password_field( :password_confirmation))%>
+      <% end %>
+    <%= f.fields_for :members do |m| %>
+    <tr><td colspan="2"><h4 class="small-caps">Group Admin Contact information</h4></td></tr>
+  
+      <%= label_data_row(m.label( :first_name), m.text_field( :first_name))%>
+      <%= label_data_row(m.label( :last_name), m.text_field( :last_name))%>
+      <%= label_data_row(m.label( :phone), m.text_field( :phone))%>
+      <%= label_data_row(m.label( :cell), m.text_field( :cell))%>
+    <% end %>
+</table>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  
+</fieldset>
+   
+<% end %>
