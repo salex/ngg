@@ -89,6 +89,8 @@ class MembersController < ApplicationController
   
   def check_group
     if @member
+       logger.info "CURRENT MEMBER #{@member}"
+       
       is_group_resource?(@member.group_id)
     end
   end

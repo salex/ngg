@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
     if user
       if current_group && (user.group_id == current_group.id)
         session[:user_id] = user.id
+        session[:user_name] = user.name
         session[:group_id] = user.group_id
         redirect_to_target_or_default root_url, :notice => "Logged in successfully."
       else

@@ -1,22 +1,20 @@
 <fieldset>
-  <legend>Listing groups <%= link_to 'New Group', new_group_path, :class => "button-link" if can? :create, Group %></legend>
+  <legend>Groups 
+      <%= link_to 'New Group', new_group_path, :class => "new-button" if can? :create, Group %>
+  </legend>
 
   <table class="g-table">
     <tr class="hdr">
       <th>Name</th>
       <th>Subdomain</th>
-      <th>Actions</th>
     </tr>
   <% altswitch = false %>
   <% @groups.each do |group| %>
     <% altswitch = !altswitch %>
     <% altclass = altswitch ? "" : "class=\"alt\"".html_safe %>
     <tr <%= altclass %>>
-      <td><%= group.name %></td>
+      <td><%= link_to group.name, group, :class => "link-go-button" %></td>
       <td><%= group.subdomain %></td>
-      <td><%= link_to 'Show', group, :class => "button-link" %>
-      <%= link_to 'Edit', edit_group_path(group), :class => "button-link" if (can? :update, Group) &&  is_my_group?(group.id) %>
-      <%= link_to 'Destroy', group, confirm: 'Are you sure?', method: :delete, :class => "button-link"  if can? :destroy, group %></td>
     </tr>
   <% end %>
   </table>

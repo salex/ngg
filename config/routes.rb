@@ -2,13 +2,7 @@ Ngg::Application.routes.draw do
   #match 'sa/:id' => 'sa#edit', :as => :sa
   resources :sa, :only => [:new, :create, :edit, :update]
 
-  resources :members do
-    member do
-      get :invite
-    end
-  end
 
-  resources :groups
 
   match 'user/edit' => 'users#edit', :as => :edit_current_user
 
@@ -22,6 +16,51 @@ Ngg::Application.routes.draw do
   match 'login' => 'sessions#new', :as => :login
   match 'opps' => "home#opps", :as => :opps
 
+
+  resources :quotas
+  
+  resources :images
+
+  resources :members do
+    resources :rounds, :only => [:index, :new]
+    resources :images, :only => [:index, :new] 
+    resources :quotas, :only => [:index, :new]
+     
+    member do
+      get :invite
+      get :teeopt
+    end
+  end
+
+
+  
+  resources :groups do
+    resources :images, :only => [:index, :new] 
+    member do
+      get :test
+    end
+  end
+  
+  resources :rounds, :except => [:index, :new] 
+  
+  
+  resources :courses do
+    resources :tees, :only => [:index, :new]
+    member do
+      get :print
+      
+    end
+  end
+  resources :tees, :except => [:index, :new]
+  
+  resources :events do
+    resources :rounds, :only => [:index, :new] 
+    
+    member do
+      post :verify
+    end
+  end
+ 
   resources :sessions
 
   resources :users

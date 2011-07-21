@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<fieldset>
 <p>
   <b>Name:</b>
   <%= @group.name %>
@@ -9,7 +9,10 @@
   <b>Subdomain:</b>
   <%= @group.subdomain %>
 </p>
+<hr />
+<%= link_to 'Edit', edit_group_path(@group), :class => "edit-button"  if (can? :update, @group) &&  is_my_group?(@group.id) %>
+<%= link_to 'Destroy', @group, confirm: 'Are you sure?', method: :delete, :class => "destroy-button"  if can? :destroy, @group %></td>
 
+<%= link_to 'Back', groups_path, :class => "breadcrumb" %>
 
-<%= link_to 'Edit', edit_group_path(@group) if (can? :update, Group ) && is_my_group?(@group.id) %> |
-<%= link_to 'Back', groups_path %>
+</fieldset>

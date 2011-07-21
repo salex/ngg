@@ -1,3 +1,4 @@
+<fieldset>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -46,5 +47,14 @@
 </p>
 
 
-<%= link_to 'Edit', edit_member_path(@member) if can? :update, Member  %> |
-<%= link_to 'Back', members_path %>
+<hr />
+
+<%= link_to 'Edit', edit_member_path(@member), :class => "edit-button"  if (can? :update, @member ) && is_my_group?(@member.group_id)%>
+<%= link_to 'Destroy', @member, confirm: 'Are you sure?', method: :delete, :class => "destroy-button" if (can? :destroy, @member) && is_my_group?(@member.group_id)  %>
+<% if (can? :invite, Member) && (@member.email != "") && @member.user.nil?%>
+    <%= link_to 'Invite', invite_member_path(@member), :class => "link-go-button" %>
+
+<% end %>
+<%= link_to 'Members', members_path, :class => "breadcrumb" %>
+
+</fieldset>

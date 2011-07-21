@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   def current_group
     # If subdomain is present, returns the group, else nil
     if !is_root_domain?
-      @current_group = Group.find_by_subdomain(request.subdomains.first)
+      @current_group ||= Group.find_by_subdomain(request.subdomains.first) if request.subdomains.first
       if @current_group.nil?
         redirect_to opps_url(:group => false, :alert => "Unknown Group/subdomain")
       end

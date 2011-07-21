@@ -1,4 +1,6 @@
 $light-green: #cceecc;
+$light1-green: #c0e0c0;
+
 $medium-green: #99dd99;
 $dark-green: green;
 $darker-green: #114411;
@@ -95,7 +97,7 @@ $alt-green: #e7ffe7;
     margin-right: auto; margin-left: auto; margin-top: 4px; margin-bottom: 4px; background: #eeffee; padding: 4px;
     @include rounded-corners(5px);
      }
-#content fieldset legend { position: relative; color: #ddffdd; background-color: #114411; font-size: 1em; border: 1px solid; border-color: #003366; margin-left: 10px; padding: 2px 4px; font-weight: bold; }
+#content fieldset legend { position: relative; color: #003366; background-image: url(ggrad.gif); background-color:$light1-green; font-size: 1em; border: 1px solid; border-color: #003366; margin-left: 10px; padding: 2px 4px; font-weight: bold; }
 
 #header { background: #99dd99; 
     padding-top: 10px; 
@@ -123,6 +125,15 @@ $alt-green: #e7ffe7;
     @include rounded-corners(5px);
 }
 
+.green-button {
+    padding: 1px 2px;
+    margin: 0 2px;
+    background: $light-green !important;
+    border: solid 1px green;
+    color: #114411 !important;
+    font-weight: bold;
+}
+
 #content-left { width: 180px; float: left; padding: 1em; background: transparent; }
 #content-left ul { margin-left: 1em; padding: 5px; }
 
@@ -137,6 +148,25 @@ $alt-green: #e7ffe7;
 .stuff { float: left; margin-left: 10px; border: 2px outset buttonface; background: #dddddd; padding: 5px; }
 
 .clear { clear: both; }
+a.edit-button { background: url(application_edit.png) no-repeat center left; padding: 1px 4px 1px 18px; }
+a.show-button { background: url(application_show.png) no-repeat center left; padding: 1px 4px 1px 18px; }
+a.print-button { background: url(printer.png) no-repeat center left; padding: 1px 4px 1px 18px; }
+a.destroy-button { background: url(application_delete.png) no-repeat center left; padding: 1px 4px 1px 18px; }
+a.link-button { background: url(application_go.png) no-repeat center left; padding: 1px 4px 1px 18px; }
+a.link-go-button { background: url(link_go.png) no-repeat center left; padding: 1px 4px 1px 18px; }
+a.new-button { background: url(application_add.png) no-repeat center left; padding: 1px 4px 1px 18px; }
+a.breadcrumb { background: url(resultset_previous.png) no-repeat center left; font-style: italic; text-decoration: none;  font-size: 0.8em; font-weight: bold; margin-left: 4px; padding: 1px 4px 1px 15px; border: none; }
+
+/* line 172, compass/src/screen.sass */
+.navspan { display: block; padding-left: 4px; background: transparent; }
+/* line 177, compass/src/screen.sass */
+.navspan a { display: block; float: left; width: 5em; text-align: center; background: black; border: white solid 1px; margin-left: -1px; padding: 2px 4px; color: white; text-decoration: none; }
+/* line 189, compass/src/screen.sass */
+.navspan a.selected { background-color: #379f37; color: white; font-weight: bold; }
+/* line 194, compass/src/screen.sass */
+.navspan a:hover { background-color: #3399cc; color: white; }
+/* line 198, compass/src/screen.sass */
+.navspan a.user { width: 10em; background-color: #379f37; color: white; }
 
 
 .label-data {
