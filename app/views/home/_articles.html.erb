@@ -1,0 +1,28 @@
+<legend>Recent Articles
+</legend>
+<div class="index-list">
+<table>
+  <tr class="list-header">
+      <th>Title</th>
+      <th>Type</th>
+      <th>Author</th>
+      <th>Published</th>
+  </tr>
+
+<% @articles.each do |article| %>
+  <tr class="alt">
+      <td><%= article.title %></td>
+      <td><%= article.type_article %></td>
+      <td><%= article.user.name %></td>
+      <td><%= article.published_at.in_time_zone( -5) %></td>
+  </tr>
+  <tr>
+    <td colspan="4">
+    <%= markdown(article.body)%>
+    </td>
+  </tr>
+<% end %>
+</table>
+<%= will_paginate @articles %>
+
+<div>

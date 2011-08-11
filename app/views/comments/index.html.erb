@@ -1,0 +1,30 @@
+<fieldset class="index-list">
+  <legend>comments
+  	<span class="actions">
+      <%= link_to 'New Comment', new_comment_path %>
+  	</span>
+  </legend>
+
+  <table>
+    <tr class="list-header">
+        <th>Article</th>
+        <th>User</th>
+        <th>Body</th>
+        <th>Actions</th>
+    </tr>
+
+  <% @comments.each do |comment| %>
+    <tr>
+        <td><%= comment.article_id %></td>
+        <td><%= comment.user_id %></td>
+        <td><%= comment.body %></td>
+        <td>
+        <%= link_to 'Show', comment %>
+        <%= link_to 'Edit', edit_comment_path(comment) %>
+        <%= link_to 'Destroy', comment, confirm: 'Are you sure?', method: :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+</fieldset>
+

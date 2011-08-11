@@ -1,0 +1,53 @@
+<div id="content-left" >
+  <h4>Links</h4>
+  <ul>
+    <li><%= link_to "Group Preferences" ,home_path( :pref ) %></li>
+    <li><%= link_to "Notices/Articles" ,home_path( :info ) %></li>
+    <li><%= link_to "Group Photos" ,home_path( :photos ) %></li>
+    <li><%= link_to "Terminology" ,home_path( :term ) %></li>
+    <%if can? :update, Image %>
+      <li><%= link_to  "Upload Photo", new_group_image_path(current_group.id) %></li>
+    <%end%>
+  </ul>
+  
+  <% if logged_in? %>
+    <% if can? :invite, Member %>
+    <h4>Other Links</h4>
+    <ul>
+      <li><%= link_to "Group Articles" ,articles_path if can? :manage, Article %></li>
+      <li><%= link_to "Group Images" ,articles_path if can? :upload, Image %></li>
+    </ul>
+    <% end %>
+    <% if current_user.role?(["coordinator","super"])%>
+      <h4>Maintenance Links</h4>
+      <ul>
+        <li><%= link_to "Trim Rounds" ,trim_rounds_group_path(current_group)  %></li>
+      </ul>
+    
+    <% end %>
+  
+  <% end %>
+  
+</div>
+<fieldset id="content-right">
+  <%if @path == "pref" %>
+    <%= render "groups/group_pref" %>
+  
+  <% elsif @path == "info"%>
+    <%= render "articles"%>
+    
+  <% elsif @path == "photos"%>
+    <%= render "photos"%>
+    
+  <% elsif @path == "term"%>
+    <%= render :template => "home/index"%>
+    
+  <% elsif @path == "blog"%>
+    <%= render "articles_list"%>
+    
+  <% else %>
+    <%= render "welcome"%>
+  
+    
+  <% end %>
+</fieldset>

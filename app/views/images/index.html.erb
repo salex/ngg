@@ -1,0 +1,38 @@
+<fieldset class="index-list">
+  <legend>images
+  	<span class="actions">
+      <%= link_to 'New Image', new_image_path %>
+  	</span>
+  </legend>
+
+  <table>
+    <tr class="list-header">
+        <th>Imageable type</th>
+        <th>Imageable</th>
+        <th>Name</th>
+        <th>Photo file name</th>
+        <th>Photo content type</th>
+        <th>Photo file size</th>
+        <th>Photo updated at</th>
+        <th>Actions</th>
+    </tr>
+
+  <% @images.each do |image| %>
+    <tr>
+        <td><%= image.imageable_type %></td>
+        <td><%= image.imageable_id %></td>
+        <td><%= image.name %></td>
+        <td><%= image.photo_file_name %></td>
+        <td><%= image.photo_content_type %></td>
+        <td><%= image.photo_file_size %></td>
+        <td><%= image.photo_updated_at.to_date %></td>
+        <td>
+        <%= link_to 'Show', image %>
+        <%= link_to 'Edit', edit_image_path(image) %>
+        <%= link_to 'Destroy', image, confirm: 'Are you sure?', method: :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+</fieldset>
+

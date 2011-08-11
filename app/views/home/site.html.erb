@@ -1,9 +1,24 @@
-<fieldset>
-  <legend>Hi Site</legend>
- <%= current_group.name%>
-<%=  SecureRandom.urlsafe_base64%>
-<%= session.inspect%>
-<%= current_user.inspect if logged_in? %>
-<br />
-<%= can? :update, User %>
+<div id="content-left" >
+  <h4>Links</h4>
+  <ul>
+    <li><%= link_to "Group Preferences" ,root_path( :pref => "t") %></li>
+    <li><%= link_to "Group Information" ,root_path( :info => "t") %></li>
+  </ul>
+</div>
+<fieldset id="content-right">
+  <%if params.has_key?( "pref") %>
+    <%= render "groups/group_pref" %>
+  
+  <% elsif params.has_key?( "info")%>
+    <%= render "articles"%>
+    
+  <% elsif params.has_key?( "term")%>
+    <%= render :template => "home/index"%>
+    
+  <% elsif params.has_key?( "articles")%>
+    <% %>
+    <%= render "articles"%>
+  <% else%>
+    <%= markdown(@welcome)%>
+  <% end%>
 </fieldset>

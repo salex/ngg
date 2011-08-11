@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  member_id: 1
+  tee_id: 1
+  quota: 1
+  last_played: 2011-07-30
+  history: MyText
+
+two:
+  member_id: 1
+  tee_id: 1
+  quota: 1
+  last_played: 2011-07-30
+  history: MyText

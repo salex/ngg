@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0.rc4'
+gem 'rails', '3.1.0.rc5'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -15,6 +15,8 @@ gem 'uglifier'
 
 gem 'jquery-rails'
 gem 'cancan'
+gem 'will_paginate', '~> 3.0.pre4'
+gem 'redcarpet'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -24,7 +26,7 @@ gem 'cancan'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-
+gem "paperclip", "~> 2.3"
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false

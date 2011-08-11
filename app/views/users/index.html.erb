@@ -1,0 +1,27 @@
+<fieldset>
+  <legend>Group Users
+  </legend>
+
+  <table class="g-table w100">
+    <tr class="hdr">
+      <th>Name</th>
+      <th>username</th>
+      <th>email</th>
+      <th>token</th>
+      <th>roles</th>
+    </tr>
+  <% altswitch = false %>
+  <% @users.each do |user| %>
+    <% altswitch = !altswitch %>
+    <% altclass = altswitch ? "" : "class=\"alt\"".html_safe %>
+    <tr <%= altclass %>>
+      <td><%= user.member.name %></td>
+      <td><%= user.username %></td>
+      <td><%= user.email %></td>
+      <td><%= user.token %></td>
+      <td><%= user.roles %></td>
+    </tr>
+  <% end %>
+  </table>
+
+</fieldset>

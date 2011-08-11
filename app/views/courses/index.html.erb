@@ -1,0 +1,89 @@
+<fieldset>
+  <legend>Courses 
+      <%= link_to 'New Course', new_course_path, :class => "new-button" if can? :create, Course %>
+  </legend>
+<div class="index-list">
+
+    <table class="g-table">
+    <tr class="hdr">
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Actions</th>
+        </span></th>
+    </tr>
+
+  <% @courses.each do |course| %>
+    <tr>
+        <td><%= course.id %></td>
+        <td><%= course.name %></td>
+        <td><%= course.address %></td>
+        <td><%= course.phone %></td>
+        <td  class="actions">
+        <%= link_to 'Print', print_course_path(course), :class => "print-button", :target => "_blank" -%> 
+        <%= link_to 'Show', course, :class => "show-button" -%>
+        <%if can? :update , course%>
+          <%= link_to 'Edit', edit_course_path(course), :class => "edit-button" -%>
+        <%end%>
+        <%if can? :destroy , course%>
+          <%= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete , :class => "destroy-button"-%>
+        <%end%>
+          <%= link_to "iGolf Link",course.link, :target => "_blank", :class => "link-go-button" %>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td colspan="5">
+        <table class="g-table">
+          <tr class="hdr">
+              <th>Tee</th>
+              <th>Color</th>
+              <th>Rating</th>
+              <th>Slope</th>
+              <th>Par-In</th>
+              <th>Par-Out</th>
+              <th>Par</th>
+          </tr>
+          <% 
+          altswitch = false
+          course.tees.each do |tee| 
+            altswitch = !altswitch
+            altclass = altswitch ? 'class="alt"' : ""
+          %>
+          <tr <%=raw altclass%>>
+  					<%
+  					if tee.tee == 'P'
+  						tname = 'P(ro)'
+  					elsif tee.tee == 'B'
+  						tname = 'B(ack)'
+  					elsif tee.tee == 'M'
+  						tname = 'M(iddle)'
+  					elsif tee.tee == 'F'
+  						tname = 'F(orward)'
+  					end
+  					par = 0
+  					i = 0
+  					while i < 9
+  						par += tee.par_in[i,1].to_i
+  						par += tee.par_out[i,1].to_i
+  						i += 1
+  					end
+  						%>
+  					<td><%=tname%></td>
+  					<td><%=tee.color%></td>
+  					<td><%=tee.rating%> </td>
+  					<td><%=tee.slope%></td>
+  					<td><%=tee.par_in%></td>
+  					<td><%=tee.par_out%></td>
+  					<td><%=par%></td>
+  				<tr>
+  				
+          <% end %>
+          </table>
+      </td>
+    
+  <% end %>
+  </table>
+</div>
+

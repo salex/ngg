@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<fieldset class="show-list">
+	<legend>Tee</legend>
+  	<table>
+	    <tr>
+      <th>Course:</th>
+      <td><%= @tee.course_id %><td>
+    </tr>
+
+	    <tr>
+      <th>Tee:</th>
+      <td><%= @tee.tee %><td>
+    </tr>
+
+	    <tr>
+      <th>Color:</th>
+      <td><%= @tee.color %><td>
+    </tr>
+
+	    <tr>
+      <th>Slope:</th>
+      <td><%= @tee.slope %><td>
+    </tr>
+
+	    <tr>
+      <th>Rating:</th>
+      <td><%= @tee.rating %><td>
+    </tr>
+
+	    <tr>
+      <th>Par in:</th>
+      <td><%= @tee.par_in %><td>
+    </tr>
+
+	    <tr>
+      <th>Par out:</th>
+      <td><%= @tee.par_out %><td>
+    </tr>
+
+		</table>
+</fieldset>
+<div class="action">
+  <%if can? :update , @tee%>
+    <%= link_to 'Edit', edit_tee_path(@tee), :class => "edit-button" -%>
+  <%end%>
+	<%= link_to 'Course', course_path(@tee.course_id), :class => "breadcrumb" %>
+</div>
+<div class="relations">
+	<div id="related">
+	</div>
+</div>
+

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  group_id: 1
+  user_id: 1
+  title: MyString
+  body: MyText
+  published: false
+  published_at: 2011-08-09 05:13:48
+  type_article: MyString
+
+two:
+  group_id: 1
+  user_id: 1
+  title: MyString
+  body: MyText
+  published: false
+  published_at: 2011-08-09 05:13:48
+  type_article: MyString

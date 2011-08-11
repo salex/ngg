@@ -1,0 +1,16 @@
+// Place all the styles related to the courses controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body.courses {
+  // Add the courses class to your body tag
+  // Then, place scoped styles here.
+}
+.print-list { font: normal 11px Verdana, Helvetica, Arial, sans-serif; }
+.print-list table { border: solid 1px #308030; }
+.print-list td, .print-list th { padding: 1px; border: dotted 1px #40b040; }
+.print-list tr { background: white; }
+.print-list tr.alt { background: #e7ffe7; }
+.print-list tr.list-header, .print-list tr.title { background: #bbdfbb; }
+.print-list tr.list-header td, .print-list tr.list-header th, .print-list tr.title td, .print-list tr.title th { font-weight: bold; }
+.ibered {color:red}

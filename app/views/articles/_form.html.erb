@@ -1,0 +1,39 @@
+<%= form_for(@article) do |f| %>
+  <fieldset class="form-list">
+  	<legend>Article</legend>
+
+    <% if @article.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+        <ul>
+        <% @article.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <table class="label-data">
+      <tr class="field">
+        <th><%= f.label :title %></th>
+        <td><%= f.text_field :title %></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :body %></th>
+        <td><%= f.text_area :body %></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :published %></th>
+        <td><%= f.check_box :published %></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :type_article %></th>
+        <td><%= f.text_field :type_article %></td>
+      </tr>
+        </table>
+    <div class="action">
+      <%= f.submit %>
+    </div>
+  </fieldset>
+  
+<% end %>

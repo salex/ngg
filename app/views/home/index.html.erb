@@ -1,3 +1,278 @@
-<h1>Rails3-Account-Devise</h1>
-<p><%= link_to "View List of all Users", users_path %></p>
-<p><%= link_to "View List of accounts", groups_path %></p>
+<h1>
+  Golf Gaggle Terminology and Preferences
+</h1>
+<div class="text">
+  <h3>
+    Terminology
+  </h3>
+  <p>
+    <strong>Quota</strong>. The number of points you have to pull to be even or score the equivalent of your handicap. If you score above your quota you will have a plus score. Scores below your quota and you will have a minus score. 
+  </p>
+  <p>
+    <strong>Points</strong>. Points are assigned based on you score relative to par on each hole. Points pulled is the sum of the point value for each hole. Each group my assign point values as they wish. A system that is equivalent to a handicap score would be:
+  </p>
+  <table class="g-table">
+    <tr class="hdr">
+      <td>
+        Score
+      </td>
+      <td>
+        Points
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Double_Eagle
+      </td>
+      <td>
+        5
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Eagle
+      </td>
+      <td>
+        4
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Birdie
+      </td>
+      <td>
+        3
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Par
+      </td>
+      <td>
+        2
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Bogey
+      </td>
+      <td>
+        1
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Double_Bogey+
+      </td>
+      <td>
+        0
+      </td>
+    </tr>
+  </table>
+  <p>
+    Using this system, (36 - Points Pulled) would be equivalent to you score relative to par (e.g., pulling 32 points would be 4 over par)
+  </p>
+  <p>
+    Probably the most used system increases points for scores under par. This give the elusion of doing really good! There are even versions that adds a penalty for going over double bogey.
+  </p>
+  <table class="g-table">
+    <tr class="hdr">
+      <td>
+        Score
+      </td>
+      <td>
+        Points or
+      </td>
+      <td>
+        Points or
+      </td>
+      <td>
+        Points
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Double_Eagle
+      </td>
+      <td>
+        8
+      </td>
+      <td>
+        16
+      </td>
+      <td>
+        5
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Eagle
+      </td>
+      <td>
+        6
+      </td>
+      <td>
+        8
+      </td>
+      <td>
+        4
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Birdie
+      </td>
+      <td>
+        4
+      </td>
+      <td>
+        4
+      </td>
+      <td>
+        3
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Par
+      </td>
+      <td>
+        2
+      </td>
+      <td>
+        2
+      </td>
+      <td>
+        2
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Bogey
+      </td>
+      <td>
+        1
+      </td>
+      <td>
+        1
+      </td>
+      <td>
+        1
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Double_Bogey
+      </td>
+      <td>
+        0
+      </td>
+      <td>
+        0
+      </td>
+      <td>
+        0
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Triple_Bogey+
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+        -1
+      </td>
+    </tr>
+  </table>
+  <p>
+    <strong>Quality Points</strong>. Quality points are a unit of measure that accumulates how you are doing in the group. Players must pay dues in quality points to play the games. Those dues make up the game pots.
+  </p>
+  <ul>
+    <li>Round dues are the basic dogfight game dues. This may be the only game played. Those individual or teams with the best scores will divide the pot by some percentage and others will loose their dues.
+    </li>
+    <li>Skins dues. Skins is an optional game played by many groups that rewards the best score on a hole (with no ties). Most groups and the software limit this to birdies and above.
+    </li>
+    <li>Other dues. There are a number of other games that may be played. Groups have a option entering the quality points given to each member on each hole, if they desire. This could be closest to the hole, low round, etc
+    </li>
+  </ul>
+  <p>
+    <strong>Tees and courses</strong>. Each course can have up to 4 tees and quotas are based on tees. Since many courses have adopted "Politically Correct" colors, The tees have names which the group can then enter a color:
+  </p>
+  <ul>
+    <li>Tips, Pro, Champion , Classic Blue tees.
+    </li>
+    <li>Back, Members , Classic White Tees.
+    </li>
+    <li>Middle, Senior tees, Classic Gold Tees
+    </li>
+    <li>Forward, Ladies, Super Senior, Classic Red tees.
+    </li>
+  </ul>
+  <h3>
+    Preferences
+  </h3>
+  <p>
+    Each group my follow a number of schemes for computing the quotas. These schemes may be based on a number of factors too numerous for a generic system to accommodate, but several of the schemes I've run into are available. Preference are normally set using some true/false question.
+  </p>
+  <p>
+    <strong>Does the group plays on multiple courses (uses_multiple_courses)?</strong> Some groups only play on a home course. Others may rotate to different course in the area, or just a few. This preference only controls if multiple courses are displayed for the group.
+  </p>
+  <p>
+    <strong>Are quotas based on each course (uses_course_quota)?</strong> We all know that there are hard courses and easy courses, and it varies by individuals. Just because you play on multiple course, does not mean you have to use a quota for each course and use just an overall quota. This option sets that preference. If the group plays on more than 2 or 3 course, finding a members quota on a given course could be confusing and the group often just option to average all the course. If there are multiple course at you home location and they vary by difficulty, you may choose to use the course quota.
+  </p>
+  <p>
+    <strong>Are quotas based on best rounds out of some number of rounds (uses_best_rounds)?</strong> This scheme is similar to the handicap system the ends up being the best 10 rounds out of the last 20. I have not run across a group that uses this, but have seen software that handles it. If this preference is set to true, there are two other preferences.
+  </p>
+  <ul>
+    <li>Minimum rounds before selecting best rounds (best_rounds_minimum). Until the number of rounds reaches this number, all rounds are used. After the minimum is reached, the minimum plus 50% of the rounds over the minimum are used, up to the maximum rounds to use.
+    </li>
+    <li>Maximum rounds used (best_rounds_maximum) Once this number of rounds is reached, 50% of the best rounds is used.
+    </li>
+  </ul>
+  <div style="margin-left:8px"><span class="annotate">Example - uses_best_rounds = true, minimum_rounds = 3, maximum_rounds = 12. 3 rounds are used until the 5th round - then 4 rounds are used. 5 rounds are used for 7th and 8th rounds. 6 rounds are used for 9 or more rounds played.</span></div> 
+  <p>
+    <strong>Is the quota based on a fixed number of rounds (uses_best_rounds = false)?</strong> If uses_best_rounds is false, the quota will be based on a fixed the number of rounds used (rounds_used) to compute the quota. The quote is the average of the that number or less rounds.
+  </p>
+  <p>
+    <strong>Do you want to throw out the high and low round of the selected rounds (uses_high_low_rounds_rule)? </strong> The rounds used option can be modified by an option that throw out the high and low score for the selection of rounds. The quota is based on average until the number of rounds that is greater than rounds_used minus 2. If 7 rounds are used and this option is set, on the 6th round played, the high a low rounds out of the 6 or 7 rounds will be thrown out and the remaining 4 or 5 rounds would be averaged. This option is used so that random spurts of brilliance or stupidity do not skew a members quota. 
+  </p>
+  <p>
+    <strong>Are new members restricted to a +- point limit on the number of points they pull until a certain number of rounds are played (uses_new_member_limit)?</strong> This is the anti-sandbagger option. The group I played with for years limited new members points to +- 4 points until they played 4 rounds. The group usually payed teams and you didn't want a new member on a team who may think he/she is better than he/she is, or is really a sandbagger. The limit only effects the quality points, the actually points pulled is used to compute the new quota. If this preference is selected, two other fields are needed to determine the limit and the number of rounds that the limit is in effect.
+  </p>
+  <p>
+    <strong>Are all round scores limited to some +- limit (uses_round_limit)?</strong> This is about the same as the new member limit, but does not expire. The purpose of this is basically throw out really good or bad scores. Mid to high handicappers tend to have these scores more often than new members. If you find the "key" in your game and start shooting lights out, this will only have an effect on the first time you exhibit this new you! This is just another way to buffer those random spurts of brilliance or stupidity.
+  </p>
+  <p>
+    If a group plays on multiple courses and uses quota on each course, they may also implement a one time limit on playing a new course for the first time (uses_new_course_limit). The new member limit would be applied to a new course or tee played the first time it is played. The initial quota on a course or tee that has not been played is your overall quota (all courses and tees).
+  </p>
+  <p><strong>How is the pot split if multiple places are paid (pot_splits)?</strong> There is not an easy answer to this question and there is certainly not a consensus. Since a pencil and paper is usually used simple percentages are used, it is probably best to use and example for this preference.  Lets say you have a quality pot of 100 and you want to play only 1 place? 1 place is easy 100%. For two place, most groups would use a 60%, 40% split. Three places my use a 50%, 30%, 20 % split. This division goes continues based on the groups series of splits. The software will split the pot up to 5 groups using the following default preference: pot_split =  [100],[60,40],[50,30,20],[40,30,20,10],[30,25,20,15,10]. This may look complicated, but the square brackets just delimit the 5 possible splits. The numbers in each spit group must sum up to 100 and represents the percentage of the pot. The default uses simple series that hopefully the scorer will remember.</p>
+  
+  <pre>
+    uses_multiple_courses
+    uses_course_quota
+    uses_best_rounds
+    best_rounds_minimum
+    best_rounds_maximum
+    rounds_used
+    uses_new_member_limit
+    new_member_limit
+    new_member_rounds_used
+    uses_round_limit
+    round_limit
+    uses_new_course_limit
+    uses_high_low_rounds_rule
+    high_low_rounds_effective
+    round_dues
+    skins_dues
+    other_game
+    other_dues
+    points_double_eagle
+    points_eagle
+    points_birdie
+    points_par
+    points_bogey
+    points_double_bogey
+  </pre>
+  
+</div>

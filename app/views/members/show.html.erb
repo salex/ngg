@@ -1,60 +1,144 @@
-<fieldset>
+<fieldset class="show-list">
 <p id="notice"><%= notice %></p>
+<table class="f-left">
 
-<p>
-  <b>Group:</b>
-  <%= @member.group_id %>
-</p>
+  <tr>
+  <th>Name:</th>
+  <td><%= @member.name %><td>
+</tr>
 
-<p>
-  <b>Email:</b>
-  <%= @member.email %>
-</p>
+<%if @member.list_contact %>
+  
+  <tr>
+  <th>Phone home:</th>
+  <td><%= @member.phone %><td>
+</tr>
 
-<p>
-  <b>Last name:</b>
-  <%= @member.last_name %>
-</p>
+  <tr>
+  <th>Phone cell:</th>
+  <td><%= @member.cell %><td>
+</tr>
 
-<p>
-  <b>First name:</b>
-  <%= @member.first_name %>
-</p>
+<tr>
+  <th>Address:</th>
+  <td><div class="col-5"><%= markdown(@member.address) if !@member.address.blank? %></div><td>
+</tr>
+<%if !@member.user.nil?%>
+<tr>
+  <th>eMail:</th>
+  <td><div class="col-5"><%= @member.user.email %></div><td>
+</tr>
+<%end%>
+<tr>
+  <th>List contact:</th>
+  <td><%= @member.list_contact %><td>
+</tr>
 
-<p>
-  <b>Phone:</b>
-  <%= @member.phone %>
-</p>
-
-<p>
-  <b>Cell:</b>
-  <%= @member.cell %>
-</p>
-
-<p>
-  <b>Address:</b>
-  <%= @member.address %>
-</p>
-
-<p>
-  <b>List contact:</b>
-  <%= @member.list_contact %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @member.status %>
-</p>
+<%end%>
 
 
-<hr />
+</table>
+<table class="f-left">
 
+  <tr>
+    <th>Status:</th>
+    <td><%= @member.status %><td>
+  </tr>
+
+
+<tr>
+  <th>Tee:</th>
+  <td><%= @member.tee %><td>
+</tr>
+
+<tr>
+  <th>Lastplayed:</th>
+  <td><%= @member.last_played %><td>
+</tr>
+
+  <tr>
+  <th>Quota:(Initial)</th>
+  <td><%= @member.quota %> (<%=@member.initial_quota%>)<td>
+</tr>
+  <tr>
+  <th>Limited:</th>
+  <td><%= @member.limited %><td>
+</tr>
+
+
+</table>
+<%if !@member.image.nil? %>
+<div class="f-left">
+  <%= link_to image_tag(@member.image.photo.url(:small)), @member.image.photo.url %>
+  
+</div>
+<% end -%>
+<div style="clear:both"></div>
+<div class="action">
 <%= link_to 'Edit', edit_member_path(@member), :class => "edit-button"  if (can? :update, @member ) && is_my_group?(@member.group_id)%>
 <%= link_to 'Destroy', @member, confirm: 'Are you sure?', method: :delete, :class => "destroy-button" if (can? :destroy, @member) && is_my_group?(@member.group_id)  %>
-<% if (can? :invite, Member) && (@member.email != "") && @member.user.nil?%>
+<% if (can? :invite, Member)  && @member.user.nil?%>
+  <% if (!@member.email.blank?) %>
     <%= link_to 'Invite', invite_member_path(@member), :class => "link-go-button" %>
-
+  <%else%>
+    <span data-behavior="email-hover" title="eMail address must be update before member can be invited">?Invite?</span>
+  <% end %>
 <% end %>
-<%= link_to 'Members', members_path, :class => "breadcrumb" %>
 
+<%if can? :update , Image%>
+  <%= link_to 'Upload Photo', !@member.image.nil? ? edit_image_path(@member.image) : new_member_image_path(@member), :class => "link-button" %> |
+<% end -%>
+
+<%= link_to 'Members', members_path, :class => "breadcrumb" %>
+</div>
+<div class="index-list">
+	<table>
+		<tr class="list-header">
+			<td colspan="<%=@current_group.rounds_used+6%>"><strong>Tee Summary - Last <%=@current_group.rounds_used+1%> Scores (* Score <%=@current_group.rounds_used+1%> not used)</strong>
+			  <%if @current_group.uses_best_rounds%>
+			  Using best <%=@current_group.rounds_used%> rounds out of last <%=@current_group.round_limit%> rounds
+			  <%end%>
+			  </td>
+  		<tr class="list-header">
+			<td>Course</td>
+			<td>Tee</td>
+			<td>Pos</td>
+			<td>Last Played</td>
+			<td>Quota</td>
+			<% 1.upto(@current_group.rounds_used) do |i| %>
+					<td>&nbsp;<%=i%>&nbsp;</td>
+			<%end%>
+			<td>&nbsp;<%=@current_group.rounds_used+1%>*</td>
+		</tr>
+		  <%
+		hist = @member.get_current_history(@member,@current_group)
+		logger.info hist.inspect
+		altswitch = false
+		for h in hist 
+      altswitch = !altswitch
+      trclass =  altswitch ? 'class="alt"' : ""
+      h[1] = h[1] ? "*" : ""
+      %>
+      <tr <%=raw trclass%>>
+		    <td><%= h[4]%></td>
+		    <td><%= h[5]%></td>
+		    <td><%= h[6][0..0]%></td>
+		    <td><%= h[2]%></td>
+		    <td><%= (h[0].to_s + h[1]) %></td>
+  		  <%
+  		  0.upto(@current_group.rounds_used) do |i| %>
+  		    <td><%= h[3][i] %></td>
+          
+		    <%end%>
+		  </tr>
+	  <%end%>		
+	</table>
+</div>
 </fieldset>
+<div class="relations">
+	<div id="related">
+	  <%= render :template => "rounds/index"%>
+	  
+	</div>
+</div>
+

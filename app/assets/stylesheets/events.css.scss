@@ -1,0 +1,45 @@
+// Place all the styles related to the events controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body.events {
+  // Add the events class to your body tag
+  // Then, place scoped styles here.
+  
+}
+#mask {
+  z-index: 10;
+  position:absolute;
+  top:0;
+  left:0;
+  opacity:0.8;
+  background:#222!important;
+  display:none;
+}
+#dialog .window {
+  position:absolute;
+  border:solid 1px green;
+  width:440px;
+  height:200px;
+  z-index:9999;
+  padding:20px;
+}
+
+
+/* Customize your modal window here, you can add background image too */
+#content #dialog {
+  width:375px; 
+  height:203px;
+}
+
+/* line 775, compass/src/screen.sass */
+.popup-list table { border: solid 1px #88aa88; }
+/* line 778, compass/src/screen.sass */
+.popup-list td, .popup-list th { padding: 4px; text-align: center; border-right: dotted 1px green; }
+/* line 783, compass/src/screen.sass */
+.popup-list tr { background: white; border-bottom: dotted 1px green; }
+/* line 787, compass/src/screen.sass */
+.popup-list th { background: #cceecc; font-weight: bold; }
+/* line 791, compass/src/screen.sass */
+.popup-list .header { background: #cceecc; padding: 4px; }
+.greenbox { padding: 0.3em 1em; background-color: #cceecc; text-decoration: none; border-right: 1px solid white;margin-right: 4px; }

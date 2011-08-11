@@ -1,0 +1,55 @@
+<fieldset>
+  <legend>Rounds</legend>
+	
+<div class="index-list">
+
+  <table>
+    <tr class="list-header">
+        <th>Member</th>
+        <th>Date</th>
+        <th>C:T</th>
+        <th>Quota</th>
+        <th>Pulled</th>
+        <th>Points</th>
+        <th>Skins</th>
+        <th>$ R/S/O</th>
+        <th>Team</th>
+        <th>Place</th>
+        <th>Actions</th>
+    </tr>
+
+  <% altswitch = false
+  @rounds.each do |round|
+    altswitch = !altswitch
+    altclass = altswitch ? "" : "class=\"alt\""
+     %>
+    <tr <%=raw altclass%> >
+        <td><%= round.member.name%></td>
+        <td><%= round.date %></td>
+        <td><%= round.tee.course.name[0..0] + ":" + round.tee.color[0..0] %></td>
+        <td><%= round.quota %></td>
+        <td><%= round.points_pulled%></td>
+        <td><%= round.plus_minus %></td>
+        <td><code><%= round.par_in %><%= round.par_out %></code></td>
+        <td><%= round.round_quality %>/<%= round.skin_quality %>/<%= round.other_quality %></td>
+        <td><%= round.team %></td>
+        <td><%= round.place %></td>
+        <td class="actions">
+        <%= link_to 'Show', round, :class => "show-button" %>
+        <%if can? :update , round%>
+        <%= link_to 'Edit', edit_round_path(round), :class => "edit-button" %> 
+        <%end%>
+        <%if can? :destrot , round %>
+        <%= link_to 'Destroy', round, :confirm => 'Are you sure?', :method => :delete, :class => "destroy-button" %>
+        <%end%>
+        
+      </td>
+    </tr>
+  <% end %>
+  
+  </table>
+  <%= will_paginate @rounds %>
+  
+</div>
+
+</fieldset>

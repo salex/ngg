@@ -1,0 +1,86 @@
+<div class="print-list" >
+	<table style="width:6.5in">
+		<tr class="title">
+			<td colspan="4"><strong>Course/Tee Summary: <%=@course.name%></strong> </td><td colspan="<%=@current_group.rounds_used+2%>"> Last <%=@current_group.rounds_used+1%> Scores (* Score <%=@current_group.rounds_used+1%> not used)</td>
+  		<tr class="title">
+			<td>Name</td>
+			<td>PrimT</td>
+			<td>OptT</td>
+			<td>Last Played</td>
+			<% 1.upto(@current_group.rounds_used) do |i| %>
+					<td>&nbsp;<%=i%>&nbsp;</td>
+			<%end%>
+			<td>&nbsp;<%=@current_group.rounds_used+1%>*</td>
+			<td>Other Course(s)</td>
+		</tr>
+		<%
+		altswitch = false
+    
+		  for m in @members
+    		hist = m.get_current_history(m,@current_group)
+        prim = ""
+        opt = ""
+        oth = ""
+        lastx = []
+        lastp = ""
+        for h in hist 
+          h[1] = h[1] ? "*" : ""
+          
+          if h[7].nil?
+            opt << "<span class=\"i8\">("+m.tee[0..0]+h[0].to_s + h[1] +")</span> "
+          elsif h[7] == @course.id
+            
+            if h[6][0..0] == m.tee
+              prim = h[6][1..1]+h[0].to_s + h[1]
+              lastx = h[3]
+              lastp = h[2]
+            else
+              opt << h[6][1..1]+h[0].to_s + h[1] + " "
+            end
+          else
+            oth << h[4][0..1]+":"+h[6][1..1]+h[0].to_s + h[1] + " "
+          end
+        end
+        altswitch = !altswitch
+        trclass =  altswitch ? 'class="alt"' : ""
+        %>
+        <tr <%=raw trclass%>>
+          <td><%= m.name%></td>
+          <td><%= prim%></td>
+          <td><%=raw opt%></td>
+          <td><%= lastp%></td>
+      	  <%
+      	  0.upto(@current_group.rounds_used) do |i| %>
+      	    <td><%= lastx[i] %></td>
+          <%end%>
+          <td><%= oth%></td>
+        </tr>
+  	 <%end%>	
+  	 <tr><td colspan="<%=@current_group.rounds_used+6%>">	
+	<%
+  tbody = []
+	for m in @imembers
+		hist = m.get_current_history(m,@current_group)
+    prim = ""
+    opt = ""
+       for h in hist 
+         h[1] = h[1] ? "*" : ""
+         
+         if h[7].nil?
+           
+           opt << "<span class=\"i8\">("+m.tee[0..0]+h[0].to_s + h[1] +")</span> "
+         elsif h[7] == @course.id
+           if h[6][0..0] == m.tee
+             prim = h[6][1..1]+h[0].to_s + h[1]
+           else
+             opt << h[6][1..1]+h[0].to_s + h[1] + " "
+           end
+         end
+       end
+       tbody << "<td>#{m.name}</td><td>#{prim}</td><td>#{opt}</td>"
+ 	 end%>		
+   <%=raw float_table_columns(tbody,3,"<tr class=\"title\"><td>Name</td><td>PrimT</td><td>OptT</td></tr>","alt","f-left col-6-5 print-list","w100p")%>
+  </td></tr>
+	</table>
+	<span class="ibered">am i red <%= self.class.to_s %></span>
+</div>

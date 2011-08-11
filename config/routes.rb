@@ -1,6 +1,13 @@
 Ngg::Application.routes.draw do
+
+
+
+  resources :comments
+
+  resources :articles
+
   #match 'sa/:id' => 'sa#edit', :as => :sa
-  resources :sa, :only => [:new, :create, :edit, :update]
+  resources :sa, :only => [:new, :create, :edit, :update, :show]
 
 
 
@@ -18,6 +25,8 @@ Ngg::Application.routes.draw do
 
 
   resources :quotas
+  
+  resources :home
   
   resources :images
 
@@ -37,7 +46,7 @@ Ngg::Application.routes.draw do
   resources :groups do
     resources :images, :only => [:index, :new] 
     member do
-      get :test
+      get :trim_rounds
     end
   end
   
@@ -57,7 +66,9 @@ Ngg::Application.routes.draw do
     resources :rounds, :only => [:index, :new] 
     
     member do
-      post :verify
+      put :verify
+      put :add
+      get :ok
     end
   end
  

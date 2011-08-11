@@ -1,3 +1,4 @@
+
 <%= form_for(@member) do |f| %>
   <% if @member.errors.any? %>
     <div id="error_explanation">
@@ -10,43 +11,64 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :group_id %><br />
-    <%= f.number_field :group_id %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
-  </div>
-  <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name %>
-  </div>
-  <div class="field">
-    <%= f.label :phone %><br />
-    <%= f.text_field :phone %>
-  </div>
-  <div class="field">
-    <%= f.label :cell %><br />
-    <%= f.text_field :cell %>
-  </div>
-  <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_area :address %>
-  </div>
-  <div class="field">
-    <%= f.label :list_contact %><br />
-    <%= f.check_box :list_contact %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br />
-    <%= f.text_field :status %>
-  </div>
+  <table class="label-data">
+  <tr class="field">
+    <th><%= f.label :email %></th>
+    <td><%= f.text_field :email %></td>
+  </tr>
+  <tr class="field">
+    <th><%= f.label :last_name %></th>
+    <td><%= f.text_field :last_name %></td>
+  </tr>
+  <tr class="field">
+    <th><%= f.label :first_name %></th>
+    <td><%= f.text_field :first_name %></td>
+  </tr>
+  <tr class="field">
+    <th><%= f.label :phone %></th>
+    <td><%= f.text_field :phone %></td>
+  </tr>
+  <tr class="field">
+    <th><%= f.label :cell %></th>
+    <td><%= f.text_field :cell %></td>
+  </tr>
+  <tr class="field">
+    <th><%= f.label :address %></th>
+    <td><%= f.text_area :address, :rows => 3, :cols => 28 %></td>
+  </tr>
+  <tr class="field">
+    <th><%= f.label :list_contact %></th>
+    <td><%= f.check_box :list_contact %></td>
+  </tr>
+  
+  <%if can? :invite , @member%>
+  <tr class="field">
+    <th><%= f.label :limited %></th>
+    <td><%= f.check_box :limited %></td>
+  </tr>
+  
+  <tr class="field">
+     <th><%= f.label :status %></th> 
+     <%=raw status_select(f) %> 
+  </tr>
+  <tr class="field">
+     <th><%= f.label :tee %></th> 
+     <td><%= f.select :tee, tee_options %></td> 
+  </tr>
+  <tr class="field">
+     <th><%= f.label :last_played %></th> 
+     <td><%= f.date_select :last_played %></td> 
+  </tr>
+  <tr class="field">
+     <th><%= f.label :quota %></th> 
+     <td><%= f.text_field :quota %></td> 
+  </tr>
+  <tr class="field">
+     <th><%= f.label :initial_quota %></th> 
+     <td><%= f.text_field :initial_quota %></td> 
+  </tr>
+  <%end%>
+  </table>
   <div class="actions">
     <%= f.submit %>
   </div>

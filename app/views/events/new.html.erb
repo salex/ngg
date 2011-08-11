@@ -1,0 +1,58 @@
+<%= form_for(@event) do |f| %>
+  <fieldset class="form-list">
+  	<legend>New Event</legend>
+
+    <% if @event.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+        <ul>
+        <% @event.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <table class="label-data">
+      <tr class="field">
+        <th><%= f.label :group_id %></th>
+        <td><%= @current_group.id %></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :course_id %></th>
+        <td><%= f.collection_select(:course_id,@current_group.courses,:id,:name,{:prompt => true})  %></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :date %></th>
+        <td><%= f.date_select :date %></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :remarks %></th>
+        <td><%= f.text_area :remarks , :rows => 4, :cols => 40%></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :attendees %></th>
+        <td><%= f.text_field :attendees, :size => 3 %><span class="annotate">The number of members attending this event</span></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :teams %></th>
+        <td><%= f.text_field :teams, :size => 3  %><span class="annotate">Equal to attendees if paying individuals</span></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :places %></th>
+        <td><%= f.text_field :places, :size => 3  %><span class="annotate">The number of teams that will be paid</span></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :status %></th>
+        <td>New</td>
+      </tr>
+      
+      
+    </table>
+    <div class="action">
+      <%= f.submit %> <%= link_to 'Events (cancel)', events_path, :class => "breadcrumb" %>
+      
+    </div>
+  </fieldset>
+  
+<% end %>

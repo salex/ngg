@@ -1,0 +1,179 @@
+<% teams = @teams %>
+<div class="app-list2">
+<%= form_for @event , :url => verify_event_path(@event) do |form| %> 
+
+<table class="g-table w100">
+		<tr class="title">
+			<td colspan="7">
+				Date: <%=@teams["event"]["date"]%>
+				Teams: <%=@teams["teams"]%>
+				Places: <%=@teams["event"]["places"]%>
+				Members: <%=@teams["count"]%>
+				Course: <%=Course.find(@teams["course"]).name%>
+				<input type="hidden" id="team_places" name="team_places" value="<%= @teams["event"]["places"] %>" />
+				<input type="hidden" id="team_members" name="team_members" value="<%= @teams["count"] %>" />
+				<input type="hidden"  name="event[date]" value="<%=@teams["event"]["date"]%>" />
+				<input type="hidden"  name="event[teams]" value="<%=@teams["teams"]%>">
+				<input type="hidden"  name="event[places]" value="<%=@teams["event"]["places"]%>" />
+				<input type="hidden"  name="event[remarks]" value="<%=@teams["event"]["remarks"]%>" />
+				<input type="hidden"  name="event[course_id]" value="<%=@teams["course"]%>" />
+				<input type="hidden"  name="event[group_id]" value="<%=@current_group.id%>" />
+				
+			</td>
+		</tr>
+		<tr class="title">
+			<td colspan="7">
+				Skins 
+				<%good = 0.0
+				1.upto(18) do |i|
+					if @teams["skins"][i-1] == 1
+						checked = 'checked="checked"'
+						good += 1.0
+					else
+						checked = ""
+					end%>
+					<%= i %><input type="checkbox" id="birdies_<%=i-1%>" value="<%=i%>"  <%=checked%> />
+				<%end
+					if good > 0
+						skinvalue = (@teams["skinspot"] / good).round_to(2)
+						eachskin = "Each Skin: $"+skinvalue.to_s
+					else
+						eachskin = ""
+					end
+				%>
+				<%=eachskin%>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="7">
+		
+				Team Pot: $<%=@teams["teampot"] %> |
+				Skins Pot: $<%=@teams["skinspot"] %> |
+				Teams Paid: <%=@teams["event"]["places"] %> |
+				
+				  <% places = ""
+				endval = @teams["places"].length
+				endval -= 1
+				for item in 1..endval do
+				    places += "P"+item.to_s+": $"+@teams["places"][item].to_s+ " "
+				end %>
+				<%= places %>
+				<input type="submit" id="save_scores" name="save_Scores" value="Save Scores"  />
+				
+			</td>
+		</tr>
+		<tr class="title">
+			<th>Team Mates</th>
+			<th>Quota</th>
+			<th>Points</th>
+			<th>Pulled</th>
+			<th>Team +/-</th>
+			<th>Team/Skins/Other $</th>
+			<td class="right green"><b>Skins</b><br /><code>123456789012345678</code></td>
+		</tr>
+		
+		<% 
+		cnt = 0
+		@teams["team"].each { |t| 
+			if t
+				cnt += 1
+				lcv = 0
+				if t["quality"] > 0
+					round_quality = (t["quality"]/t["count"])
+					t['comment'] += ' (each $'+round_quality.to_s+")"
+				else
+					round_quality = 0
+				end
+				t["mate"].each { |id| 
+					m = Member.find(id)
+					skins = 0
+					skin_quality = 0
+					for item in 0..17 do
+						
+					  if @teams['skinswho'][item] == id
+					  	skins += 1
+					  end
+					end
+					if skins > 0
+						skin_quality += (skins * skinvalue)
+						t['par'][lcv]
+						
+					end
+					otherquality = t['otherquality'][lcv].to_i
+					#tmp = t['tee'][lcv].split("_")
+					#tee = tmp[1]
+					quality = skin_quality + round_quality
+					%>
+				<tr>
+					<td><%= m.name %> 
+					<input type="hidden" id="round_memb[<%=m.id%>]" name="round[memb[<%=m.id%>]]" value="<%=m.id%>" />
+					<input type="hidden" id="round_points[<%=m.id%>]" name="round[points[<%=m.id%>]]" value="<%=t['points'][lcv]%>" />
+					<input type="hidden" id="round_starpoints[<%=m.id%>]" name="round[starpoints[<%=m.id%>]]" value="<%=t['starpoints'][lcv]%>" />
+					<input type="hidden" id="round_net_points[<%=m.id%>]" name="round[net_points[<%=m.id%>]]" value="<%=t['net_points'][lcv]%>" />
+					<input type="hidden" id="round_quota[<%=m.id%>]" name="round[quota[<%=m.id%>]]" value="<%= t['quota'][lcv]%>" />
+					<input type="hidden" id="round_tee[<%=m.id%>]" name="round[tee[<%=m.id%>]]" value="<%= t['tee'][lcv]%>" />
+					<input type="hidden" id="round_par[<%=m.id%>]" name="round[par[<%=m.id%>]]" value="<%= t['par'][lcv]%>" />
+					<input type="hidden" id="round_pulled[<%=m.id%>]" name="round[pulled[<%=m.id%>]]" value="<%=t['pulled'][lcv]%>" />
+					<input type="hidden" id="round_team[<%=m.id%>]" name="round[team[<%=m.id%>]]" value="<%= t['team'][lcv]%>" />
+					<input type="hidden" id="round_quality[<%=m.id%>]" name="round[quality[<%=m.id%>]]" value="<%= quality.to_s%>" />
+					<input type="hidden" id="round_roundquality[<%=m.id%>]" name="round[roundquality[<%=m.id%>]]" value="<%= round_quality.to_s%>" />
+					<input type="hidden" id="round_skinquality[<%=m.id%>]" name="round[skinquality[<%=m.id%>]]" value="<%= skin_quality.to_s%>" />
+					<input type="hidden" id="round_place[<%=m.id%>]" name="round[place[<%=m.id%>]]" value="<%= t['place']%>" />
+					<input type="hidden" id="round_otherquality[<%=m.id%>]" name="round[otherquality[<%=m.id%>]]" value="<%= t['otherquality'][lcv]%>" />
+					</td>
+					
+					<td>
+						<%= t['quota'][lcv]%>
+					</td>
+					<td>
+						<%= t['points'][lcv]%>
+						
+					</td>
+					<td><input type="text" size="3" name="pulled_<%=cnt%>_<%=m.id%>" 
+						id="pulled_<%=cnt%>_<%=m.id%>" value="<%=t['pulled'][lcv]%>" disabled="disabled" />
+					</td>
+					<td>
+					  <input class="ppm_<%=cnt%>" type="text" size="3" name="points_<%=cnt%>_<%=m.id%>" 
+					  id="points_<%=cnt%>_<%=m.id%>" value="<%=t['starpoints'][lcv]%>" disabled="disabled" />
+					  
+					</td>
+					<td>
+					  <%if round_quality > 0 %>
+					    $<%=round_quality%>
+					  <%else%>
+					  --
+					  <%end%>
+					  /
+					  <%if skin_quality > 0 %>
+					    $<%=skin_quality%>
+					  <%else%>
+					  --
+					  <%end%>
+					  /
+					  <%if otherquality > 0 %>
+					    $<%= otherquality.round(2)%>
+					  <%else%>
+					  --
+					  <%end%>
+					  
+
+					</td>
+					<td class="right"><code><%=t['par'][lcv]%></code>
+					</td>
+				</tr>
+				<% lcv += 1
+				 }%>
+				<tr class="hdr">
+					<td colspan="3">
+						&uarr;Team:<%= cnt%> Members: <%=t["count"]%> 
+					</td>
+					<td>Total</td>
+					<td><input class="ppm_tot" type="text" size="3" name="points_<%=cnt%>" id="points_<%=cnt%>" value="<%=t['total']%>" disabled="disabled" /></td>
+					<td colspan="2"><span id="place_<%=cnt%>" ><%=t['comment']%></span></td>
+				</tr>
+				
+			<% end }%>
+	</table>
+  <%end%>
+	<%= session.inspect%>
+</div>

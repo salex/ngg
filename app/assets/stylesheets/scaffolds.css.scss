@@ -1,3 +1,5 @@
+$light-green: #cceecc;
+
 .message p{font-size:1.2em;}
 div.alert, div.error {color:red;border:solid red 1px;background:#fff;padding:2px}
 div.notice {color:green;}
@@ -5,7 +7,18 @@ div.warning {color:orange;}
 
 div {
   &.field, &.actions {
-    margin-bottom: 10px; } }
+    margin-bottom: 4px;
+    } 
+  &.field label {
+    display: block;
+    width: 15em;
+    margin-right:6px;
+    text-align: right;
+    font-weight: bold;
+    background: $light-green;
+    float:left;
+  }
+}
 
 #notice {
   color: green; }

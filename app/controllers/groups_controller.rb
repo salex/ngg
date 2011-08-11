@@ -93,4 +93,15 @@ class GroupsController < ApplicationController
      end
    end
    
+   def trim_rounds
+     rounds = Round.where("date < ?", (Date.today - 1000.days)).count
+     events = Event.where("date < ?", (Date.today - 1000.days)).count
+     members = Member.where('not exists (select member_id from rounds where member_id = members.id)')
+     
+     #:conditions => "NOT EXISTS (SELECT * FROM cities_stores WHERE cities_stores.store_type = stores.store_type)")
+     #select * from members where not exists (select member_id from rounds where member_id = members.id);
+     render :text => "Events #{events} Rounds #{rounds} members #{members.count} #{members.each {|m| p m.name}}"
+     
+   end
+   
 end

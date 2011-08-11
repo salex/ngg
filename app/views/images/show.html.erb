@@ -1,0 +1,57 @@
+
+<p class="notice"><%= notice %></p>
+<fieldset class="show-list">
+  	<table class="f-left">
+	    <tr>
+      <th>Imageable type:</th>
+      <td><%= @image.imageable_type %><td>
+    </tr>
+
+	    <tr>
+      <th>Imageable:</th>
+      <td><%= @image.imageable_id %><td>
+    </tr>
+
+	    <tr>
+      <th>Name:</th>
+      <td><%= @image.name %><td>
+    </tr>
+
+	    <tr>
+      <th>Photo file name:</th>
+      <td><%= @image.photo_file_name %><td>
+    </tr>
+
+	    <tr>
+      <th>Photo content type:</th>
+      <td><%= @image.photo_content_type %><td>
+    </tr>
+
+	    <tr>
+      <th>Photo file size:</th>
+      <td><%= @image.photo_file_size %><td>
+    </tr>
+
+	    <tr>
+      <th>Photo updated at:</th>
+      <td><%= @image.photo_updated_at %><td>
+    </tr>
+
+		</table>
+		<div class="f-left">
+      <%= link_to image_tag(@image.photo.url(:small)), @image.photo.url %>
+      
+		</div>
+		<div class="f-clear"></div>
+		
+</fieldset>
+<div class="action">
+	<%= link_to 'Edit', edit_image_path(@image), :class => "edit-button" %> 
+	<%= link_to 'Destroy', @image, confirm: 'Are you sure?', method: :delete, :class => "destroy-button" %>
+	<%= link_to 'Images', images_path, :class => "breadcrumb"%>
+  
+</div>
+<div class="relations">
+	<div id="related">
+	</div>
+</div>

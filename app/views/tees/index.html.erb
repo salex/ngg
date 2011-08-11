@@ -1,0 +1,45 @@
+
+<fieldset>
+ <legend>Tees
+   <%= link_to 'New Tee', new_course_tee_path(@course), :class => "new-button" if can? :create, Tee %>
+   
+   </legend>
+ <div class="index-list">
+
+   <table class="g-table">
+     <tr class="hdr">
+         <th>Course</th>
+         <th>Tee</th>
+         <th>Color</th>
+         <th>Slope</th>
+         <th>Rating</th>
+         <th>Par in</th>
+         <th>Par out</th>
+         <th>Actions</th>
+     </tr>
+
+   <% @tees.each do |tee| %>
+     <tr>
+         <td><%= tee.course_id %></td>
+         <td><%= tee.tee %></td>
+         <td><%= tee.color %></td>
+         <td><%= tee.slope %></td>
+         <td><%= tee.rating %></td>
+         <td><%= tee.par_in %></td>
+         <td><%= tee.par_out %></td>
+         <td>
+         <%= link_to 'Show', tee %>
+         <%if can? :update , tee%>
+           <%= link_to 'Edit', edit_tee_path(tee), :class => "edit-button" -%>
+         <%end%>
+         <%if can? :destroy , tee%>
+           <%= link_to 'Destroy', tee, :confirm => 'Are you sure?', :method => :delete , :class => "destroy-button"-%>
+         <%end%>
+         
+       </td>
+     </tr>
+   <% end %>
+   </table>
+ </div>
+</fieldset>
+ 

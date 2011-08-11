@@ -7,8 +7,13 @@ class MembersController < ApplicationController
   before_filter :check_group, :except => [:index,:new]
   
   def index
-    @members = Member.get_members(@current_group) #@current_group.members.order('name ASC') #
-
+    @members = Member.get_active_members(@current_group) #@current_group.members.order('name ASC') #
+    @imembers = Member.get_inactive_members(@current_group) #@current_group.members.order('name ASC') #
+    @dmembers = Member.get_deleted_members(@current_group) #@current_group.members.order('name ASC') #
+    #filepath = Rails.root.join("db/conversion","members.json")
+    #json = @members.to_json
+    #File.open(filepath,'w') {|f| f.write(json)}
+    #puts "Wrote member records as JSON"
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @members }
@@ -19,7 +24,11 @@ class MembersController < ApplicationController
   # GET /members/1.json
   def show
     #@member = Member.find(params[:id])
-
+    #@member =  @current_group.members.find(params[:id])
+    #@rounds = @member.rounds.paginate(:per_page => 15, :page => params[:page])
+    params[:member_id] = @member.id
+    @rounds = Round.search(params).paginate(:per_page => 15, :page => params[:page])
+    @user = @member.user
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @member }
@@ -41,6 +50,7 @@ class MembersController < ApplicationController
   # GET /members/1/edit
   def edit
     #@member = Member.find(params[:id])
+    @user = @member
   end
 
   # POST /members
@@ -99,6 +109,34 @@ class MembersController < ApplicationController
     @member.invite_user
     render :text => "Invited #{@member.name}", :layout => true
   end
-      
+
+  def teeopt
+    m =  Member.find(params[:id])
+    c = Course.find(params[:course])
+    t = Tee.get_tees(c.id)
+    teeopt = ""
+    membOpt = []
+    cnt = 0
+    for tee in t 
+      quota, limited = m.get_member_quota(tee.id)
+      star = limited ? "*" : ""
+      val = {"quota" => quota,"star" => star,"limited" => limited, "tee" => tee.id, "color" => tee.color, "membID" => m.id }
+      if m.tee == tee.tee
+        sel = 'selected="selected"'
+        val["selected"] = true
+      else
+        sel = ""
+        val["selected"] = false
+      end
+      membOpt << val
+      #teeopt += '<option value="'+quota.to_s+star+'_'+tee.id.to_s+'" ' + sel + '>'+tee.color+":"+quota.to_s+star+'</option>'
+      teeopt += '<option value="'+ cnt.to_s + '"' + sel+ '>'+tee.color+":"+quota.to_s+star+'</option>'
+      cnt += 1
+    end
+    obj = {"teeopt" => teeopt, "membopt" => membOpt, "group" => @current_group.options}.to_json
+    render :text => obj
+  end
+
+
 end
 

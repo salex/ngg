@@ -1,18 +1,10 @@
-<p id="notice"><%= notice %></p>
 <fieldset>
-<p>
-  <b>Name:</b>
-  <%= @group.name %>
-</p>
-
-<p>
-  <b>Subdomain:</b>
-  <%= @group.subdomain %>
-</p>
-<hr />
-<%= link_to 'Edit', edit_group_path(@group), :class => "edit-button"  if (can? :update, @group) &&  is_my_group?(@group.id) %>
-<%= link_to 'Destroy', @group, confirm: 'Are you sure?', method: :delete, :class => "destroy-button"  if can? :destroy, @group %></td>
-
-<%= link_to 'Back', groups_path, :class => "breadcrumb" %>
-
+  <%= render "group_pref" %>
 </fieldset>
+
+<div class="action">
+  <%= link_to 'Edit', edit_group_path(@group), :class => "edit-button"  if (can? :update, @group) &&  is_my_group?(@group.id) %>
+  <%= link_to 'Destroy', @group, confirm: 'Are you sure?', method: :delete, :class => "destroy-button"  if can? :destroy, @group %></span>
+
+  <%= link_to 'Back', groups_path, :class => "breadcrumb" %>
+</div>

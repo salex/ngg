@@ -1,4 +1,8 @@
 class SaController < ApplicationController
+  def show
+    edit
+  end
+  
   def edit
     token_type = params[:id][0..1]
     
@@ -15,6 +19,7 @@ class SaController < ApplicationController
   def iv #invite
     @user = User.find_by_token(params[:id])
     if @user
+      
       render :action => "iv"
     else
       redirect_to root_url, :alert => "access token not found or expired"

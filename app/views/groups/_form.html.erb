@@ -1,3 +1,4 @@
+
 <%= form_for(@group) do |f| %>
   <% if @group.errors.any? %>
     <div id="error_explanation">
@@ -11,15 +12,152 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <h3 class="small-caps">Basic Information</h3>
+  
+  <div class="show">
+    <span class="labelr"><%= f.label :name %></span>
+    <span class="data"><%= f.text_field :name %></span>
   </div>
-  <div class="field">
-    <%= f.label :subdomain %><br />
-    <%= f.text_field :subdomain %>
+  <div class="show">
+    <span class="labelr"><%= f.label :subdomain %></span>
+    <span class="data"><%= f.text_field :subdomain,:disabled => true %></span>
   </div>
+
+  <h3 class="small-caps">Preferences</h3>
+  <div class="show">
+    <span class="label">Does the group plays on multiple courses?</span>
+      <span class="data">
+        Yes <%= f.radio_button :uses_multiple_courses,true %> No <%= f.radio_button :uses_multiple_courses,false %>
+      </span>
+  </div>
+  <div class="show">
+    <span class="label">Are quotas based on each course?</span>
+      <span class="data">
+        Yes <%= f.radio_button :uses_course_quota,true %> No <%= f.radio_button :uses_course_quota,false %>
+      </span>
+  </div>
+  <div class="show">
+    <span class="label">Are quotas based on best (X/mininum) rounds out of (Y/maximum) rounds?</span>
+      <span class="data">
+        Yes <%= f.radio_button :uses_best_rounds,true %> No <%= f.radio_button :uses_best_rounds,false %>
+      </span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :best_rounds_minimum %></span>
+    <span class="data"><%= f.text_field :best_rounds_minimum, :size => 4 %></span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :best_rounds_maximum %></span>
+    <span class="data"><%= f.text_field :best_rounds_maximum, :size => 4 %></span>
+  </div>
+  <div class="show">
+    <span class="label">Are quotas based on a fixed number of rounds?</span>
+      <span class="data">
+        (Use Best Rounds = No)
+      </span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :rounds_used %></span>
+    <span class="data"><%= f.text_field :rounds_used, :size => 4 %></span>
+  </div>
+
+  
+  <div class="show">
+      <span class="label">Are new members restricted to a +- point limit  until a certain number of rounds are played?</span>
+        <span class="data">
+          Yes <%= f.radio_button :uses_new_member_limit,true %> No <%= f.radio_button :uses_new_member_limit,false %>
+          
+        </span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :new_member_limit %></span>
+    <span class="data"><%= f.text_field :new_member_limit, :size => 4 %></span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :new_member_rounds_used %></span>
+    <span class="data"><%= f.text_field :new_member_rounds_used, :size => 4 %></span>
+  </div>
+
+  <div class="show">
+    <span class="label">Are all round scores limited to some +- points limit?</span><span class="data">
+      Yes <%= f.radio_button :uses_round_limit,true %> No <%= f.radio_button :uses_round_limit,false %>
+      </span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :round_limit %></span>
+    <span class="data"><%= f.text_field :round_limit, :size => 4 %></span>
+  </div>
+  
+  <div class="show">
+    <span class="label">Are all round on new courses or tees limited to some +- points limit?</span><span class="data">
+      Yes <%= f.radio_button :uses_new_course_limit,true %> No <%= f.radio_button :uses_new_course_limit,false %>
+      </span>
+  </div>
+
+  <div class="show">
+    <span class="label">Do you  throw out the high and low round of the selected rounds?</span><span class="data">
+      Yes <%= f.radio_button :uses_high_low_rounds_rule,true %> No <%= f.radio_button :uses_high_low_rounds_rule,false %>
+      </span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :high_low_rounds_effective %></span>
+    <span class="data"><%= f.text_field :high_low_rounds_effective, :size => 4 %></span>
+  </div>
+  
+  <h3 class="small-caps">Quality Points Dues</h3>
+  <div class="show">
+    <span class="labelr"><%= f.label :round_dues %></span>
+    <span class="data"><%= f.text_field :round_dues, :size => 4 %></span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :skins_dues %></span>
+    <span class="data"><%= f.text_field :skins_dues, :size => 4 %></span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :other_game %></span>
+    <span class="data"><%= f.text_field :other_game %></span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :other_dues %></span>
+    <span class="data"><%= f.text_field :other_dues, :size => 4 %></span>
+  </div>
+
+  <h3 class="small-caps">Dogfight Points Assignment</h3>
+  <div class="show">
+    <span class="labelr"><%= f.label :points_double_eagle %></span>
+    <span class="data"><%= f.text_field :points_double_eagle, :size => 4 %></span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :points_eagle %></span>
+    <span class="data"><%= f.text_field :points_eagle, :size => 4 %></span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :points_birdie %></span>
+    <span class="data"><%= f.text_field :points_birdie, :size => 4 %></span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :points_par %></span>
+    <span class="data"><%= f.text_field :points_par, :size => 4 %></span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :points_bogey %></span>
+    <span class="data"><%= f.text_field :points_bogey, :size => 4 %></span>
+  </div>
+  <div class="show">
+    <span class="labelr"><%= f.label :points_double_bogey %></span>
+    <span class="data"><%= f.text_field :points_double_bogey, :size => 4 %></span>
+  </div>
+  
+  <h3 class="small-caps">Redistribution of Wealth (splitting the pots)</h3>
+  <div class="show">
+    <span class="labelr"><%= f.label "How is the pot split if multiple places are paid? (1 to 5 places)" %></span>
+    <span class="data"><%= f.text_field :pot_splits, :size => 60 %></span>
+  </div>
+  
+  
+  
+  
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit %> <%= @links %>
   </div>
 <% end %>

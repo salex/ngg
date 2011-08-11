@@ -11,12 +11,23 @@ $alt-green: #e7ffe7;
   -webkit-border-radius: $radius;  
 }  
 
+.text p {margin:8px 0}
 .f-left { float: left; }
 
 .f-right { float: right; padding: 0; }
 
 .f-clear { clear: both; height: 0; width: 0; }
-
+.action {
+  background: $darker-green!important;
+  border:solid 1px $light-green;
+  padding: 3px;
+  margin: 2px 0;
+  color: #fff!important;
+  @include rounded-corners(5px);
+  a {
+    color: #fff!important;
+  }
+}
 .left { text-align: left; }
 
 .right { text-align: right; }
@@ -93,11 +104,10 @@ $alt-green: #e7ffe7;
 .col-32 { width: 960px; padding-right: 10px; }
 
 #content fieldset { position: relative; 
-    border: 1px solid; 
-    margin-right: auto; margin-left: auto; margin-top: 4px; margin-bottom: 4px; background: #eeffee; padding: 4px;
+    margin-right: auto; margin-left: auto; margin-top: 4px; margin-bottom: 4px; background: #e8ffe8; padding: 4px;border: 1px solid; border-color: $medium-green;
     @include rounded-corners(5px);
      }
-#content fieldset legend { position: relative; color: #003366; background-image: url(ggrad.gif); background-color:$light1-green; font-size: 1em; border: 1px solid; border-color: #003366; margin-left: 10px; padding: 2px 4px; font-weight: bold; }
+#content fieldset legend { position: relative; color: #003366;  background-color:$alt-green; font-size: 1em; border: 1px solid; border-color: $medium-green; margin-left: 10px; padding: 2px 4px; font-weight: bold; }
 
 #header { background: #99dd99; 
     padding-top: 10px; 
@@ -109,12 +119,15 @@ $alt-green: #e7ffe7;
 
 #navbar { background: green; padding: 2px; }
 
-#container { background: #cceecc; width: 960px; margin: auto; }
+#container { background: #cceecc; width: 960px; margin: auto;   z-index:1;position:relative}
 
 #content { padding: 1em; background: transparent;}
 
-.links a, #content a { text-decoration: none; color: blue; }
+h4 {font-size:1.25em;font-wight:bold;border-bottom:$darker-green;font-variant: small-caps;}
+
+.links a, #content a { text-decoration: none; color: blue;font-size:0.9em; }
 .links a:hover, #content a:hover { color: red !important;}
+
 .button-link {
     padding: 1px 2px;
     margin: 0 2px;
@@ -134,14 +147,14 @@ $alt-green: #e7ffe7;
     font-weight: bold;
 }
 
-#content-left { width: 180px; float: left; padding: 1em; background: transparent; }
-#content-left ul { margin-left: 1em; padding: 5px; }
+#content-left { width: 180px; float:left; padding: 0.5em; background: transparent;margin-right:1em; }
+#content-left ul { padding: 5px; }
 
-#content-right { background: transparent; margin-left: 212px; padding: 1em; width: auto; }
+#content-right {background: transparent; padding: 1em; width: auto; }
 
 #content-print { background: white; margin: 0.5in; width: 8.5in; }
 
-#footer { background: green; color: white; padding: 4px; }
+#footer { background: green; color: white; padding: 4px;clear:both }
 #footer a { color: #aaccaa; text-decoration: none; }
 #footer a:hover { color: white; }
 
@@ -172,15 +185,55 @@ a.breadcrumb { background: url(resultset_previous.png) no-repeat center left; fo
 .label-data {
     color: #333;
     th, td {
-        padding: 2px 0.3em;  
+        padding: 2px 0.3em;
     }
     th, td.label {
         text-align: right;
         font-weight: bold;
         color: #222;
+        
+    }
+    .lbl td {
+      font-weight: bold;
+      background: $light-green;
     }
     
 }  
+
+.show {
+  span.label {
+    font-style:italic;
+  }
+  span.data {
+    font-weight:bold;    
+  }
+  span.label1 {
+    margin-left:8px;
+  }
+  span.labelr {
+    margin-left:8px;
+    text-align:right;
+    display:inline-block;
+    width:14em;
+  }
+  
+  
+}
+
+.index-list table {  width: 100%; }
+.index-list td, .index-list th { padding: 2px 4px; border: dotted 1px #40b040; }
+.index-list tr { background: white; }
+.index-list tr.alt { background: #e7ffe7; }
+.index-list tr.list-header { background: #bbdfbb; border: 1px solid #40b040; }
+.index-list tr.list-header td, .index-list tr.list-header th { font-weight: bold; }
+
+
+.show-list table { border: solid 1px #88aa88; }
+.show-list td, .show-list th { padding: 4px; }
+.show-list tr { background: white; border-bottom: dotted 1px green; }
+.show-list th { background: #cceecc; font-weight: bold; text-align: right; width: 10em; }
+.show-list .header { background: #cceecc; padding: 4px; }
+.show-list td.green { background: #cceecc;}
 
 .small-caps {
      font-variant: small-caps;
@@ -212,9 +265,18 @@ table.g-table tr.hdr {
 
 table.g-table tr.hdr * {
 	font-weight:bold;
-	text-align:left;
 	
 }
+table.g-table tr.title * {
+	background:$light-green;
+	
+}
+table.g-table tr.title th {
+	font-weight:bold;
+	
+}
+
+
  
 table.g-table tr.lbl th{
 	font-weight:bold;
@@ -232,4 +294,22 @@ span.annotate {
 }
 
 
-$light-green: #cceecc;
+.show-list div label { 
+  font-weight: bold; 
+  width: 10em; 
+  text-align: right; 
+  display: inline-block; 
+  margin-right: 4px; 
+  padding: 0.3em 1em; 
+  background: $light1-green; 
+  text-decoration: none; 
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+  
+}
+
+.markdown {
+  p {
+    padding: 0.4em 0;
+  }
+}

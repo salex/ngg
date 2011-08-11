@@ -1,0 +1,38 @@
+
+<p class="notice"><%= notice %></p>
+<fieldset class="show-list">
+  <legend>Article</legend>
+    <table>
+      <tr>
+        <th>User:</th>
+        <td><%= @article.user.name %><td>
+      </tr>
+      <tr>
+        <th>Title:</th>
+        <td><%= @article.title %><td>
+      </tr>
+      <tr>
+        <th>Body:</th>
+        <td><%= markdown(@article.body) %><td>
+      </tr>
+      <tr>
+        <th>Type article:</th>
+        <td><%= @article.type_article %><td>
+      </tr>
+      <tr>
+        <th>Published:</th>
+        <td><%= @article.published %><td>
+      </tr>
+
+    </table>
+</fieldset>
+<div class="action">
+  <%= link_to 'Edit', edit_article_path(@article), :class => "edit-button" %> 
+  <%= link_to 'Destroy', @article, confirm: 'Are you sure?', method: :delete, :class => "destroy-button" %>
+  <%= link_to 'Articles', articles_path, :class => "breadcrumb" %>
+  
+</div>
+<div class="relations">
+  <div id="related">
+  </div>
+</div>

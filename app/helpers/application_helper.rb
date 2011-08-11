@@ -145,5 +145,11 @@ module ApplicationHelper
     end
   end
   
+  def markdown(text)
+    options = [:hard_wrap, :filter_html, :autolink, :no_intraemphasis, :fenced_code, :gh_blockcode]
+    html = Redcarpet.new(text, *options).to_html
+    return "<div class=\"markdown\">#{html}</div>".html_safe
+  end
+  
   
 end

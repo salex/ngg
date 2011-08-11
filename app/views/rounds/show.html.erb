@@ -1,0 +1,94 @@
+<fieldset class="show-list">
+	<legend>Round</legend>
+  	<table>
+	    <tr>
+      <th>Member:</th>
+      <td><%= @round.member_id %><td>
+    </tr>
+
+	    <tr>
+      <th>Event:</th>
+      <td><%= @round.event_id %><td>
+    </tr>
+
+	    <tr>
+      <th>Tee:</th>
+      <td><%= @round.tee_id %><td>
+    </tr>
+
+	    <tr>
+      <th>Date:</th>
+      <td><%= @round.date %><td>
+    </tr>
+
+	    <tr>
+      <th>Quota:</th>
+      <td><%= @round.quota %><td>
+    </tr>
+
+	    <tr>
+      <th>Pulled:</th>
+      <td><%= @round.points_pulled%><td>
+    </tr>
+
+	  <tr>
+      <th>Points:</th>
+      <td><%= @round.plus_minus %><td>
+    </tr>
+	  <tr>
+      <th>Gross Pulled:</th>
+      <td><%= @round.gross_pulled %><td>
+    </tr>
+	  <tr>
+      <th>Net Pulled:</th>
+      <td><%= @round.net_pulled %><td>
+    </tr>
+
+	    <tr>
+      <th>Par in:</th>
+      <td><%= @round.par_in %><td>
+    </tr>
+
+	    <tr>
+      <th>Par out:</th>
+      <td><%= @round.par_out %><td>
+    </tr>
+
+	    <tr>
+      <th>Score:</th>
+      <td><%= @round.score %><td>
+    </tr>
+
+	    <tr>
+      <th>Round quality:</th>
+      <td><%= @round.round_quality %><td>
+    </tr>
+
+	    <tr>
+      <th>Skin quality:</th>
+      <td><%= @round.skin_quality %><td>
+    </tr>
+
+	    <tr>
+      <th>Other quality:</th>
+      <td><%= @round.other_quality %><td>
+    </tr>
+	    <tr>
+      <th>Place:</th>
+      <td><%= @round.place %><td>
+    </tr>
+
+		</table>
+</fieldset>
+<div class="action">
+  <%if can? :update , @round%>
+  <%= link_to 'Edit', edit_round_path(@round), :class => "edit-button" %> |
+  <%end%>
+	<%= link_to 'Return to Event', event_path(@round.event_id), :class => "breadcrumb" %>
+	<%= link_to 'Return to Member', member_path(@round.member_id), :class => "breadcrumb" %>
+
+</div>
+<div class="relations">
+	<div id="related">
+	</div>
+</div>

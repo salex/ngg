@@ -1,0 +1,93 @@
+<%= form_for(@round) do |f| %>
+  <fieldset class="form-list">
+  	<legend>Round</legend>
+
+    <% if @round.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@round.errors.count, "error") %> prohibited this round from being saved:</h2>
+
+        <ul>
+        <% @round.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <table class="label-data">
+        <tr class="field">
+          <th><%= f.label :member_id %></th>
+          <td><%= f.text_field :member_id %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :event_id %></th>
+          <td><%= f.text_field :event_id %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :tee_id %></th>
+          <td><%= f.text_field :tee_id %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :date %></th>
+          <td><%= f.date_select :date %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :quota %></th>
+          <td><%= f.text_field :quota %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :points_pulled %></th>
+          <td><%= f.text_field :points_pulled %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :net_pulled %></th>
+          <td><%= f.text_field :net_pulled %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :gross_pulled %></th>
+          <td><%= f.text_field :gross_pulled %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :plus_minus %></th>
+          <td><%= f.text_field :plus_minus %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :par_in %></th>
+          <td><%= f.text_field :par_in %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :par_out %></th>
+          <td><%= f.text_field :par_out %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :score %></th>
+          <td><%= f.text_field :score %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :round_quality %></th>
+          <td><%= f.text_field :round_quality %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :skin_quality %></th>
+          <td><%= f.text_field :skin_quality %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :other_quality %></th>
+          <td><%= f.text_field :other_quality %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :place %></th>
+          <td><%= f.text_field :place %></td>
+        </tr>
+        <tr class="field">
+          <th><%= f.label :team %></th>
+          <td><%= f.text_field :team %></td>
+        </tr>
+
+      
+        </table>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  </fieldset>
+  
+<% end %>

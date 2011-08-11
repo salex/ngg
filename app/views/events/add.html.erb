@@ -1,0 +1,205 @@
+<div id="addround" > 
+  <% 
+  		links = ""
+  	t = Time.now
+  	@event.date = t.strftime("%Y-%m-%d")
+  %>
+
+  <%= form_for  @event , :url => {:action => "add"} do |form| %> 
+  
+  <fieldset> 
+  	<legend>Add Member to Event
+  	<span class="annotate">Add required date and team information. Select members using the checkbox next to their name. <br />Enter score info in opened form. Click the "Continue" button after selections.</span>
+  	</legend> 
+  	<table class="g-table w100">
+  		<tr class="title">
+  			<th>
+  				Date: <%=@event.date%>
+  				Teams: <%=@event.teams%>
+  				Places: <%=@event.places%>
+  				Members: <%=@event.attendees %>
+  				Course: <%=Course.find(@event.course_id).name%>
+  				<%= form.hidden_field(:course_id)%>
+  				Teams: <%= check_box_tag( :event_teams, 0, @event.teams != @event.attendees)%>
+  			</th>
+  			<th>
+  			   Add/Cancel Status
+  			</th>
+  		</tr>
+  		<tr>
+  		  <td class="greenbox">
+  		    <%= submit_tag "Continue", :class => "submit" %>  
+  		  </td>
+  		  <td class="greenbox">
+  		    <textarea rows="5" cols="30" id="addStatus" ></textarea>
+  		  </td>
+  		</tr>
+  	</table>
+    <div class="f-clear"></div>
+
+    <hr/>
+
+    <div class="index-list" id="member-list">
+      <h3 class="actions">Active Members</h3>
+      
+    <%  
+    	tbody = []
+      @members.each do |member|
+   	
+        tbody << "<td>#{link_to member.name,member}</td><td>
+    		<input id=\"addmemb_#{member.id}\" type=\"checkbox\" data-behavior=\"addMember\"  />
+    		<span class=\"i8\" id=\"mpts_#{member.id}\">#{'set' if session['attendees']}</span>
+    		<input type=\"hidden\" id=\"memb_#{member.id}\" name=\"memb[#{member.id}]\" value=\"#{session['attendees'][member.id.to_s] if session['attendees']}\" />
+    		<input type=\"hidden\" id=\"mname_#{member.id}\"  value=\" #{member.name} \" />
+        </td>"
+      end%>
+      <%=raw float_table_columns(tbody,4,"<tr class=\"list-header\"><th>Name</th><th style=\"width:35%\" >Select</th></tr>","alt","f-left col-7  index-list")%>
+        <h3 class="actions">Inactive Members</h3>
+
+      <%  
+      	tbody = []
+        @imembers.each do |member|
+
+          tbody << "<td>#{link_to member.name,member}</td><td>
+      		<input id=\"addmemb_#{member.id}\" type=\"checkbox\" data-behavior=\"addMember\" />
+      		<span  class=\"i8\" id=\"mpts_#{member.id}\"></span>
+      		<input type=\"hidden\" id=\"memb_#{member.id}\" name=\"memb[#{member.id}]\" value=\"\" />
+      		<input type=\"hidden\" id=\"mname_#{member.id}\"  value=\" #{member.name} \" />
+          </td>"
+        end%>
+        <%=raw float_table_columns(tbody,4,"<tr class=\"list-header\"><th>Name</th><th>Select</th></tr>","alt","f-left col-7  index-list")%>
+      
+    </div>
+  </fieldset>
+  <% end %>
+
+</div>
+<div class="jform window" id="maskpopup" style="padding:6px;width:828px;border:2px solid green; position:absolute;display:none;z-index:10000;background:#cceecc">
+	<div class="show-list" style="float:left;width:49%">
+		<div><label>Member</label><span id="mname">?</span></div>
+		<div><label>Team</label><input  type="text" name="s_team" id="s_team" size="2" value="" /></div>
+		<div><label>Points In</label><input  type="text" name="parin" id="parin" size="9" value="........." /> 
+		  <strong>Points Out</strong><input  type="text" name="parout" id="parout" size="9" value="........." /></div>
+		
+	</div>
+	<div class="show-list" style="float:left;width:49%">
+		<div><label>Quota</label><input  type="text" name="quota" id="quota" size="3" value="" onfocus="$('tee').focus()" /><span id="limited"></span></div>
+		<div><label>+-Points</label><input  type="text" name="points" id="points" size="3" data-behavior="calcPoints" value="" /> 
+		  (*<input  type="text" id="starpoints" size="3" value="" />)
+		  (Limit<input  type="text" id="net_points" size="3" value="" />)
+		  
+		</div>
+		<div><label>Pulled</label><input  type="text" name="pulled" id="pulled" size="3" value="" /></div>
+	
+		<input  type="hidden"  id="h_memb" value="" />
+		<input  type="hidden" id="cb" value="" />
+		
+	</div>
+<div style="clear:both"></div>
+	<table border="0" cellspacing="2" cellpadding="2" style="width:100%" class="popup-list" >
+	  
+		<tr class="alt" style="border-top:dotted 1px green">
+  		
+			<td colspan="4">
+    	
+  			<span class="annotate">
+  			  Instructions: The area above will display calculated data based on the the buttons selected in the below area. <br />
+  			   &curren; Select the team.  &curren; Select the plus or minus points.  &curren; Select Tee if required. 
+  			    <br />If you are tracking skins, click on the score (e.g., Birdies)
+  			  for the holes where birdies were made.  <br />
+  			  Click the Set or Cancel button to exit this screen.
+  			</span>
+		 	    
+      		
+		  </td>
+		</tr>	
+		<tr class="title" style="border-top:dotted 1px green">
+			<th>Team</th>
+			<th>Points (+)</th>
+			<th>Points (-)</th>
+			<th style="text-align:left">
+			  <div class="col-8 f-left">
+			  <label>Tee</label>
+   			<select id="tee" data-behavior="selectTee">
+   			</select>
+   			<%= image_tag("ajax-loader-1.gif", :id => "busy_indicator", :alt =>"busy", :style => "display:none")%>
+   			<label>Other $ </label>
+   			<input type="text" size="3" id="otherquality" name="otherquality" />
+   			
+  	    </div>
+			  Hole Score/Skins</th>
+		</tr>	
+		<tr> 
+			<td valign="top">
+				<select size="12" id="team" data-behavior="setTeam">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+				</select>
+					
+			</td>
+			<td valign="top" style="text-align:center">
+				<select size="13" id="point_sel" data-behavior="setPoints" >
+					<option value="0">E</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+				</select>
+  			
+			</td>
+			<td valign="top" style="text-align:center">
+  			
+				<select size="13" id="point_selm"  data-behavior="setPoints" >
+					<option value="0">E</option>
+					<option value="-1">-1</option>
+					<option value="-2">-2</option>
+					<option value="-3">-3</option>
+					<option value="-4">-4</option>
+					<option value="-5">-5</option>
+					<option value="-6">-6</option>
+					<option value="-7">-7</option>
+					<option value="-8">-8</option>
+					<option value="-9">-9</option>
+					<option value="-10">-10</option>
+					<option value="-11">-11</option>
+					<option value="-12">-12</option>
+				</select><br />	
+
+			</td>
+			<td valign="top" style="text-align:center">
+      	<%=raw score_table%>
+				
+			</td>
+
+		</tr>	
+		<tr>
+	  <th  style="text-align:left" colspan="4" class="action left">
+	    <label>Actions</label>
+    	<input type="button" id="set"  data-behavior="setMember"  disabled="disabled" value="Set">
+    	<input type="button" data-behavior="cancelAdd"  value="Cancel">
+   		
+		</th>
+		 
+	 </tr>
+    
+	</table>
+</div>
+

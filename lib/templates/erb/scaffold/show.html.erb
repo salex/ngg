@@ -1,0 +1,23 @@
+
+<p class="notice"><%%= notice %></p>
+<fieldset class="show-list">
+	<legend><%=singular_table_name.capitalize%></legend>
+  	<table>
+	<% for attribute in attributes %>
+      <tr>
+        <th><%= attribute.human_name %>:</th>
+        <td><%%= @<%= singular_table_name %>.<%= attribute.name %> %><td>
+      </tr>
+	<% end %>
+	</table>
+</fieldset>
+<div class="actions">
+	<%%= link_to 'Edit', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>) %> 
+	<%%= link_to 'Destroy', @<%= singular_table_name %>, <%= key_value :confirm, "'Are you sure?'" %>, <%= key_value :method, ":delete" %> %>
+	<%%= link_to 'Back', <%= plural_name %>_path %>
+  
+</div>
+<div class="relations">
+	<div id="related">
+	</div>
+</div>

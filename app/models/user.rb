@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :group
   belongs_to :member
+  has_many :articles
   # new columns need to be added here to be writable through mass assignment
   attr_accessible :username, :email, :password, :password_confirmation, :group_id, :member_id, :role_hash
 
@@ -16,6 +17,8 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 4, :allow_blank => true
   before_create { generate_token(:auth_token) }  
+  
+  serialize :roles
     
   def generate_token(column)  
     begin  
@@ -38,28 +41,25 @@ class User < ActiveRecord::Base
     BCrypt::Engine.hash_secret(pass, password_salt)
   end
   
-  def role_hash=(data)
-    # make sure were providing a hash
-    data = ["#{data}"] unless data.is_a?(Array)
-
-    # convert to json
-    self[:roles] = data.to_json
-  end
-  
-  def role_hash
-    hash = ActiveSupport::JSON.decode(self.roles)
-  end
   
   def role?(role)
     if self.roles.blank?
       return false
     else 
       if role.class != Array
-        return self.roles.downcase.include?(role.to_s.downcase)
+        if self.roles.class == Array
+          return self.roles.include?(role.to_s.downcase)
+        else
+          return self.roles == (role.to_s.downcase)
+        end
       else
         ok = false
         role.each do |r|
-          ok = true if self.roles.downcase.include?(r.to_s.downcase)
+          if self.roles.class == Array
+            ok = true if self.roles.include?(r.to_s.downcase)
+          else
+            ok = true if self.roles == (r.to_s.downcase)
+          end
         end
         return ok
       end

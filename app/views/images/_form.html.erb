@@ -1,0 +1,39 @@
+<%= form_for(@image, :html => { :multipart => true }) do |f| %>
+  <fieldset class="form-list">
+  	<legend>Image</legend>
+
+    <% if @image.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
+
+        <ul>
+        <% @image.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <table class="label-data">
+      <tr class="field">
+        <th><%= f.label :name %></th>
+        <td><%= f.text_field :name %>
+          <%= f.hidden_field :imageable_id %>
+          <%= f.hidden_field :imageable_type %>
+        </td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label "Photo" %></th>
+        <td><%= f.file_field :photo %></td>
+      </tr>
+
+      </table>
+
+    <div class="action">
+      <%= f.submit %>
+    </div>
+  </fieldset>
+  
+<% end %>
+
+
+

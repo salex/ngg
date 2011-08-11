@@ -1,0 +1,41 @@
+<p class="notice"><%= notice %></p>
+<fieldset class="show-list">
+	<legend>Course</legend>
+  	<table>
+	    <tr>
+      <th>Group:</th>
+      <td><%= @course.group_id %><td>
+    </tr>
+
+	    <tr>
+      <th>Name:</th>
+      <td><%= @course.name %><td>
+    </tr>
+
+	    <tr>
+      <th>Address:</th>
+      <td><%= @course.address %><td>
+    </tr>
+
+	    <tr>
+      <th>Phone:</th>
+      <td><%= @course.phone %><td>
+    </tr>
+	    <tr>
+      <th>iGolf Link:</th>
+      <td><%= link_to "iGolf",@course.link, :target => "_blank" %><td>
+    </tr>
+
+		</table>
+</fieldset>
+<div class="action">
+	<%= link_to 'Edit', edit_course_path(@course), :class => "edit-button" if can? :edit, @course %>
+	<%= link_to 'Courses', courses_path, :class => "breadcrumb" %>
+</div>
+<div class="relations">
+	<div id="related">
+	  <%= render :template => "tees/index"%>
+	</div>
+</div>
+
+

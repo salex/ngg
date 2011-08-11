@@ -1,0 +1,39 @@
+<%= form_for(@comment) do |f| %>
+  <fieldset class="form-list">
+  	<legend>Comment</legend>
+
+    <% if @comment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+        <ul>
+        <% @comment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <table class="label-data">
+    
+      <tr class="field">
+        <th><%= f.label :article_id %></th>
+        <td><%= f.number_field :article_id %></td>
+      </tr>
+    
+      <tr class="field">
+        <th><%= f.label :user_id %></th>
+        <td><%= f.number_field :user_id %></td>
+      </tr>
+    
+      <tr class="field">
+        <th><%= f.label :body %></th>
+        <td><%= f.text_area :body %></td>
+      </tr>
+    
+    </table>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  </fieldset>
+  
+<% end %>

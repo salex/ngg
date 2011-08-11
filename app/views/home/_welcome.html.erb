@@ -1,0 +1,15 @@
+<%= markdown(@welcome) %>
+<hr />
+<% @articles.each do |article| %>
+  <div class="action">
+    <strong><%= article.type_article %>:</strong> 
+    <%= article.published_at.to_date %>
+    <%= article.title %>
+    <strong>Author:</strong> <%= article.user.name %>
+  </div>
+  <div style="margin-left:1.5em">
+  <%= markdown(article.body) %>
+  </div>
+  
+  
+<% end %>

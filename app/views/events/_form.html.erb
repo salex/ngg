@@ -1,0 +1,63 @@
+<%= form_for(@event) do |f| %>
+  <fieldset class="form-list">
+  	<legend>Event</legend>
+
+    <% if @event.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+        <ul>
+        <% @event.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <table class="label-data">
+      <tr class="field">
+        <th><%= f.label :group_id %></th>
+        <td><%= f.text_field :group_id %></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :course_id %></th>
+        <td><%= f.collection_select(:course_id,@current_group.courses,:id,:name,{:prompt => true})  %></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :date %></th>
+        <td><%= f.date_select :date %></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :remarks %></th>
+        <td><%= f.text_area :remarks , :rows => 4, :cols => 40%></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :attendees %></th>
+        <td><%= f.text_field :attendees, :value => @rounds.length %><span class="annotate">The number of members attending this event</span></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :teams %></th>
+        <td><%= f.text_field :teams %><span class="annotate">Equal to attendees if paying individuals</span></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :places %></th>
+        <td><%= f.text_field :places %><span class="annotate">The number of teams that will be paid</span></td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :place_percent %></th>
+        <td><%= f.text_field :place_percent %><br />
+          <span class="annotate">The percentage payed for each place, separated by commas (e.g., 3 places = 50,30,20 )</span>
+          </td>
+      </tr>
+      <tr class="field">
+        <th><%= f.label :status %></th>
+        <td><%= f.text_field :status %></td>
+      </tr>
+      
+      
+    </table>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  </fieldset>
+  
+<% end %>

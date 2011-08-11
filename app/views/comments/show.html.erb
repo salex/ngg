@@ -1,0 +1,36 @@
+
+<p class="notice"><%= notice %></p>
+<fieldset class="show-list">
+	<legend>Comment</legend>
+  	<table>
+	
+      <tr>
+        <th>Article:</th>
+        <td><%= @comment.article_id %><td>
+      </tr>
+
+	
+      <tr>
+        <th>User:</th>
+        <td><%= @comment.user_id %><td>
+      </tr>
+
+	
+      <tr>
+        <th>Body:</th>
+        <td><%= @comment.body %><td>
+      </tr>
+
+	
+	</table>
+</fieldset>
+<div class="actions">
+	<%= link_to 'Edit', edit_comment_path(@comment) %> 
+	<%= link_to 'Destroy', @comment, confirm: 'Are you sure?', method: :delete %>
+	<%= link_to 'Back', comments_path %>
+  
+</div>
+<div class="relations">
+	<div id="related">
+	</div>
+</div>

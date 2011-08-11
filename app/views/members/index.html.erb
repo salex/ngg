@@ -1,30 +1,38 @@
-<fieldset>
-  <legend>Members 
+<fieldset class="index-list">
+  <legend >Active Members 
+    <span >
       <%= link_to 'New Member', new_member_path, :class => "new-button" if can? :create, Member %>
+    </span>
   </legend>
 
-  <table class="g-table">
-    <tr class="hdr">
-      <th>Name</th>
-      <th>eMail</th>
-      <th>Phone</th>
-      <th>Cell</th>
-      <th>Status</th>
-    </tr>
-    <% altswitch = false %>
 
-  <% @members.each do |member| %>
-  <% altswitch = !altswitch %>
-  <% altclass = altswitch ? "" : "class=\"alt\"".html_safe %>
-    <tr <%= altclass %>>
-      <td><%= link_to member.name, member, :class => "link-go-button" %></td>
-      <td><%= member.email %></td>
-      <td><%= member.phone %></td>
-      <td><%= member.cell %></td>
-      <td><%= member.status %></td>
-    </tr>
-  <% end %>
-  </table>
+
+    <%tbody = []%>
+    <% @members.each do |member|
+      tbody << "<td>#{link_to member.name,member}</td><td>#{member.quota}</td>"
+    end %>
+    <%=raw float_table_columns(tbody,4,"<tr class=\"list-header\"><th>Name</th><th>Quota</th></tr>","alt","f-left col-7 index-list")%>
+</fieldset>
+<fieldset class="actions">
+    <legend>Inactive</legend>
+    <%tbody = []%>
+    <% @imembers.each do |member|
+      tbody << "<td>#{link_to member.name,member}</td><td>#{member.quota}</td>"
+    end %>
+    <%=raw float_table_columns(tbody,4,"<tr class=\"list-header\"><th>Name</th><th>Quota</th></tr>","alt","f-left col-7 index-list")%>
+    &nbsp;
+</fieldset>
+<% if can? :invite, Member%>
+
+<fieldset class="actions">
+  <legend>Deleted/Hidden Members</legend>
+
+    <%tbody = []%>
+    <% @dmembers.each do |member|
+      tbody << "<td>#{link_to member.name,member}</td><td>#{member.quota}</td>"
+    end %>
+    <%=raw float_table_columns(tbody,4,"<tr class=\"list-header\"><th>Name</th><th>Quota</th></tr>","alt","f-left col-7 index-list")%>
+  &nbsp;
 
 </fieldset>
-
+<% end%>

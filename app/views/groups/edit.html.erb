@@ -1,6 +1,8 @@
-<h1>Editing group</h1>
-
+<fieldset>
+<legend>Editing group</legend>
+<% @links = link_to( 'Show (Cancel)', @group, :class => "show-button" )  %>
 <%= render 'form' %>
 
 <%= link_to 'Show', @group %> |
 <%= link_to 'Back', groups_path %>
+</fieldset>

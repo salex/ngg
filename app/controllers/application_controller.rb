@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include ControllerAuthentication
   protect_from_forgery
   
-  helper_method :current_group, :is_root_domain?, :is_group_resource?, :is_my_group?
+  helper_method :current_group, :is_root_domain?, :is_group_resource?, :is_my_group?, :logged_in?
   before_filter :current_group
   before_filter :set_mailer_url_options
   
@@ -54,4 +54,21 @@ class ApplicationController < ActionController::Base
     @current_group
   end      
   
+end
+
+class Float
+  def round_to(x)
+    (self * 10**x).round.to_f / 10**x
+  end
+
+  def ceil_to(x)
+    (self * 10**x).ceil.to_f / 10**x
+  end
+
+  def floor_to(x)
+    (self * 10**x).floor.to_f / 10**x
+  end
+  def round_with_precision(precision = nil)
+    precision.nil? ? round_without_precision : (self * (10 ** precision)).round / (10 ** precision).to_f
+  end
 end

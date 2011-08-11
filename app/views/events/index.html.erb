@@ -1,0 +1,61 @@
+<%
+links = ""
+#if can_add_event?
+  cond = "group_id = "+@current_group.id.to_s
+  links =  '<strong>Select Course to Add New Event:</strong> ' + select("course", "course_id", Course.find(:all, :conditions => cond).collect { |c| [c.name, c.id]}, { :prompt => 'Select Course'},{ :onchange => "selectHandler(this.id,'"+new_event_path+"?cid=')" })
+#end
+%>
+
+<fieldset class="index-list">
+  <legend>Events
+  	<span class="annotate">
+  	  <%if can? :create , Event%>
+        <%=raw links %> 
+        <%= link_to 'New Member', new_member_path, :class => 'add-button' %>
+      <% end -%>
+  	</span>
+  </legend>
+
+  <table>
+    <tr class="list-header">
+        <th>Course</th>
+        <th>Date</th>
+        <th>Remarks</th>
+        <th>Memb</th>
+        <th>Teams</th>
+        <th>Places</th>
+        <th>Actions</th>
+    </tr>
+
+  <% 
+  altswitch = false
+  
+  @events.each do |event| 
+    altswitch = !altswitch
+    trclass =  altswitch ? 'class="alt"' : ""
+    %>
+    <tr <%=raw trclass%>>
+        <td><%= event.course.name %></td>
+        <td><%= event.date %></td>
+        <td class="col-10"><%=raw truncate_text(event.remarks) %></td>
+        <td><%= event.rounds.size %></td>
+        
+        <td><%= event.teams %></td>
+        <td><%= event.places %></td>
+        <td class="actions">
+        <%= link_to 'Show', event, :class => "show-button" %>
+        <%if can? :update , event%>
+          <%= link_to 'Edit', edit_event_path(event), :class => "edit-button"  %>
+        <%end%>
+        <%if can? :destroy , event%>
+          <%= link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete, :class => "destroy-button"  %>
+        <%end%>
+        
+      </td>
+    </tr>
+  <% end %>
+  </table>
+  <%= will_paginate @events %>
+  
+</fieldset>
+

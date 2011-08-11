@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GolfGaggle</title>
+  <%= stylesheet_link_tag "application" %>
+  <%= csrf_meta_tag %>
+  <%= yield(:head) %>
+</head>
+<body style="background-color:#fff">
+    <div id="content-print">
+      <%= yield %>
+    </div>
+  
+
+</body>
+</html>

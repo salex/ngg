@@ -1,0 +1,155 @@
+  <h3 class="small-caps">Basic Information</h3>
+  
+  <div class="show">
+    <span class="label1">Name</span>
+    <span class="data">
+    <%= @group.name %></span>
+  </div>
+
+  <div class="show">
+    <span class="label1">Subdomain</span><span class="data">
+    <%= @group.subdomain %></span>
+  </div>
+  <h3 class="small-caps">Preferences</h3>
+  <div class="show">
+    <span class="label">Does the group plays on multiple courses?</span>
+    <span class="data">
+      <%= check_box_tag :uses_multiple_courses, @group.uses_multiple_courses, @group.uses_multiple_courses %> 
+    </span>
+    <span class="annotate">[uses_multiple_courses]</span>
+  </div>
+  <div class="show">
+    <span class="label">Are quotas based on each course?</span>
+    <span class="data">
+      <%= check_box_tag :uses_course_quota, @group.uses_course_quota, @group.uses_course_quota %>
+    </span>
+    <span class="annotate">[uses_course_quota]</span>
+    
+  </div>
+  <div class="show">
+    <span class="label">Are quotas based on best (X/mininum) rounds out of (Y/maximum) rounds?</span>
+      <span class="data">
+    <%= check_box_tag :uses_best_rounds, @group.uses_best_rounds, @group.uses_best_rounds %></span>
+    <span class="annotate">[uses_best_rounds]</span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= :best_rounds_minimum.to_s.humanize %></span>
+      <span class="data">
+    <%= @group.best_rounds_minimum %></span>
+    <span class="annotate">[best_rounds_minimum]</span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= :best_rounds_maximum.to_s.humanize %></span>
+      <span class="data">
+    <%= @group.best_rounds_maximum %></span>
+    <span class="annotate">[best_rounds_maximum]</span>
+  </div>
+
+  <div class="show">
+    <span class="label">Are quotas based on a fixed number of rounds?</span>
+      <span class="data">
+        <%= check_box_tag :uses_best_rounds, @group.uses_best_rounds, !@group.uses_best_rounds %></span>
+        <span class="annotate">[!uses_best_rounds]</span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= :rounds_used.to_s.humanize %></span>
+      <span class="data">
+    <%= @group.rounds_used %></span>
+    <span class="annotate">[rounds_used]</span>
+  </div>
+  
+  <div class="show">
+      <span class="label">Are new members restricted to a +- point limit on the number of points they pull until a certain number of rounds are played?</span>
+        <span class="data">
+          <%= check_box_tag :uses_new_member_limit, @group.uses_new_member_limit, @group.uses_new_member_limit %></span>
+          <span class="annotate">[uses_new_member_limit]</span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= "new_member_limit".humanize %></span><span class="data">
+    <%= @group.new_member_limit %></span>
+    <span class="annotate">[new_member_limit]</span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= "new_member_rounds_used".humanize %></span><span class="data">
+    <%= @group.new_member_rounds_used %></span>
+    <span class="annotate">[new_member_rounds_used]</span>
+  </div>
+
+  <div class="show">
+    <span class="label">Are all round scores limited to some +- points limit?</span><span class="data">
+      <%= check_box_tag :uses_round_limit, @group.uses_round_limit, @group.uses_round_limit %></span>
+      <span class="annotate">[uses_round_limit]</span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= "round_limit".humanize %></span><span class="data">
+    <%= @group.round_limit %></span>
+    <span class="annotate">[round_limit]</span>
+  </div>
+  <div class="show">
+    <span class="label">Are all round on new courses or tees limited to some +- points limit?</span><span class="data">
+      <%= check_box_tag :uses_new_course_limit, @group.uses_new_course_limit, @group.uses_new_course_limit %></span>
+      <span class="annotate">[uses_new_course_limit]</span>
+  </div>
+
+  <div class="show">
+    <span class="label">Do you  throw out the high and low round of the selected rounds?</span><span class="data">
+      <%= check_box_tag :uses_high_low_rounds_rule, @group.uses_high_low_rounds_rule, @group.uses_high_low_rounds_rule %></span>
+      <span class="annotate">[uses_high_low_rounds_rule]</span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= "high_low_rounds_effective".humanize %></span><span class="data">
+    <%= @group.high_low_rounds_effective %></span>
+    <span class="annotate">[high_low_rounds_effective]</span>
+  </div>
+  <h3 class="small-caps">Quality Points Dues</h3>
+
+  <div class="show">
+    <span class="label1"><%= "round_dues".humanize %></span><span class="data">
+    <%= @group.round_dues %></span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= "skins_dues".humanize %></span><span class="data">
+    <%= @group.skins_dues %></span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= "other_game".humanize %></span><span class="data">
+    <%= @group.other_game %></span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= "other_dues".humanize %></span><span class="data">
+    <%= @group.other_dues %></span>
+  </div>
+  <h3 class="small-caps">Dogfight Points Assignment</h3>
+  
+  <div class="show">
+    <span class="label1"><%= "points_double_eagle".humanize %></span><span class="data">
+    <%= @group.points_double_eagle %></span>
+  </div>
+
+  <div class="show">
+    <span class="label1"><%= "points_eagle".humanize %></span><span class="data">
+    <%= @group.points_eagle %></span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= "points_birdie".humanize %></span><span class="data">
+    <%= @group.points_birdie %></span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= "points_par".humanize %></span><span class="data">
+    <%= @group.points_par %></span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= "points_bogey".humanize %></span><span class="data">
+    <%= @group.points_bogey %></span>
+  </div>
+  <div class="show">
+    <span class="label1"><%= "points_double_bogey".humanize %></span><span class="data">
+    <%= @group.points_double_bogey %></span>
+  </div>
+  <h3 class="small-caps">Redistribution of Wealth (splitting the pots)</h3>
+  <div class="show">
+    <span class="label1">How is the pot split if multiple places are paid? (1 to 5 places)</span><span class="data">
+      <%= @group.pot_splits %></span>
+    </span>
+  </div>
+

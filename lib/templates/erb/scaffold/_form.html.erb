@@ -1,0 +1,29 @@
+<%%= form_for(@<%= singular_table_name %>) do |f| %>
+  <fieldset class="form-list">
+  	<legend><%=singular_name.capitalize%></legend>
+
+    <%% if @<%= singular_table_name %>.errors.any? %>
+      <div id="error_explanation">
+        <h2><%%= pluralize(@<%= singular_table_name %>.errors.count, "error") %> prohibited this <%= singular_table_name %> from being saved:</h2>
+
+        <ul>
+        <%% @<%= singular_table_name %>.errors.full_messages.each do |msg| %>
+          <li><%%= msg %></li>
+        <%% end %>
+        </ul>
+      </div>
+    <%% end %>
+    <table class="label-data">
+    <% attributes.each do |attribute| %>
+      <tr class="field">
+        <th><%%= f.label :<%= attribute.name %> %></th>
+        <td><%%= f.<%= attribute.field_type %> :<%= attribute.name %> %></td>
+      </tr>
+    <% end %>
+    </table>
+    <div class="actions">
+      <%%= f.submit %>
+    </div>
+  </fieldset>
+  
+<%% end %>

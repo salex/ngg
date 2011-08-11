@@ -8,6 +8,8 @@
     <%= yield(:head) %>
   </head>
   <body>
+		<div id="mask"></div>
+	
     <div id="container">
 			<div class="f-right links">
 				<% if current_user %>  
@@ -36,18 +38,19 @@
 	      <div class="clear"></div>
 	    </div>
 	    <div id="content">
+		
 				<%= flash_messages %>
 				
 	      <%= content_tag :h1, yield(:title) if show_title? %>
 	      <%= yield %>
 	    </div>
 	    <div id="footer">
+		
 	      <%if @current_group.nil?%>
 	      <%else%>
 	      <%= @current_group.name%> is a member of <a href="http://golfgaggle.com">GolfGaggle.com</a>
 	      <%end%>
 	    </div>
-	
-    </div>
+		</div>
   </body>
 </html>

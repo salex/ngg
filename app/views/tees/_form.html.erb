@@ -1,0 +1,52 @@
+
+<%= form_for(@tee) do |f| %>
+<fieldset class="form-list">
+	<legend>Tee</legend>
+
+  <% if @tee.errors.any? %>
+  <div id="errorExplanation">
+    <h2><%= pluralize(@tee.errors.count, "error") %> prohibited this tee from being saved:</h2>
+    <ul>
+    <% @tee.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+  <table>
+    <tr class="field">
+      <th><%= f.label :course_id %></th>
+      <td><%= f.text_field :course_id %></td>
+    </tr>
+    <tr class="field">
+      <th><%= f.label :tee %></th>
+      <td><%= f.select :tee, tee_options %></td>
+    </tr>
+    <tr class="field">
+      <th><%= f.label :color %></th>
+      <td><%= f.text_field :color %></td>
+    </tr>
+    <tr class="field">
+      <th><%= f.label :slope %></th>
+      <td><%= f.text_field :slope %></td>
+    </tr>
+    <tr class="field">
+      <th><%= f.label :rating %></th>
+      <td><%= f.text_field :rating %></td>
+    </tr>
+    <tr class="field">
+      <th><%= f.label :par_in %></th>
+      <td><%= f.text_field :par_in %></td>
+    </tr>
+    <tr class="field">
+      <th><%= f.label :par_out %></th>
+      <td><%= f.text_field :par_out %></td>
+    </tr>
+    </table>
+    
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+</fieldset>
+      
+<% end %>

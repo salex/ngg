@@ -1,0 +1,18 @@
+
+<%= render :partial => "rounds" %>
+
+<div class="action">
+<%= link_to 'Edit', edit_event_path(@event), :class => "edit-button"  if (can? :update, @event ) && is_my_group?(@event.group_id)%>
+<%= link_to 'Destroy', @event, confirm: 'Are you sure?', method: :delete, :class => "destroy-button" if (can? :destroy, @event) && is_my_group?(@event.group_id)  %>
+<%= link_to 'Events', events_path, :class => "breadcrumb" %>
+</div>
+
+<div class="relations">
+	<div id="related">
+	  <% if @event.status == "New" %>
+	  <%= render :template => "events/add"%>
+	  <% else %>
+	  <%= render :template => "rounds/index"%>
+	  <% end if%>
+	</div>
+</div>

@@ -13,13 +13,17 @@ class Ability
     end 
     if user.role? [:scorer]
       can [:update, :create,:teeopt], Member  
-      #can [:update, :create], Round
+      can [:update, :create], Round
     end
     if user.role? [:inviter]
       can [:invite], Member  
     end
+    if user.role? [:poster]
+      can [:manage], Article  
+    end
+    
     if user.role? [:upload]
-      #can [:update, :create, :upload], Image
+      can [:update, :create, :upload], Image
     end
     if user.role? [:admin]
       can [:update, :create, :invite,:teeopt], Member  
