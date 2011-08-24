@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def index
     @users = current_group.users
+    authorize! :read, @users
   end
   
   def new
@@ -30,9 +31,25 @@ class UsersController < ApplicationController
       @user = current_user
     end
     if @user.update_attributes(params[:user])
-      redirect_to root_url, :notice => "Your profile has been updated."
+      redirect_to root_url, :notice => "Your profile has been updated.(U)"
     else
       render :action => 'edit'
     end
   end
+  
+  def get
+    @user = User.find(params[:id])
+    authorize! :read, @user
+  end
+  
+  def set
+    @user = User.find(params[:id])
+    authorize! :read, @user
+    if @user.update_attributes(params[:user])
+      redirect_to users_path, :notice => "User has been updated"
+    else
+      render :action => 'get'
+    end
+  end
+  
 end

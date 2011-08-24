@@ -1,5 +1,4 @@
 <fieldset class="show-list">
-<p id="notice"><%= notice %></p>
 <table class="f-left">
 
   <tr>
@@ -23,12 +22,14 @@
   <th>Address:</th>
   <td><div class="col-5"><%= markdown(@member.address) if !@member.address.blank? %></div><td>
 </tr>
-<%if !@member.user.nil?%>
 <tr>
   <th>eMail:</th>
-  <td><div class="col-5"><%= @member.user.email %></div><td>
+  <%if !@member.user.nil?%>
+    <td><div class="col-5"><%= @member.user.email %></div><td>
+  <% else%>
+    <td><div class="col-5"><%= @member.email %></div><td>
+  <%end%>
 </tr>
-<%end%>
 <tr>
   <th>List contact:</th>
   <td><%= @member.list_contact %><td>
@@ -81,7 +82,7 @@
   <% if (!@member.email.blank?) %>
     <%= link_to 'Invite', invite_member_path(@member), :class => "link-go-button" %>
   <%else%>
-    <span data-behavior="email-hover" title="eMail address must be update before member can be invited">?Invite?</span>
+    <span class="hover" data-behavior="email-hover" title="eMail address must be updated before member can be invited. Edit member and add eMail address." onclick="alert(this.title)">?Invite?</span>
   <% end %>
 <% end %>
 
@@ -91,6 +92,7 @@
 
 <%= link_to 'Members', members_path, :class => "breadcrumb" %>
 </div>
+<% if !@current_group.rounds_used.nil?%>
 <div class="index-list">
 	<table>
 		<tr class="list-header">
@@ -134,6 +136,7 @@
 	  <%end%>		
 	</table>
 </div>
+<% end %>
 </fieldset>
 <div class="relations">
 	<div id="related">

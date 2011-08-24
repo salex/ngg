@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-	belongs_to :group
+  belongs_to :group
   belongs_to :course
   has_many :rounds, :order => 'team', :dependent => :destroy
   
@@ -21,70 +21,65 @@ class Event < ActiveRecord::Base
     teams["teamtot"] = []
     teams["count"] = 0
     teams["teams"] = 0
-    #params["memb"].each { |key,memb|
     for round in rounds do 
-      #if memb != ""
-        teams["count"] += 1
-        #data = memb.split(":")
-        #$('memb_'+ membID).value = membID +":"+ team+":"+ points+":"+ quota+":"+ pulled+":"+ par+":"+ tee
-        membID = round.member_id
-        teamID = round.team
-        points = round.plus_minus
-        quota = round.quota
-        pulled = round.points_pulled
-        round.par_in = round.par_in.nil? ? "........." : round.par_in
-        round.par_out = round.par_out.nil? ? "........." : round.par_out
-        par = round.par_in + round.par_out
-        tee = round.tee_id
-        starpoints =  round.gross_pulled.nil? ? pulled - quota : round.gross_pulled - quota
-        net_points =  round.net_pulled.nil? ? pulled : round.net_pulled
-        otherquality = round.other_quality
-        
+      teams["count"] += 1
+      membID = round.member_id
+      teamID = round.team
+      points = round.plus_minus
+      quota = round.quota
+      pulled = round.points_pulled
+      round.par_in = round.par_in.nil? ? "........." : round.par_in
+      round.par_out = round.par_out.nil? ? "........." : round.par_out
+      par = round.par_in + round.par_out
+      tee = round.tee_id
+      starpoints =  round.gross_pulled.nil? ? pulled - quota : round.gross_pulled - quota
+      net_points =  round.net_pulled.nil? ? pulled : round.net_pulled
+      otherquality = round.other_quality
+      
 
-        if teams["team"][teamID]
-          teams["team"][teamID]["count"] += 1
-          teams["team"][teamID]["total"] += starpoints
-          teams["team"][teamID]["mate"].push(membID)
-          teams["team"][teamID]["team"].push(teamID)
-          teams["team"][teamID]["points"].push(points)
-          teams["team"][teamID]["starpoints"].push(starpoints)
-          teams["team"][teamID]["net_points"].push(net_points)
-          teams["team"][teamID]["quota"].push(quota)
-          teams["team"][teamID]["pulled"].push(pulled)
-          teams["team"][teamID]["par"].push(par)
-          teams["team"][teamID]["otherquality"].push(otherquality)
-          teams["team"][teamID]["tee"].push(tee)
-        else
-          teams["team"][teamID] = {}
-          teams["teams"] += 1
-          teams["team"][teamID]["count"] = 1
-          teams["team"][teamID]["quality"] = 0
-          teams["team"][teamID]["place"] = 0
-          teams["team"][teamID]["total"] = starpoints
-          teams["team"][teamID]["comment"] = ""
-          teams["team"][teamID]["mate"] = []
-          teams["team"][teamID]["team"] = []
-          teams["team"][teamID]["points"] = []
-          teams["team"][teamID]["starpoints"] = []
-          teams["team"][teamID]["net_points"] = []
-          teams["team"][teamID]["quota"] = []
-          teams["team"][teamID]["pulled"] = []
-          teams["team"][teamID]["par"] = []
-          teams["team"][teamID]["tee"] = []
-          teams["team"][teamID]["otherquality"] = []
-          teams["team"][teamID]["mate"].push(membID)
-          teams["team"][teamID]["team"].push(teamID)
-          teams["team"][teamID]["points"].push(points)
-          teams["team"][teamID]["starpoints"].push(starpoints)
-          teams["team"][teamID]["net_points"].push(net_points)
-          teams["team"][teamID]["quota"].push(quota)
-          teams["team"][teamID]["pulled"].push(pulled)
-          teams["team"][teamID]["par"].push(par)
-          teams["team"][teamID]["tee"].push(tee)
-          teams["team"][teamID]["otherquality"].push(otherquality)
-        end
-        self.set_skins(par,membID)
-      #end
+      if teams["team"][teamID]
+        teams["team"][teamID]["count"] += 1
+        teams["team"][teamID]["total"] += starpoints
+        teams["team"][teamID]["mate"].push(membID)
+        teams["team"][teamID]["team"].push(teamID)
+        teams["team"][teamID]["points"].push(points)
+        teams["team"][teamID]["starpoints"].push(starpoints)
+        teams["team"][teamID]["net_points"].push(net_points)
+        teams["team"][teamID]["quota"].push(quota)
+        teams["team"][teamID]["pulled"].push(pulled)
+        teams["team"][teamID]["par"].push(par)
+        teams["team"][teamID]["otherquality"].push(otherquality)
+        teams["team"][teamID]["tee"].push(tee)
+      else
+        teams["team"][teamID] = {}
+        teams["teams"] += 1
+        teams["team"][teamID]["count"] = 1
+        teams["team"][teamID]["quality"] = 0
+        teams["team"][teamID]["place"] = 0
+        teams["team"][teamID]["total"] = starpoints
+        teams["team"][teamID]["comment"] = ""
+        teams["team"][teamID]["mate"] = []
+        teams["team"][teamID]["team"] = []
+        teams["team"][teamID]["points"] = []
+        teams["team"][teamID]["starpoints"] = []
+        teams["team"][teamID]["net_points"] = []
+        teams["team"][teamID]["quota"] = []
+        teams["team"][teamID]["pulled"] = []
+        teams["team"][teamID]["par"] = []
+        teams["team"][teamID]["tee"] = []
+        teams["team"][teamID]["otherquality"] = []
+        teams["team"][teamID]["mate"].push(membID)
+        teams["team"][teamID]["team"].push(teamID)
+        teams["team"][teamID]["points"].push(points)
+        teams["team"][teamID]["starpoints"].push(starpoints)
+        teams["team"][teamID]["net_points"].push(net_points)
+        teams["team"][teamID]["quota"].push(quota)
+        teams["team"][teamID]["pulled"].push(pulled)
+        teams["team"][teamID]["par"].push(par)
+        teams["team"][teamID]["tee"].push(tee)
+        teams["team"][teamID]["otherquality"].push(otherquality)
+      end
+      self.set_skins(par,membID)
     end
     teams["skins"] = @skins
     teams['skinswho'] =   @skinWho
@@ -94,7 +89,9 @@ class Event < ActiveRecord::Base
     if !event.places.nil?
       places = event.places
     else
-      places = (event.teams / 2).to_i
+      places = ((event.teams / 2.0) + 0.5 ).to_i 
+      logger.info "dddddddddddddddddd #{places}"
+      event.places = places
     end
     teams['places'] = self.calcPot(teams["teampot"], places)  
     len = teams["team"].length
@@ -111,8 +108,8 @@ class Event < ActiveRecord::Base
     # teams["team"].delete_at(0)
     if teams["count"] > 0
     
-  	teams = self.pay_teams(teams)
-	end
+      teams = self.pay_teams(teams)
+    end
     return teams
   end
   
@@ -216,58 +213,58 @@ class Event < ActiveRecord::Base
     logger.info teams.inspect
     if teams["count"] > 0
     
-  	  teams = self.pay_teams(teams)
-	  end
+      teams = self.pay_teams(teams)
+    end
     return teams
   end
   
   def self.pay_teams(teams)
     ts = teams['teamtot'].sort {|a,b| b<=>a}
-  	teams['teamtot'] = ts
-  	teamsToPay = teams["event"]["places"].to_i
-  	teamCount = teams["teamtot"].length
-  	teamtot_idx = 0
-  	pot_idx = 1
-  	while teamsToPay > 0
-  		thisAmount = teams['places'][pot_idx]
-  		thisTeam = teams["teamtot"][teamtot_idx][1]
-  		thisScore = teams["teamtot"][teamtot_idx][0]
-  		ties = 0
-  		tie_idx = teamtot_idx + 1
-  		while tie_idx < teamCount
-  			if teams["teamtot"][teamtot_idx][0] == teams["teamtot"][tie_idx][0]
-  				ties += 1
-  			end
-  			tie_idx += 1
-  		end
-  		if ties == 0
-  			teams["team"][thisTeam]["place"] = pot_idx
-  			teams["team"][thisTeam]["quality"] = thisAmount
-  			teams["team"][thisTeam]["comment"] = "Place: "+pot_idx.to_s+" Amount: " + thisAmount.to_s
-  			teamsToPay -= 1
-  			teamtot_idx += 1
-  			pot_idx += 1
-  		else
-  			tie_idx = pot_idx + 1
-  			teams["team"][thisTeam]["place"] = pot_idx
-  			while tie_idx <= teamsToPay
-  				thisAmount += teams['places'][tie_idx]
-  				tie_idx += 1
-  			end
-  			tie_amount = thisAmount / (ties + 1)
-  			teams["team"][thisTeam]["quality"] = tie_amount
-  			teams["team"][thisTeam]["comment"] = "Its a tie for place "+pot_idx.to_s+" Amount: " + tie_amount.to_s
-  			for i in 1..ties
-  				tieTeam =  teams["teamtot"][teamtot_idx+i][1]
-  				teams["team"][tieTeam]["place"] = pot_idx
-  				teams["team"][tieTeam]["quality"] = tie_amount
-  				teams["team"][tieTeam]["comment"] = "Its a tie for place "+pot_idx.to_s+" Amount: " + tie_amount.to_s
-  			end
-  			teamsToPay -= 1 + ties
-  			teamtot_idx += 1 + ties
-  			pot_idx += 1 + ties
-  		end
-  	end
+    teams['teamtot'] = ts
+    teamsToPay = teams["event"]["places"].to_i
+    teamCount = teams["teamtot"].length
+    teamtot_idx = 0
+    pot_idx = 1
+    while teamsToPay > 0
+      thisAmount = teams['places'][pot_idx]
+      thisTeam = teams["teamtot"][teamtot_idx][1]
+      thisScore = teams["teamtot"][teamtot_idx][0]
+      ties = 0
+      tie_idx = teamtot_idx + 1
+      while tie_idx < teamCount
+        if teams["teamtot"][teamtot_idx][0] == teams["teamtot"][tie_idx][0]
+          ties += 1
+        end
+        tie_idx += 1
+      end
+      if ties == 0
+        teams["team"][thisTeam]["place"] = pot_idx
+        teams["team"][thisTeam]["quality"] = thisAmount
+        teams["team"][thisTeam]["comment"] = "Place: "+pot_idx.to_s+" Amount: " + thisAmount.to_s
+        teamsToPay -= 1
+        teamtot_idx += 1
+        pot_idx += 1
+      else
+        tie_idx = pot_idx + 1
+        teams["team"][thisTeam]["place"] = pot_idx
+        while tie_idx <= teamsToPay
+          thisAmount += teams['places'][tie_idx]
+          tie_idx += 1
+        end
+        tie_amount = thisAmount / (ties + 1).to_f
+        teams["team"][thisTeam]["quality"] = tie_amount
+        teams["team"][thisTeam]["comment"] = "Its a tie for place "+pot_idx.to_s+" Amount: " + tie_amount.to_s
+        for i in 1..ties
+          tieTeam =  teams["teamtot"][teamtot_idx+i][1]
+          teams["team"][tieTeam]["place"] = pot_idx
+          teams["team"][tieTeam]["quality"] = tie_amount
+          teams["team"][tieTeam]["comment"] = "Its a tie for place "+pot_idx.to_s+" Amount: " + tie_amount.to_s
+        end
+        teamsToPay -= 1 + ties
+        teamtot_idx += 1 + ties
+        pot_idx += 1 + ties
+      end
+    end
     return teams
   end
   
@@ -314,13 +311,13 @@ class Event < ActiveRecord::Base
             amt += money[i]
           end
         when 4
-    			split = [0.0,0.43,0.26,0.18,0.13]
+          split = [0.0,0.43,0.26,0.18,0.13]
           for i in 1..split.length-1 do
             money[i] = (split[i] * pot).round
             amt += money[i]
           end
         when 3
-    			split = [0.0,0.5,0.3,0.2]
+          split = [0.0,0.5,0.3,0.2]
           for i in 1..split.length-1 do
             money[i] = (split[i] * pot).round
             amt += money[i]

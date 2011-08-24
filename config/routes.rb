@@ -24,7 +24,6 @@ Ngg::Application.routes.draw do
   match 'opps' => "home#opps", :as => :opps
 
 
-  resources :quotas
   
   resources :home
   
@@ -74,7 +73,13 @@ Ngg::Application.routes.draw do
  
   resources :sessions
 
-  resources :users
+  resources :users do
+    member do
+      get :get
+      put :set
+    end
+  end
+  
   root :to => "home#index"
 
   # The priority is based upon order of creation:

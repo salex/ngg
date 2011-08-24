@@ -12,16 +12,12 @@
   <% end %>
   <table>
     <tr class="field">
-      <th><%= f.label :group_id %></th>
-      <td><%= f.text_field :group_id %></td>
-    </tr>
-    <tr class="field">
       <th><%= f.label :name %></th>
       <td><%= f.text_field :name %></td>
     </tr>
     <tr class="field">
       <th><%= f.label :address %></th>
-      <td><%= f.text_area :address %></td>
+      <td><%= f.text_area :address, :rows => 2 %></td>
     </tr>
     <tr class="field">
       <th><%= f.label :phone %></th>

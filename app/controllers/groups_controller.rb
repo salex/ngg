@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   load_and_authorize_resource
-  before_filter :login_required, :except => [:show, :index,:teeopt]
+  before_filter :login_required, :except => [:show, :index,:teeopt,:signup,:new,:create]
   #before_filter :check_group, :except => [:index]
   
   def index
@@ -46,10 +46,11 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
+    
     @group = Group.new(params[:group])
-
+    result = @group.new_group
     respond_to do |format|
-      if @group.save
+      if result
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render json: @group, status: :created, location: @group }
       else
@@ -94,13 +95,13 @@ class GroupsController < ApplicationController
    end
    
    def trim_rounds
-     rounds = Round.where("date < ?", (Date.today - 1000.days)).count
-     events = Event.where("date < ?", (Date.today - 1000.days)).count
-     members = Member.where('not exists (select member_id from rounds where member_id = members.id)')
-     
+     @rounds = Round.where("date < ?", (Date.today - 1000.days)).count
+     @events = @current_group.events.where("date < ?", (Date.today - 1000.days)).count
+     @members = Member.where('not exists (select member_id from rounds where member_id = members.id)')
+     @orphan = Round.where('not exists (select id from members where id = rounds.member_id)').count
+     @orphane = Round.where('not exists (select id from events where id = rounds.event_id)').count
      #:conditions => "NOT EXISTS (SELECT * FROM cities_stores WHERE cities_stores.store_type = stores.store_type)")
      #select * from members where not exists (select member_id from rounds where member_id = members.id);
-     render :text => "Events #{events} Rounds #{rounds} members #{members.count} #{members.each {|m| p m.name}}"
      
    end
    

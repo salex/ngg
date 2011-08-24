@@ -17,7 +17,7 @@ class EventsController < ApplicationController
   def show
     @event = @current_group.events.find(params[:id])
     params[:event_id] = params[:id]
-    @rounds = Round.search(params).paginate(:per_page => 15, :page => params[:page])
+    @rounds = Round.search(params)
     @teams = Event.form_event_teams(@event,@current_group,@rounds) if @rounds
     respond_to do |format|
       

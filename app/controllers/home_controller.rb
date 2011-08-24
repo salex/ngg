@@ -1,8 +1,7 @@
 class HomeController < ApplicationController
   def index
     if !is_root_domain?
-       @welcome = "Welcome article missing"
-       
+      @welcome = "Welcome article missing"
       show
     end
   end
@@ -24,6 +23,7 @@ class HomeController < ApplicationController
       @articles = @current_group.articles.where(:published => true).paginate(:per_page => 15, :page => params[:page])
       @path = "blog"
     else
+      @art_count = @current_group.articles.where(:published => true).count
       welcome = @current_group.articles.find_by_type_article("Welcome")
       if welcome
         @welcome = "### #{welcome.title} \n <br /> #{welcome.body}"
@@ -38,15 +38,3 @@ class HomeController < ApplicationController
   
 
 end
-
-=begin
-
-if params[:term]
-  @group = @current_group
-end
-if params[:info]
-  @articles = @current_group.articles
-end
-
-render :action => 'site'
-=end

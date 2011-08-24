@@ -113,7 +113,7 @@ module ApplicationHelper
   end
   
   def tee_options
-    tee_options = [["P(ro/Championship/Tips" , "P"],["B(ack/Members" ,"B"],["M(iddle/Senior" , "M"],["F(orward/Ladies/SuperSenior" , "F"]]
+    tee_options = [["Select Tee",""],["P(ro/Championship/Tips" , "P"],["B(ack/Members" ,"B"],["M(iddle/Senior" , "M"],["F(orward/Ladies/SuperSenior" , "F"]]
   end
   
   def disp_header(title,links = "",back = true)

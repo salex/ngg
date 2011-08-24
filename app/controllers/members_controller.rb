@@ -4,7 +4,7 @@ class MembersController < ApplicationController
   load_and_authorize_resource
   
   before_filter :login_required, :except => [:show, :index,:teeopt]
-  before_filter :check_group, :except => [:index,:new]
+  before_filter :check_group, :except => [:index,:new,:create]
   
   def index
     @members = Member.get_active_members(@current_group) #@current_group.members.order('name ASC') #
@@ -57,6 +57,7 @@ class MembersController < ApplicationController
   # POST /members.json
   def create
     @member = Member.new(params[:member])
+    @member.group_id = session[:group_id]
 
     respond_to do |format|
       if @member.save
@@ -106,8 +107,14 @@ class MembersController < ApplicationController
   end
   
   def invite
-    @member.invite_user
-    render :text => "Invited #{@member.name}", :layout => true
+    if @member.user
+      flash[:error] = 'Member already a user.'
+    else
+      @member.invite_user
+      flash[:notice] = "Member Invited #{@member.name}"
+      
+    end
+    redirect_to member_path(@member)
   end
 
   def teeopt

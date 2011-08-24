@@ -14,15 +14,20 @@
   <table class="label-data">
   <tr class="field">
     <th><%= f.label :email %></th>
-    <td><%= f.text_field :email %></td>
-  </tr>
-  <tr class="field">
-    <th><%= f.label :last_name %></th>
-    <td><%= f.text_field :last_name %></td>
+     <%if @member.user.nil?%>
+       <td><%= f.text_field :email %><td>
+     <% else%>
+       <td><%= f.text_field :email, :value => @member.user.email %><td>
+     <%end%>
+     
   </tr>
   <tr class="field">
     <th><%= f.label :first_name %></th>
     <td><%= f.text_field :first_name %></td>
+  </tr>
+  <tr class="field">
+    <th><%= f.label :last_name %></th>
+    <td><%= f.text_field :last_name %></td>
   </tr>
   <tr class="field">
     <th><%= f.label :phone %></th>
@@ -49,16 +54,18 @@
   
   <tr class="field">
      <th><%= f.label :status %></th> 
-     <%=raw status_select(f) %> 
+     <td><%=raw status_select(f) %></td> 
   </tr>
   <tr class="field">
      <th><%= f.label :tee %></th> 
      <td><%= f.select :tee, tee_options %></td> 
   </tr>
+  <% if !@member.last_played.nil?%>
   <tr class="field">
      <th><%= f.label :last_played %></th> 
      <td><%= f.date_select :last_played %></td> 
   </tr>
+  <% end %>
   <tr class="field">
      <th><%= f.label :quota %></th> 
      <td><%= f.text_field :quota %></td> 

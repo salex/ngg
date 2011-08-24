@@ -24,7 +24,7 @@
     altclass = altswitch ? "" : "class=\"alt\""
      %>
     <tr <%=raw altclass%> >
-        <td><%= round.member.name%></td>
+        <td><%= round.member.name if round.member%></td>
         <td><%= round.date %></td>
         <td><%= round.tee.course.name[0..0] + ":" + round.tee.color[0..0] %></td>
         <td><%= round.quota %></td>
@@ -48,7 +48,6 @@
   <% end %>
   
   </table>
-  <%= will_paginate @rounds %>
   
 </div>
 

@@ -11,6 +11,8 @@ class SaController < ApplicationController
       iv
     when "rp"
       rp
+    when "rg"
+      rg
     else
       render :text => "unknown token #{token_type}"
     end
@@ -35,6 +37,19 @@ class SaController < ApplicationController
     end
   end
   
+  def rg
+    @user = User.find_by_token(params[:id])
+    if @user
+      @user.confirm
+      session[:user_id] = @user.id
+      session[:user_name] = @user.name
+      session[:group_id] = @user.group_id
+      render :action => "rg"
+    else
+      redirect_to root_url, :alert => "access token not found or expired"
+    end
+  end
+  
   def create
     user = User.find_by_email(params[:email])  
     user.send_password_reset if user  
@@ -45,6 +60,9 @@ class SaController < ApplicationController
     @user = User.find(params[:id])
     @user.token = nil
     @user.token_expires = nil
+    if @user.confirmed_at.nil?
+      @user.confirm
+    end
     if @user.update_attributes(params[:user])
       redirect_to login_url, :notice => "Your profile has been updated. Please login with updated information"
     else

@@ -15,7 +15,7 @@
     <% altswitch = !altswitch %>
     <% altclass = altswitch ? "" : "class=\"alt\"".html_safe %>
     <tr <%= altclass %>>
-      <td><%= user.member.name %></td>
+      <td><%= link_to user.member.name, get_user_path(user) %></td>
       <td><%= user.username %></td>
       <td><%= user.email %></td>
       <td><%= user.token %></td>

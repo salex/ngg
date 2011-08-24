@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   belongs_to :member
   has_many :articles
   # new columns need to be added here to be writable through mass assignment
-  attr_accessible :username, :email, :password, :password_confirmation, :group_id, :member_id, :role_hash
+  attr_accessible :username, :email, :password, :password_confirmation, :group_id, :member_id, :roles, :token
 
   attr_accessor :password
   before_save :prepare_password
@@ -20,9 +20,9 @@ class User < ActiveRecord::Base
   
   serialize :roles
     
-  def generate_token(column)  
+  def generate_token(column,sa="")  
     begin  
-      self[column] = SecureRandom.urlsafe_base64  
+      self[column] = sa + SecureRandom.urlsafe_base64  
     end while User.exists?(column => self[column])  
   end  
   
@@ -41,6 +41,23 @@ class User < ActiveRecord::Base
     BCrypt::Engine.hash_secret(pass, password_salt)
   end
   
+  def confirm
+    self.confirmed_at = Time.zone.now
+    self.token = nil
+    self.token_expires = nil
+    self.save
+  end
+  
+  def self.single_access(token)
+    u = User.find_by_token(params[:id])
+    if u
+      tn = Time.zone.now
+      if tn > self.token_expires
+        u = nil
+      end
+    end
+    return u
+  end
   
   def role?(role)
     if self.roles.blank?

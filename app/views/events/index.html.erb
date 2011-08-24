@@ -18,13 +18,12 @@ links = ""
 
   <table>
     <tr class="list-header">
-        <th>Course</th>
-        <th>Date</th>
-        <th>Remarks</th>
-        <th>Memb</th>
-        <th>Teams</th>
-        <th>Places</th>
-        <th>Actions</th>
+      <th>Date</th>
+      <th>Course</th>
+      <th>Remarks</th>
+      <th>Memb</th>
+      <th>Teams</th>
+      <th>Places</th>
     </tr>
 
   <% 
@@ -35,23 +34,13 @@ links = ""
     trclass =  altswitch ? 'class="alt"' : ""
     %>
     <tr <%=raw trclass%>>
+        <td><%= link_to event.date, event, :class => "show-button" %></td>
         <td><%= event.course.name %></td>
-        <td><%= event.date %></td>
         <td class="col-10"><%=raw truncate_text(event.remarks) %></td>
         <td><%= event.rounds.size %></td>
         
         <td><%= event.teams %></td>
         <td><%= event.places %></td>
-        <td class="actions">
-        <%= link_to 'Show', event, :class => "show-button" %>
-        <%if can? :update , event%>
-          <%= link_to 'Edit', edit_event_path(event), :class => "edit-button"  %>
-        <%end%>
-        <%if can? :destroy , event%>
-          <%= link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete, :class => "destroy-button"  %>
-        <%end%>
-        
-      </td>
     </tr>
   <% end %>
   </table>

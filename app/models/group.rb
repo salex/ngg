@@ -1,11 +1,10 @@
 class Group < ActiveRecord::Base
-  has_many :users
-  has_many :members, :order => 'first_name , last_name'
-  has_many :courses, :order => :id
-  has_many :articles, :order => 'published_at DESC'
-  has_many :events, :order => 'date DESC'
-  has_many :images, :as => :imageable
-  has_many :users #, :foreign_key => :subdomain, :primary_key => :subdomain
+  has_many :users, :dependent => :destroy
+  has_many :members, :order => 'first_name , last_name', :dependent => :destroy
+  has_many :courses, :order => :id, :dependent => :destroy
+  has_many :articles, :order => 'published_at DESC', :dependent => :destroy
+  has_many :events, :order => 'date DESC', :dependent => :destroy
+  has_many :images, :as => :imageable, :dependent => :destroy
   
   
   validates_presence_of :subdomain
@@ -17,7 +16,23 @@ class Group < ActiveRecord::Base
   accepts_nested_attributes_for :users, :allow_destroy => true
   accepts_nested_attributes_for :members, :allow_destroy => true
   
-  #after_create :link_member
+  
+  def new_group
+    result = self.save
+    if result 
+      mid, uid = self.link_member
+      a = Article.new
+      a.group_id = self.id
+      a.user_id = uid
+      a.body = "**Who**\r\n\r\n**What**\r\n\r\n**Where**\r\n\r\n**When**\r\n\r\n**Why**\r\n"
+      a.title = "About " + self.name
+      a.type_article = "Welcome"
+      a.save
+      UserMailer.register_group(uid).deliver  
+      
+    end
+    return result
+  end
 
 	def options
 		options = {}
@@ -48,6 +63,19 @@ class Group < ActiveRecord::Base
 		options["pot_splits"] = self["pot_splits"]
 		return options
 	end
+	
+	def recompute_user_quotas
+    users = User.where(:group_id => self.id)
+    users.each do |user|
+      tees = Round.where(:user_id => user.id).select("DISTINCT(tee_id)")
+      tees.each do |tee|
+        user.compute_tee_quota(tee.tee_id)
+      end
+      user.update_quota
+    end
+    return true
+  end
+  
 
   protected
 
@@ -58,28 +86,16 @@ class Group < ActiveRecord::Base
     
     def link_member
       member = self.members.first
-
       user = self.users.first
       user.member_id = member.id
       user.roles = ["coordinator","admin"]
+      user.generate_token(:token,"rg")
+      user.token_expires = Time.zone.now + 86400 * 5
       user.save
+      return member.id, user.id
     end
   
 end
 
-=begin
-def recompute_user_quotas
-  users = User.where(:group_id => self.id)
-  users.each do |user|
-    tees = Round.where(:user_id => user.id).select("DISTINCT(tee_id)")
-    tees.each do |tee|
-      user.compute_tee_quota(tee.tee_id)
-    end
-    user.update_quota
-  end
-  return true
-end
 
 
-
-=end

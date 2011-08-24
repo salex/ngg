@@ -3,8 +3,9 @@ class Ability
   # valid roles [super,coordinator,admin,inviter,scorer,upload,member,guest]
   def initialize(user)
     user ||= User.new  
-    cannot :manage, Group  
-    can [:read, :print, :pot], :all
+    cannot :manage, Group
+    can [:signup,:create], Group 
+    can [:read, :print, :pot], :except => [User]
     can :update, Member do |member|  
       member.try(:user) == user  
     end 

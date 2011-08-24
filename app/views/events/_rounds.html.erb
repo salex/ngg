@@ -77,7 +77,10 @@
   				end
  					
   				t["mate"].each { |id| 
-  					m = Member.find(id)
+  					m = Member.where(:id => id).first
+  					if m.nil?
+  					  next
+					  end
   					skins = 0
   					skin_quality = 0
   					for item in 0..17 do

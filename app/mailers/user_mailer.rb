@@ -15,5 +15,9 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail :to => user.email, :subject => "Invitation" 
   end 
-    
+  
+  def register_group(uid)
+    @user = User.find(uid)
+    mail :to => @user.email, :subject => "Registration" 
+  end
 end

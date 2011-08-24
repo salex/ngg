@@ -28,7 +28,9 @@
       <%= label_data_row(m.label( :password_confirmation, "Confirm Password"), m.password_field( :password_confirmation))%>
       <% end %>
     <%= f.fields_for :members do |m| %>
-    <tr><td colspan="2"><h4 class="small-caps">Group Admin Contact information</h4></td></tr>
+    
+    <tr><td colspan="2"><h4 class="small-caps">Group Admin Contact information</h4>
+    </td></tr>
   
       <%= label_data_row(m.label( :first_name), m.text_field( :first_name))%>
       <%= label_data_row(m.label( :last_name), m.text_field( :last_name))%>

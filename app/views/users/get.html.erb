@@ -1,0 +1,23 @@
+<fieldset>
+<legend>Update User</legend>
+<%= form_for @user, :url => set_user_path(@user), :method => :put do |f| %>
+  <%= f.error_messages %>
+  <table class="label-data">
+    <%= label_data_row(f.label( :username), f.text_field( :username))%>
+    <%= label_data_row(f.label( :email, "Email Address"), f.text_field( :email))%>
+    <% if !@user.roles.include?("super")%>
+    <%= label_data_row(f.label( :roles), role_select(f))%>
+    <% end %>
+    <%= label_data_row(f.label( :token), f.text_field( :token))%>
+    <%= label_data_row(f.label( :token_expires), f.text_field( :token_expires, :disabled => true))%>
+    <%= label_data_row(f.label( :confirmed_at), f.text_field( :confirmed_at,:disabled => true))%>
+    
+  </table>
+  <p class="action">
+    <%= f.submit  %>
+    <%= link_to "Users (Cancel)" ,users_path, :class => "breadcrumb"%>
+    
+  </p>
+  
+<% end %>
+</fieldset>
