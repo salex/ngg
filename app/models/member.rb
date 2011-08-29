@@ -4,6 +4,7 @@ class Member < ActiveRecord::Base
   has_one :image, :as => :imageable, :dependent => :destroy
   has_many :rounds, :order => "date DESC", :dependent => :destroy
   has_many :quotas,  :dependent => :destroy
+  accepts_nested_attributes_for :rounds, :reject_if => lambda { |r| r[:points_pulled].blank? }
   validates_format_of :email, :with => /^[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}$/i, :allow_blank => true, :allow_nil => true
   validates_numericality_of :quota,  :only_integer => true, :greater_than => 1, :less_than => 45
   validates_numericality_of :initial_quota,  :only_integer => true, :greater_than => 1, :less_than => 45
@@ -34,7 +35,7 @@ class Member < ActiveRecord::Base
   
   def set_defaults
     self.status = "Active" if self.status.nil?
-    self.initial_quota = self.quota if self.initial_quota.nil?
+    self.initial_quota = self.quota if (self.initial_quota.nil? ||  self.initial_quota < 2 ) 
   end 
   
   def update_quota
@@ -68,10 +69,11 @@ class Member < ActiveRecord::Base
   
   def compute_tee_quota(tee=0)
     group = self.group
-    # ** Comment **
-    # first get the last_played date and the rounds that will be used for the calculation
-    # ** End Comment **
+=begin 
+    first get the last_played date and the rounds that will be used for the calculation
+=end
     last_played = nil
+    total_rounds = self.rounds.count
 
     if group.uses_best_rounds
       perc =  group.best_rounds_minimum.to_f / group.best_rounds_maximum.to_f
@@ -98,17 +100,18 @@ class Member < ActiveRecord::Base
       quota_limit = group.rounds_used
       
     end
-    # ** Comment **
+=begin ** Comment **
     # set some inital values and then calculate the quota, taking into account preferences
-    # ** End Comment **
+=end
 
     round_count = therounds.size
     total = 0.0
     current_rounds = []
     cnt = 0
     star = false
+    # get quota, currenr_rounds and rounds used
     if round_count <=  0
-      quota = self.quota
+      quota = self.quota # quota = initial_quota on new member
       rounds_used = 0
     else
       max = 0
@@ -132,36 +135,40 @@ class Member < ActiveRecord::Base
       end
       quota = total / divisor
     end
-    # ** Comment **
+=begin ** Comment **
     # if the star preferece is used, set the star to true or false.
     # star will always be false if preference not set 
-    # ** End Comment **
-
+=end
     if tee > 0
       if group.uses_new_course_limit
         star = rounds_used < group.new_member_rounds_used ? true : false
       end
-    else
+    else # computing overall quota, tee = 0
       if group.uses_new_member_limit
         star = rounds_used < group.new_member_rounds_used ? true : false
       end
     end
 
-    # TODO need to add field quota claimed that does not change
-    if (rounds_used < group.new_member_rounds_used)  &&  !self.initial_quota.nil? && (self.initial_quota > 0) # average claimed (or quota for all course) with single round score
+=begin ** Comment **
+  if uses new member limit, average the computed quota with the inital quota until the new member rounds used is met
+  this is both for course or overall
+=end
+    if (total_rounds < group.new_member_rounds_used)  &&  !self.initial_quota.nil? && (self.initial_quota > 0) 
+      # average claimed (or quota for all course) with single round score
+      # for first round average of initial claimed and pulled
+      # for 2nd+ average of computed quota and initial claimed
       quota = (quota + self.initial_quota) / 2
     end
-
+    # round and normalize
     quota = (quota + 0.5).to_i
     if quota <= 0
       quota = 18
     end
-    # ** Comment **
-    # save the calculations in the Quoto model if there are rounds
-    # ** End Comment **
-    #TODO THIS NEEDS TO MOVE TO UPDATE OR CREATE FOR ROUNDS, THINK CONVERSION KLUDGE
-    #BUT THEN IF IT IS NOT CHANGED, IT DOES NOT DO AN UPDATE
-
+=begin ** Comment **
+    save the calculations in the Quoto model if there are rounds
+    TODO THIS NEEDS TO MOVE TO UPDATE OR CREATE FOR ROUNDS, THINK CONVERSION KLUDGE
+    BUT THEN IF IT IS NOT CHANGED, IT DOES NOT DO AN UPDATE
+=end
     if round_count > 0
       q = Quota.find_or_create_by_member_id_and_tee_id(self.id,tee)
       q.quota = quota
@@ -189,8 +196,8 @@ class Member < ActiveRecord::Base
       return q.quota, q.limited, q.last_played, q.history_from_json
     end
   end
-
-  def get_current_history(m,g,c=nil)
+=begin
+  def get_current_historyold(m,g,c=nil)
 	
     hist = []
     all =  m.get_member_quota(0)
@@ -224,6 +231,29 @@ class Member < ActiveRecord::Base
       end
     end
     return hist
+  end
+=end  
+  def get_current_history
+    quotas = self.quotas.order(:tee_id)
+    history = []
+    for quota in quotas
+      arr  = [quota.quota,quota.limited,quota.last_played,quota.history_from_json]
+      if quota.tee_id == 0
+        arr << 'All'
+        arr << "<a href=\"?All\">All</a>".html_safe
+        arr << self.tee
+        arr << nil
+      else
+        tee = Tee.find(quota.tee_id)
+        arr << tee.course.name
+        arr << "<a href=\"?tee=#{tee.id}\">#{tee.color}</a>".html_safe
+        arr << tee.tee+tee.color[0..0]
+        arr << tee.course_id
+        
+      end
+      history << arr
+    end
+    return history
   end
 
 end

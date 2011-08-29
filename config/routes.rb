@@ -37,6 +37,7 @@ Ngg::Application.routes.draw do
     member do
       get :invite
       get :teeopt
+      get :init_rounds
     end
   end
 

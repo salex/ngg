@@ -11,7 +11,7 @@
       </ul>
     </div>
   <% end %>
-  <table class="label-data">
+  <table class="label-data f-left">
   <tr class="field">
     <th><%= f.label :email %></th>
      <%if @member.user.nil?%>
@@ -22,12 +22,8 @@
      
   </tr>
   <tr class="field">
-    <th><%= f.label :first_name %></th>
-    <td><%= f.text_field :first_name %></td>
-  </tr>
-  <tr class="field">
-    <th><%= f.label :last_name %></th>
-    <td><%= f.text_field :last_name %></td>
+    <th><%=  "Name First/Last" %></th>
+    <td><%= f.text_field :first_name, :size => 12 %>/<%= f.text_field :last_name, :size => 12 %></td>
   </tr>
   <tr class="field">
     <th><%= f.label :phone %></th>
@@ -45,7 +41,9 @@
     <th><%= f.label :list_contact %></th>
     <td><%= f.check_box :list_contact %></td>
   </tr>
-  
+  </table>
+   <table class="label-data f-left">
+   
   <%if can? :invite , @member%>
   <tr class="field">
     <th><%= f.label :limited %></th>
@@ -76,7 +74,39 @@
   </tr>
   <%end%>
   </table>
-  <div class="actions">
+  <div class="f-clear"></div>
+  <% if params[:action] == "new"%>
+    <fieldset>
+      <legend>Initial Rounds</legend>
+      <span class="annotate">
+        You may optionally enter round history for members who are transitioning to GolfGaggle.com. Dates and quotas are not significant, just in the ballpark.<br />
+        Points Pulled and Tee are minimum requirements. Points Pulled will be basis of computing quota and dates the sequence. 
+        
+        </span>
+      <%
+        cd = Date.today
+      %>
+      <%= f.fields_for :rounds do |r| %>
+      <% cd -= 1%>
+      <div>
+        <strong><%= r.label :date %></strong> 
+        <span><%= r.text_field :date, :size => 10, :value => cd  %></span> 
+        <strong><%= r.label :tee %></strong> 
+        <span><%= r.select :tee_id,  group_tees%></span>
+        <strong><%= r.label :quota %></strong> 
+        <span><%= r.text_field :quota, :size => 3  %></span> 
+        <strong><%= r.label :points_pulled %></strong> 
+        <span><%= r.text_field :points_pulled, :size => 3  %></span> 
+      </div>
+      
+      <% end%>
+      
+    </fieldset>
+  
+  <% end%>
+  <div class="action">
     <%= f.submit %>
+    <%= params.inspect%>
   </div>
+  
 <% end %>

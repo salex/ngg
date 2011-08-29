@@ -1,7 +1,5 @@
-<p>There are <%= @events %> events over x days.</p>
-<p>There are <%= @rounds %> rounds over x days.</p>
-<p>There are <%= @orphan %> round orphans.</p>
-<p>There are <%= @orphane %> round orphans on events.</p>
+<p>There are <%= @events.count %> events over x days.</p>
+<p>There are <%= @orphane.count %> round orphans on events.</p>
 Here are members without rounds
 
 <% @members.each do |m| %>
@@ -10,3 +8,5 @@ Here are members without rounds
 
 <% end%>
   
+ <p><%= @orphane.inspect%></p>
+ 

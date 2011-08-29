@@ -176,6 +176,38 @@ end
       return(money) 
   end
 
+  def split(pot,places)
+      place = []
+      if places == 1
+        place[1] = pot
+        return place, pot
+      end
+      if places == 2
+        s40 = ((pot * 0.4)).round(0)
+        s60 = pot - s40
+        place[1] = s60
+        place[2] = s40
+      else
+        places.downto(1) do |i|
+            s40 = ((pot * 0.4) / i).round(0)
+            puts s40
+            i.downto(1) {|j| 
+              place[j] = place[j].nil? ? s40 : place[j] + s40
+            }
+            pot -= s40 * i
+            if i == 2
+              s40 = ((pot * 0.4)).round(0)
+              s60 = pot - s40
+              place[1] += s60
+              place[2] += s40
+              break
+            end
+        end
+      end
+       po = 0
+       1.upto(places) {|i| po += place[i]}
+      return place,po
+  end
 
 
   

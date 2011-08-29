@@ -113,8 +113,7 @@
 			<td>&nbsp;<%=@current_group.rounds_used+1%>*</td>
 		</tr>
 		  <%
-		hist = @member.get_current_history(@member,@current_group)
-		logger.info hist.inspect
+		hist = @member.get_current_history
 		altswitch = false
 		for h in hist 
       altswitch = !altswitch

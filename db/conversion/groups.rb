@@ -38,6 +38,8 @@ IO.foreach(inFile) {|line|
 	col['points_par'] = 2
 	col['points_bogey'] = 1
 	col['points_double_bogey'] = 0
+	col['trim_round_days'] = 360
+	
 	col['pot_splits'] = "[100],[60,40],[50,30,20],[40,30,20,10],[30,25,20,15,10]"
 	puts "GROUP #{col["id"]} fields #{field.length()}"
   
@@ -45,10 +47,19 @@ IO.foreach(inFile) {|line|
 	col.each {|k,v| 
 		rec[k] = v
 	}
+  
 	puts "ID   #{rec.id}"
 	puts rec.inspect
 	puts "nil #{rec.id.nil?}"
 	rec.save
+	a = Article.new
+  a.group_id = rec.id
+  a.user_id = 1
+  a.body = "**Who**\r\n\r\n**What**\r\n\r\n**Where**\r\n\r\n**When**\r\n\r\n**Why**\r\n"
+  a.title = "About " + rec.name
+  a.type_article = "Welcome"
+  a.save
+	
 	puts "END"
 	
  

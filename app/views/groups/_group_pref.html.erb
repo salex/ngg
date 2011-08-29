@@ -101,6 +101,17 @@
     <%= @group.high_low_rounds_effective %></span>
     <span class="annotate">[high_low_rounds_effective]</span>
   </div>
+  
+  <div class="show">
+    <span class="label">Trim Rounds/Events Greater than <%= @group.trim_round_days %> days.</span>
+  </div>
+  <div class="show">
+  
+    <span class="label1"><%= "trim_round_days".humanize %></span><span class="data">
+    <%= @group.trim_round_days %></span>
+    <span class="annotate">[trim_round_days]</span>
+  </div>
+  
   <h3 class="small-caps">Quality Points Dues</h3>
 
   <div class="show">

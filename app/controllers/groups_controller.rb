@@ -95,11 +95,16 @@ class GroupsController < ApplicationController
    end
    
    def trim_rounds
-     @rounds = Round.where("date < ?", (Date.today - 1000.days)).count
-     @events = @current_group.events.where("date < ?", (Date.today - 1000.days)).count
-     @members = Member.where('not exists (select member_id from rounds where member_id = members.id)')
-     @orphan = Round.where('not exists (select id from members where id = rounds.member_id)').count
-     @orphane = Round.where('not exists (select id from events where id = rounds.event_id)').count
+     #@rounds = Round.where("date < ?", (Date.today - 1000.days)).count
+     @events = @current_group.events.where("date < ?", (Date.today - @current_group.trim_round_days.days)).destroy_all
+     @orphane = Round.where('rounds.event_id is not NULL AND not exists (select id from events where id = rounds.event_id)')
+     
+     @members = @current_group.members.where('not exists (select member_id from rounds where member_id = members.id)')
+     for m in @members
+       m.status = "Deleted"
+       m.save
+     end
+     #@orphan = Round.where('rounds.event_id is not NULL AND not exists (select id from members where id = rounds.member_id)').count
      #:conditions => "NOT EXISTS (SELECT * FROM cities_stores WHERE cities_stores.store_type = stores.store_type)")
      #select * from members where not exists (select member_id from rounds where member_id = members.id);
      

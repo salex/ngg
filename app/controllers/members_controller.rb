@@ -29,6 +29,12 @@ class MembersController < ApplicationController
     params[:member_id] = @member.id
     @rounds = Round.search(params).paginate(:per_page => 15, :page => params[:page])
     @user = @member.user
+    if params[:tee]
+      t = Tee.find(params[:tee])
+      @color = " - " + t.course.name + " - " + t.color
+    else
+      @color = "- All Courses/Tees"
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @member }
@@ -40,7 +46,8 @@ class MembersController < ApplicationController
   def new
     @member = Member.new
     @member.group_id = session[:group_id]
-
+    @current_group.rounds_used.times {@member.rounds.build({:event_id => 0})}
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @member }
@@ -56,11 +63,14 @@ class MembersController < ApplicationController
   # POST /members
   # POST /members.json
   def create
+
     @member = Member.new(params[:member])
     @member.group_id = session[:group_id]
 
     respond_to do |format|
       if @member.save
+        @member.update_member_quotas
+        
         format.html { redirect_to @member, notice: 'Member was successfully created.' }
         format.json { render json: @member, status: :created, location: @member }
       else

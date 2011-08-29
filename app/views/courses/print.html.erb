@@ -17,7 +17,7 @@
 		altswitch = false
     
 		  for m in @members
-    		hist = m.get_current_history(m,@current_group)
+    		hist = m.get_current_history
         prim = ""
         opt = ""
         oth = ""
@@ -60,7 +60,7 @@
 	<%
   tbody = []
 	for m in @imembers
-		hist = m.get_current_history(m,@current_group)
+		hist = m.get_current_history
     prim = ""
     opt = ""
        for h in hist 

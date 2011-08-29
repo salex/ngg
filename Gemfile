@@ -5,7 +5,7 @@ gem 'rails', '3.1.0.rc5'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+#gem 'sqlite3'
 gem "nifty-generators", :group => :development
 
 # Asset template engines
@@ -17,6 +17,7 @@ gem 'jquery-rails'
 gem 'cancan'
 gem 'will_paginate', '~> 3.0.pre4'
 gem 'redcarpet'
+gem 'pg'
 
 # Use unicorn as the web server
 # gem 'unicorn'

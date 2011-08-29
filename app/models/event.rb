@@ -90,7 +90,6 @@ class Event < ActiveRecord::Base
       places = event.places
     else
       places = ((event.teams / 2.0) + 0.5 ).to_i 
-      logger.info "dddddddddddddddddd #{places}"
       event.places = places
     end
     teams['places'] = self.calcPot(teams["teampot"], places)  
@@ -197,8 +196,15 @@ class Event < ActiveRecord::Base
     teams['skinswho'] =   @skinWho
     teams["teampot"] = teams["count"] *  group.round_dues ||= 0
     teams["skinspot"] = teams["count"] * group.skins_dues ||= 0
-      
-    teams['places'] = self.calcPot(teams["teampot"], teams["event"]["places"].to_i)  
+    
+    if !teams["event"]["places"].nil?
+      places = teams["event"]["places"]
+    else
+      places = ((teams["teams"] / 2.0) + 0.5 ).to_i 
+      teams["event"]["places"] = places
+    end
+    
+    teams['places'] = self.calcPot(teams["teampot"], places)  
     len = teams["team"].length
     #debugger
     j = 0
@@ -210,9 +216,7 @@ class Event < ActiveRecord::Base
     end
   
     teams["teamtot"].delete_at(0)
-    logger.info teams.inspect
     if teams["count"] > 0
-    
       teams = self.pay_teams(teams)
     end
     return teams
@@ -251,7 +255,8 @@ class Event < ActiveRecord::Base
           thisAmount += teams['places'][tie_idx]
           tie_idx += 1
         end
-        tie_amount = thisAmount / (ties + 1).to_f
+        tie_amount = (thisAmount / (ties + 1).to_f).round_to(2)
+        
         teams["team"][thisTeam]["quality"] = tie_amount
         teams["team"][thisTeam]["comment"] = "Its a tie for place "+pot_idx.to_s+" Amount: " + tie_amount.to_s
         for i in 1..ties

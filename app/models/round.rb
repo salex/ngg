@@ -2,6 +2,8 @@ class Round < ActiveRecord::Base
   belongs_to :member
   belongs_to :event
   belongs_to :tee
+  validates_numericality_of :points_pulled
+  validates_presence_of :tee_id
   
   
   def self.search(params)

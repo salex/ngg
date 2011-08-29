@@ -5,7 +5,7 @@ class Ability
     user ||= User.new  
     cannot :manage, Group
     can [:signup,:create], Group 
-    can [:read, :print, :pot], :except => [User]
+    can [:read, :print, :pot], [Event,Member,Round,Course]
     can :update, Member do |member|  
       member.try(:user) == user  
     end 

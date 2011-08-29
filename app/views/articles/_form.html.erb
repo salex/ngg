@@ -13,7 +13,7 @@
         </ul>
       </div>
     <% end %>
-    <table class="label-data">
+    <table class="label-data f-left">
       <tr class="field">
         <th><%= f.label :title %></th>
         <td><%= f.text_field :title %></td>
@@ -31,6 +31,29 @@
         <td><%= f.text_field :type_article %></td>
       </tr>
         </table>
+        				<div class="blogMarkdownHelp f-left">
+        					<h2>Editing Help</h2>
+        					<p>This blog uses Markdown to format its syntax, here is a quick guide</p>
+        					<ul>
+        					  <li>Headers</li>
+        					  <ul>
+        					    <li># header 1 </li><h1>header 1 </h1>
+        					    <li>## header 2 </li><h1>header 2 </h1>
+        					    <li>### header 3 </li><h1>header 3 </h1>
+        					    <li>#### header 4</li><h5>header 4 </h5>
+        					    <li>##### header 5</li><h5>header 5 </h5>
+        					  <ul>
+        						<li>**bold text** => <b>bold text</b></li>
+        						<li>*italicized text* => <i>italicized text</i></li>
+        						<li>&gt;This text is blockquoted</li>
+        						<li>&gt;&gt;This text is a nested blockquote</li>
+        						<li>* This is an unordered list (ul) item</li>
+        						<li>1. This is an ordered list (ol) item</li>
+        						<li>[This is a link](http://www.example.com/)</li>
+        						<li>[This is a link](http://www.example.com/ "with a title attribute")</li>
+        					</ul>
+        				</div>
+        <div class="f-clear"></div>
     <div class="action">
       <%= f.submit %>
     </div>

@@ -21,16 +21,21 @@ IO.foreach(inFile) {|line|
 	col['created_at'] = field[14] == '\N' ? nil : field[14]
 	col['updated_at'] = field[15] == '\N' ? nil : field[15]
 	col['last_played'] = field[cno.index('lastplayed')] == '\N' ? nil : field[cno.index('lastplayed')]
-	col['quota'] = field[12] == '\N' ? nil : field[12].to_i
+	col['quota'] = field[12] == '\N' ? 18 : field[12].to_i
 	col['limited'] = field[cno.index('stared')] == '\N' ? nil : field[cno.index('stared')] == 't'
-	col['initial_quota'] = field[17] == '\N' ? nil : field[17].to_i
+	col['initial_quota'] = field[17] == '\N' ? col['quota'] : field[17].to_i
+	col['initial_quota'] = 1 if col['initial_quota'] == 0
 	col['tee'] = field[10] == '\N' ? nil : field[10]
 	
 	m = Member.new
 	col.each {|k,v| 
 		m[k] = v
 	}
-  puts m.inspect
-	m.save
+  if  m.save
+    puts m.inspect
+  else
+    puts m.inspect
+    puts m.errors.inspect
+  end
 	
 }

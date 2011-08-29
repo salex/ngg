@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110809101418) do
+ActiveRecord::Schema.define(:version => 20110828132347) do
 
   create_table "articles", :force => true do |t|
     t.integer  "group_id"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20110809101418) do
     t.integer  "points_bogey"
     t.integer  "points_double_bogey"
     t.string   "pot_splits"
+    t.integer  "trim_round_days"
   end
 
   create_table "images", :force => true do |t|
