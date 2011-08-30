@@ -15,7 +15,7 @@
     <h4>Other Links</h4>
     <ul>
       <li><%= link_to "Group Articles(#{@art_count})" ,articles_path if can? :manage, Article %></li>
-      <li><%= link_to "Group Images" ,articles_path if can? :upload, Image %></li>
+      <li><%= link_to "Group Images" ,images_path if can? :upload, Image %></li>
     </ul>
     <% end %>
     <% if current_user.role?(["coordinator","super"])%>

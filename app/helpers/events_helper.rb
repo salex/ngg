@@ -122,7 +122,22 @@ end
     money[0] = compPot
     return(money) 
 end
-
+def splitPot(pot,places)
+  splits = eval("[#{@current_group.pot_splits}]")
+  split = splits[places - 1]
+  money = []
+  amt = 0
+  for i in 0..split.length-1 do
+    money[i] = ((split[i] / 100.0) * pot).round
+    amt += money[i]
+  end
+  if (amt != pot) 
+    dif = pot - amt
+    money[0] += dif
+  end
+  money.insert(0,pot)
+  return money
+end
     def calcPot(pot,places)
       money = Array.new(places)
       amt = 0

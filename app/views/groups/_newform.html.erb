@@ -29,13 +29,23 @@
       <% end %>
     <%= f.fields_for :members do |m| %>
     
-    <tr><td colspan="2"><h4 class="small-caps">Group Admin Contact information</h4>
+    <tr><td colspan="2"><h4 class="small-caps">Group Admin Contact/Member information</h4>
     </td></tr>
   
       <%= label_data_row(m.label( :first_name), m.text_field( :first_name))%>
       <%= label_data_row(m.label( :last_name), m.text_field( :last_name))%>
       <%= label_data_row(m.label( :phone), m.text_field( :phone))%>
       <%= label_data_row(m.label( :cell), m.text_field( :cell))%>
+      <tr class="field">
+        <th><%= m.label :tee %></th>
+        <td><%= m.select :tee, tee_options %><span class="annotate">What tee do you normally play from?</span></td>
+      </tr>
+      <tr class="field">
+        <th><%= m.label :quota %></th>
+        <td><%= m.text_field :quota, :size => 3 %><span class="annotate">How many points do you have to pull?</span></td>
+      </tr>
+      
+      
     <% end %>
 </table>
   <div class="actions">

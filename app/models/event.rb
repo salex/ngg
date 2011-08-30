@@ -7,6 +7,7 @@ class Event < ActiveRecord::Base
   validates_uniqueness_of :date
   
   
+  
   def self.form_event_teams(event,group,rounds)
     @skins = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     @skinType = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -92,7 +93,7 @@ class Event < ActiveRecord::Base
       places = ((event.teams / 2.0) + 0.5 ).to_i 
       event.places = places
     end
-    teams['places'] = self.calcPot(teams["teampot"], places)  
+    teams['places'] = event.splitPot(teams["teampot"], places)  
     len = teams["team"].length
     #debugger
     j = 0
@@ -204,7 +205,7 @@ class Event < ActiveRecord::Base
       teams["event"]["places"] = places
     end
     
-    teams['places'] = self.calcPot(teams["teampot"], places)  
+    teams['places'] = event.splitPot(teams["teampot"], places)  
     len = teams["team"].length
     #debugger
     j = 0
@@ -299,6 +300,8 @@ class Event < ActiveRecord::Base
     end
   end
   
+  
+  
     def self.calcPot(pot,places)
       money = Array.new(places)
       amt = 0
@@ -351,5 +354,24 @@ class Event < ActiveRecord::Base
       money[0] = compPot
       return(money) 
   end
+  
+  def splitPot(pot,places)
+    arr = self.group.pot_splits
+    splits = eval("[#{arr}]")
+    split = splits[places - 1]
+    money = []
+    amt = 0
+    for i in 0..split.length-1 do
+      money[i] = ((split[i] / 100.0) * pot).round
+      amt += money[i]
+    end
+    if (amt != pot) 
+      dif = pot - amt
+      money[0] += dif
+    end
+    money.insert(0,pot)
+    return money
+  end
+  
   
 end
