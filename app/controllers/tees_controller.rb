@@ -20,7 +20,7 @@ class TeesController < ApplicationController
   # GET /tees/new.json
   def new
     @tee = Tee.new
-
+    @tee.course_id = params[:course_id]
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @tee }
@@ -36,7 +36,6 @@ class TeesController < ApplicationController
   # POST /tees.json
   def create
     @tee = Tee.new(params[:tee])
-
     respond_to do |format|
       if @tee.save
         format.html { redirect_to @tee, notice: 'Tee was successfully created.' }

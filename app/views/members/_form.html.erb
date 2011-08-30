@@ -56,7 +56,7 @@
   </tr>
   <tr class="field">
      <th><%= f.label :tee %></th> 
-     <td><%= f.select :tee, tee_options %></td> 
+     <td><%= f.select :tee, tee_options, {},{:onchange => "$('.rtees').prop('selectedIndex',this.selectedIndex)"} %></td> 
   </tr>
   <% if !@member.last_played.nil?%>
   <tr class="field">
@@ -75,7 +75,7 @@
   <%end%>
   </table>
   <div class="f-clear"></div>
-  <% if params[:action] == "new"%>
+  <% if (params[:action] == "new") || (@member.id.nil?)%>
     <fieldset>
       <legend>Initial Rounds</legend>
       <span class="annotate">
@@ -88,16 +88,18 @@
       %>
       <%= f.fields_for :rounds do |r| %>
       <% cd -= 1%>
-      <div>
-        <strong><%= r.label :date %></strong> 
-        <span><%= r.text_field :date, :size => 10, :value => cd  %></span> 
-        <strong><%= r.label :tee %></strong> 
-        <span><%= r.select :tee_id,  group_tees%></span>
-        <strong><%= r.label :quota %></strong> 
-        <span><%= r.text_field :quota, :size => 3  %></span> 
-        <strong><%= r.label :points_pulled %></strong> 
-        <span><%= r.text_field :points_pulled, :size => 3  %></span> 
-      </div>
+      <table class="show-list">
+        <tr>
+          <th><%= r.label :date %></th> 
+          <td><%= r.text_field :date, :size => 10, :value => cd  %></td>
+          <th><%= r.label :tee %></th> 
+          <td><%= r.select :tee_id,  group_tees,{},{ :class => "rtees"}%></td>
+          <th><%= r.label :quota %></th> 
+          <td><%= r.text_field :quota, :size => 3  %></td>
+          <th><%= r.label :points_pulled %></th> 
+          <td><%= r.text_field :points_pulled, :size => 3  %></td>
+        </tr> 
+      </table>
       
       <% end%>
       

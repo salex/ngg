@@ -1,6 +1,6 @@
 module GroupsHelper
   def group_tees
-    opt = "<option value=\"0\">Select Tee</option>"
+    opt = "<option value=\"\">Select Tee</option>"
     for course in @current_group.courses
       opt << "<optgroup label=\"#{course.name}\">"
       for tee in course.tees

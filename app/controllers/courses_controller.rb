@@ -50,6 +50,7 @@ class CoursesController < ApplicationController
   
   def create
     @course = Course.new(params[:course])
+    @course.group_id = @current_group.id
 
     respond_to do |format|
       if @course.save

@@ -61,6 +61,7 @@ class RoundsController < ApplicationController
 
     respond_to do |format|
       if @round.update_attributes(params[:round])
+        @round.member.update_member_quotas
         format.html { redirect_to @round, notice: 'Round was successfully updated.' }
         format.json { head :ok }
       else
