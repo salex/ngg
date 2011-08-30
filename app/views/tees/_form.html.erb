@@ -16,7 +16,11 @@
   <table>
     <tr class="field">
       <th><%= f.label :course_id %></th>
-      <td><%= f.text_field :course_id %></td>
+      <td>
+        <% if @tee.id.nil?%>
+        <%= f.hidden_field :course_id %>
+        <% end %>
+      <%= @tee.course_id%></td>
     </tr>
     <tr class="field">
       <th><%= f.label :tee %></th>
