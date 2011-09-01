@@ -1,0 +1,72 @@
+<h4>GolfGaggle.com Gaols</h4>
+<p>Every golf group who has decided to keep their own scores has followed a pattern. First you use pencil and paper. Then someone
+  say "Lets use a spreadsheet". Someone gets appointed the scorekeeper. The members quibble over the rules. The rules become
+  difficult to implement in the spreadsheet. The rules change and you discover "Spreadsheet abuse" - you are using the 
+  wrong tool - you need a database.  Now the scorekeeper probably knows less about a database then a spreadsheet and is ready
+  to give up their job.</p>
+<p>I know this because I've been the scorekeeper for a group for over 20 years!
+  I inherited a bunch of paper from the individual who kept the scores before me. He was amazing and kept statics that astonished me
+  could be derived from pieces of paper.  I then went through the spreadsheet phase. Fortunately my job was Information Technology and
+  I tried to make a spreadsheet a database. I almost succeeded using "Resolve", a spreadsheet designed for NeXT computers and ported to
+  the MacIntosh. When it was no longer supported, I converted to Excel and complained all the way. I eventually gave up and created a simple
+  database. I tried several stand-alone databases, 4D or 4th Dimension was one we used at work and I had a personal copy. While it worked, it was
+  just has hard to make changes when the rules changed and I was stuck with putting in the scores.  If I was out of town, the scores didn't 
+  get entered.
+  
+</p>
+<p>
+  Sometime in the early 90's we started to experiment with the World Wide Web (http protocal) on the internet and developed static 
+  web sites. I published a hidden page that
+  I generated form the database so that the group could at least get the scores when I was out of town. Towards the end of the 90's 
+  dynamic databases on the web started to appear and I wrote my first version of a web based system using PHP and Mysql. Since one
+  of my tasks at the state agency I worked at was provide training in software development to the community, my gaggle database became
+  my personal example of a problem that needed a solution. I created different solutions with different
+  sets of tools (computer language, database). I am really not sure
+  how many different languages and database I've tried, but quite a few.
+  
+</p>
+  
+<p>
+  In about 2006, we started to experiment with a framework called "Ruby on Rails" or RoR. I managed to learn the frameworks and the
+  programming language Ruby, converting my gaggle database to RoR. I liked it so much I converted the production version to RoR.  RoR was 
+  at version 1.x and is now at version 3.1.  There was a version 2 that was a little better than the first version, but was still really a
+  conversion from the PHP version.  With version 3.0 I decided to try to write a generic version that not only worked for my group,
+  but others in the area.  While I had some of the preferences defined that distinguished the different approaches, I never found another group
+  that wanted to try my software and sort of lost interest.
+</p>
+
+<p>I forgot to mention that after the first web implementation, I was no longer "responsible" for entering scores - just to make sure
+  it computed the right quota. That work was spread among several members who were given scoring roles. The web server is a little
+  MacMini that sits in the corner of a closet. I hardly every had to touch the software or box - it just chugged away in the closet. 
+  I have since retired and have moved, by I still maintain the web site for the group I've 
+  been playing with for over 20 years. I still visit and occasionally play with them, but playing with a new group has rekindled my
+  interest in the generic system. The RoR version is that system.
+</p>
+
+<p>My goal has never been to make money off of this, but I considered it at one time. The main goal was to see if I could stop "spreadsheet abuse"
+  and let groups enjoy playing with their group and quit arguing about rules and points! 
+  </p>
+  <p>
+  I mentioned a minimal fee after the first year. If Several groups start using GolfGaggle.com, the little MacMini in the closet would most likely be replaced by
+  a web hosting service. While there are some "free" services, it would most likely have a cost. I can absorb the domain name costs, but would look for 
+  help with web hosting. Three or four groups (or more) probably would not be a problem
+</p>
+Steve Alex
+
+<pre>
+  Groups
+    Courses
+      Tees
+    Events
+      Course
+      Rounds
+        Member
+        Tee
+    Member
+      Events
+      Rounds
+        Tee
+        Event
+</pre>
+  
+</pre>

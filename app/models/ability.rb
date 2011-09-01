@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     user ||= User.new  
     cannot :manage, Group
-    can [:signup,:create], Group 
+    can [:signup,:create,:read], Group 
     can [:read, :print, :pot], [Event,Member,Round,Course]
     can :update, Member do |member|  
       member.try(:user) == user  

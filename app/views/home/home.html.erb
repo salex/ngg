@@ -1,0 +1,74 @@
+<div id="content-left" >
+  <h4>Design</h4>
+  <ul>
+    <li><%= link_to "Terminology" ,home_path( :term ) %></li>
+    <li><%= link_to "Goals" ,home_path( :goals ) %></li>
+    <li><%= link_to "Admin" ,home_path( :admin ) %></li>
+  </ul>
+  
+  <h4>Features</h4>
+  <ul>
+    <li><%= link_to "Article/Blog" ,home_path( :articles ) %></li>
+    <li><%= link_to "Photos" ,home_path( :photos ) %></li>
+    <li><%= link_to "Events" ,home_path( :events ) %></li>
+    <li><%= link_to "xxx" ,home_path( :goals ) %></li>
+  </ul>
+  
+  
+  
+</div>
+<fieldset id="content-right">
+  <%if @path == "goals" %>
+    <%= render "home_goals"%>
+  
+  <% elsif @path == "articles"%>
+    <%= render "home_articles"%>
+    
+  <% elsif @path == "photos"%>
+    <%= render "home_photos"%>
+    
+  <% elsif @path == "term"%>
+    <%= render :template => "home/index"%>
+    
+  <% elsif @path == "admin"%>
+    <%= render "home_admin"%>
+    
+  <% elsif @path == "events"%>
+    <%= render "home_events"%>
+    
+  <% else %>
+    <h2>Golf Gaggle</h2>
+
+  	<p>
+  		<a href="http://en.wikipedia.org/wiki/Golf">Golf</a> is an amazing game. It can be played alone or with others in a group. 
+  		Played either way, it brings on the joys and frustrations 
+  		that is inherent with the game. 
+  	</p><br />
+  	<p>	
+  		 <a href="http://en.wikipedia.org/wiki/Gaggle">Gaggle</a> 
+  		Besides the usual reference to a flock of geese, is a term that is 
+  		prevalent in the military with a totally different meaning. In military slang, the term gaggle is often used to describe; An unorganized 
+  		group doing nothing. A Golf Gaggle usually refers to a semi-organized group that play regularly at a home course.  
+  	</p><br />
+  	<p>
+  		This site
+  		tries to help these groups get organized - keeping track of their group's members, events, and scores. With organization, the members can concentrate
+  		on playing golf, which is much more than "nothing".
+  	</p>
+  	<br />
+  	<p>
+  		Outside of the military, the word "gaggle" can often be replaced with "dogfight" (which is another military term!). A golf "dogfight" is a game
+  		that allows players with differing skill level to compete. While the USGA Golf Handicap system provides this capability, the dogfight 
+  		quota system allows groups to take into account factors that the handicap system does not provide. These factors include the number of scores tracked,
+  		better responsiveness to trends (playing good-bad, winter, summer, etc). This sites uses a flexible dogfight quota system to manage groups. Flexibility
+  		is required because each group adopts a set of rules that are often different from other groups. 
+  	</p>
+  <br />
+  	<p>
+  		This is a free service for the first year a group uses the service. If the service is renewed, there <i>may</i> be a minimal "donation" charge to help
+  		defray the expenses of the site. Read more about this in "Goals" link on the left.
+  	</p>
+  
+    
+  <% end %>
+</fieldset>

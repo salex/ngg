@@ -150,7 +150,14 @@ span.hover:hover { color: red !important;}
 #content-left { width: 180px; float:left; padding: 0.5em; background: transparent;margin-right:1em; }
 #content-left ul { padding: 5px; }
 
-#content-right {background: transparent; padding: 1em; width: auto; }
+#content-right {
+  background: transparent; 
+  padding: 1em; 
+  width: auto; 
+  p { 
+    margin-bottom: 0.5em;
+  }
+}
 
 #content-print { background: white; margin: 0.5in; width: 8.5in; }
 
