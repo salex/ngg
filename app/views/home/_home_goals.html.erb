@@ -52,21 +52,29 @@
   help with web hosting. Three or four groups (or more) probably would not be a problem
 </p>
 Steve Alex
-
+<h4>Database Structure</h4>
+<p>Some insight into how the database works and the differnt tables used will help
+  in understanding how the system work. The plural words below are the database tables used. Singular words just indicate that there is
+  a reference to a record in a table. For instance Member have many rounds and each round has information about what tee was used
+  and when the event happened.
+</o>
 <pre>
   Groups
     Courses
       Tees
+    Articles
+      Comments
+    Images
     Events
       Course
       Rounds
         Member
         Tee
-    Member
+    Members
       Events
       Rounds
         Tee
         Event
 </pre>
   
-</pre>
+<p>From a pure "Compute Quota" perspective, on Group, Members, and Rounds are used (with references to tee). All quotas are based on member and tee. If you play from one tee in the summer and another in the winter. Two quotas are computed, but you don't have to use them since there is an overall quota. Events just keep track of who played when. It also allows you go gather other statistics as to teams, places etc. The rest of the tables (Images, Articles ) allow you to </p>

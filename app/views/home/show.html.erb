@@ -1,6 +1,10 @@
 <div id="content-left" >
   <h4>Links</h4>
   <ul>
+    <% @current_group.courses.each do |course| %>
+    <li><%= link_to "Print " + course.name,print_course_path( course ) %></li>
+    
+    <% end %>
     <li><%= link_to "Group Preferences" ,home_path( :pref ) %></li>
     <li><%= link_to "Notices/Articles" ,home_path( :info ) %></li>
     <li><%= link_to "Group Photos" ,home_path( :photos ) %></li>

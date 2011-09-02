@@ -7,9 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Member.delete_all
-Group.delete_all
-Course.delete_all
-Tee.delete_all
+#Group.delete_all
+#Course.delete_all
+#Tee.delete_all
 Quota.delete_all
 Image.delete_all
 Round.delete_all
@@ -18,9 +18,9 @@ Comment.delete_all
 Event.delete_all
 
 require File.expand_path('../conversion/members', __FILE__)
-require File.expand_path('../conversion/groups', __FILE__)
-require File.expand_path('../conversion/courses', __FILE__)
-require File.expand_path('../conversion/tees', __FILE__)
+#require File.expand_path('../conversion/groups', __FILE__)
+#require File.expand_path('../conversion/courses', __FILE__)
+#require File.expand_path('../conversion/tees', __FILE__)
 require File.expand_path('../conversion/quotas', __FILE__)
 require File.expand_path('../conversion/images', __FILE__)
 require File.expand_path('../conversion/events', __FILE__)

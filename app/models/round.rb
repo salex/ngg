@@ -47,6 +47,7 @@ class Round < ActiveRecord::Base
       rnd.member.update_quota
     end
     event.teams = params["event"]["teams"]
+    event.places = params["event"]["places"]
     event.attendees = params["team_members"]
     event.status = "Add"
   end

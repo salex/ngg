@@ -212,7 +212,7 @@
   </p>
   <p><strong>Net Points</strong> - 
     Your gross points +- any restrictions. If your quota is 21 points and you have a +-4 point restriction and pull 31 point, you gross points 
-    would be 21 and net points would be 25.  Net points are only used for computing "redistribution of wealth" or pot totals.
+    would be 31 (+10) and net points would be 25 (+4).  Net points are only used for computing "redistribution of wealth" or pot totals.
   </p>
   
   
@@ -273,7 +273,11 @@
     <strong>Are all round scores limited to some +- limit (uses_round_limit)?</strong> This is about the same as the new member limit, but does not expire. The purpose of this is basically throw out really good or bad scores. Mid to high handicappers tend to have these scores more often than new members. If you find the "key" in your game and start shooting lights out, this will only have an effect on the first time you exhibit this new you! This is just another way to buffer those random spurts of brilliance or stupidity.
   </p>
   <p>
-    If a group plays on multiple courses and uses quota on each course, they may also implement a one time limit on playing a new course for the first time (uses_new_course_limit). The new member limit would be applied to a new course or tee played the first time it is played. The initial quota on a course or tee that has not been played is your overall quota (all courses and tees).
+    <strong>Does round limit effect Gross points?</strong> This allow you to apply the round limit to both gross points and net points. If you have a round limit set to +-6, the net and gross points is restrict to 6 (unless member is limited by new member rules to a lower value). If this value is set, a member's quota is 21 and they pull 31 points. Their gross and new points pulled would be set to 27. With out it, net points would be 27 and gross set to what was actually pulled (31).
+  </p>
+  
+  <p>
+    If a group plays on multiple courses and uses quota on each course, they may also implement a one time limit on playing a new course/tee for the first time (uses_new_course_limit). The new member limit would be applied to a new course or tee played the first time it is played. The initial quota on a course or tee that has not been played is your overall quota (all courses and tees).
   </p>
   <p><strong>How is the pot split if multiple places are paid (pot_splits)?</strong> There is not an easy answer to this question and there is certainly not a consensus. Since a pencil and paper is usually used simple percentages are used, it is probably best to use and example for this preference.  Lets say you have a quality pot of 100 and you want to play only 1 place? 1 place is easy 100%. For two place, most groups would use a 60%, 40% split. Three places my use a 50%, 30%, 20 % split. This division goes continues based on the groups series of splits. The software will split the pot up to 5 groups using the following default preference: pot_split =  [100],[60,40],[50,30,20],[40,30,20,10],[30,25,20,15,10]. This may look complicated, but the square brackets just delimit the 5 possible splits. The numbers in each spit group must sum up to 100 and represents the percentage of the pot. The default uses simple series that hopefully the scorer will remember.</p>
   

@@ -37,7 +37,7 @@ links = ""
         <td><%= link_to event.date, event, :class => "show-button" %></td>
         <td><%= event.course.name %></td>
         <td class="col-10"><%=raw truncate_text(event.remarks) %></td>
-        <td><%= event.rounds.size %></td>
+        <td><%= event.attendees %></td>
         
         <td><%= event.teams %></td>
         <td><%= event.places %></td>

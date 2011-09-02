@@ -356,6 +356,9 @@ class Event < ActiveRecord::Base
   end
   
   def splitPot(pot,places)
+    if places > 5
+      return split(pot,places)
+    end
     arr = self.group.pot_splits
     splits = eval("[#{arr}]")
     split = splits[places - 1]
@@ -371,6 +374,38 @@ class Event < ActiveRecord::Base
     end
     money.insert(0,pot)
     return money
+  end
+  
+  def split(pot,places)
+      place = []
+      place[0] = pot
+      if places == 1
+        place[1] = pot
+        return place
+      end
+      if places == 2
+        s40 = ((pot * 0.4)).round(0)
+        s60 = pot - s40
+        place[1] = s60
+        place[2] = s40
+      else
+        places.downto(1) do |i|
+            s40 = ((pot * 0.4) / i).round(0)
+            puts s40
+            i.downto(1) {|j| 
+              place[j] = place[j].nil? ? s40 : place[j] + s40
+            }
+            pot -= s40 * i
+            if i == 2
+              s40 = ((pot * 0.4)).round(0)
+              s60 = pot - s40
+              place[1] += s60
+              place[2] += s40
+              break
+            end
+        end
+      end
+      return place
   end
   
   
