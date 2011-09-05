@@ -24,7 +24,7 @@ IO.foreach(inFile) {|line|
 	col['new_member_limit'] = field[cno.index('star_max_points')] == '\N' ? nil : field[cno.index('star_max_points')].to_i
 	col['new_member_rounds_used'] = field[cno.index('star_limit')] == '\N' ? nil : field[cno.index('star_limit')].to_i
 	col['uses_round_limit'] = field[cno.index('use_plus_minus_limit')] == '\N' ? nil : field[cno.index('use_plus_minus_limit')]
-	col['round_limit'] = field[19] == '\N' ? nil : field[19]
+	col['round_limit'] = field[19].strip  == '\N' ? nil : field[19].strip 
 	col['uses_new_course_limit'] = true
 	col['uses_high_low_rounds_rule'] = field[cno.index('use_hilo')] == '\N' ? nil : field[cno.index('use_hilo')] == "t"
 	col['high_low_rounds_effective'] = field[cno.index('hilo_limit')] == '\N' ? nil : field[cno.index('hilo_limit')].to_i

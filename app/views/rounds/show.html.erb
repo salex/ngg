@@ -25,16 +25,15 @@
       <th>Quota:</th>
       <td><%= @round.quota %><td>
     </tr>
-
+	  <tr>
+      <th>Points:</th>
+      <td><%= @round.plus_minus %><td>
+    </tr>
 	    <tr>
       <th>Pulled:</th>
       <td><%= @round.points_pulled%><td>
     </tr>
 
-	  <tr>
-      <th>Points:</th>
-      <td><%= @round.plus_minus %><td>
-    </tr>
 	  <tr>
       <th>Gross Pulled:</th>
       <td><%= @round.gross_pulled %><td>
@@ -90,5 +89,6 @@
 </div>
 <div class="relations">
 	<div id="related">
+	  <%= @round.point_hash%>
 	</div>
 </div>

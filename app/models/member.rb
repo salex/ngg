@@ -5,11 +5,13 @@ class Member < ActiveRecord::Base
   has_many :rounds, :order => "date DESC", :dependent => :destroy
   has_many :quotas,  :dependent => :destroy
   accepts_nested_attributes_for :rounds, :reject_if => lambda { |r| r[:points_pulled].blank? }
+  accepts_nested_attributes_for :user
   validates_format_of :email, :with => /^[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}$/i, :allow_blank => true, :allow_nil => true
   validates_numericality_of :quota,  :only_integer => true, :greater_than => 1, :less_than => 45
   validates_numericality_of :initial_quota,  :only_integer => true, :greater_than => 1, :less_than => 45
   validates_presence_of :tee
   validates_presence_of :first_name
+  validates_presence_of :last_name
   before_validation :set_defaults
   
   #has_one :image, :as => :imageable
@@ -38,6 +40,22 @@ class Member < ActiveRecord::Base
     self.initial_quota = self.quota if (self.initial_quota.nil? ||  self.initial_quota < 2 ) 
   end 
   
+  def quality_statistics
+      stats = {}
+      stats[:rounds] = self.rounds.count
+      g = self.group
+      stats[:round_quality] = self.rounds.sum(:round_quality) 
+      stats[:skin_quality] = self.rounds.sum(:skin_quality)
+      stats[:other_quality] = self.rounds.sum(:other_quality)
+      stats[:round_dues] = stats[:rounds] * (g.round_dues ||= 0 )
+      stats[:skins_dues] = stats[:rounds] * (g.skins_dues ||= 0 )
+      stats[:other_dues] = stats[:rounds] * (g.other_dues ||= 0 )
+      stats[:round_bal] = ((stats[:round_quality] ||= 0) - stats[:round_dues]).round(2)
+      stats[:skins_bal] = ((stats[:skin_quality] ||= 0) - stats[:skins_dues]).round(2)
+      stats[:other_bal] = ((stats[:other_quality] ||= 0) - stats[:other_dues]).round(2)
+      return stats
+  end
+  
   def update_quota
     quota, limited, last_played, current_rounds = self.compute_tee_quota(0)
     self.quota = quota
@@ -58,13 +76,17 @@ class Member < ActiveRecord::Base
     self.first_name + " " + self.last_name
   end
   
-  def invite_user
+  def invite_user(params)
+    self.email = params["email"]
     user = self.build_user(:group_id => self.group_id,:email => self.email, :member_id => self.id)
-    user.roles = ["member"]
+    user.roles = params["user"]["roles"]
+    user.email = self.email
     user.generate_token(:token,"iv")
     user.token_expires = Time.zone.now + 86400 * 5
     user.save :validate => false
+    self.save
     UserMailer.invite_member(user).deliver  
+    return true
   end
   
   def compute_tee_quota(tee=0)
@@ -73,7 +95,7 @@ class Member < ActiveRecord::Base
     first get the last_played date and the rounds that will be used for the calculation
 =end
     last_played = nil
-    total_rounds = self.rounds.count
+    total_rounds = self.rounds.count #all rounds regardless od tee
 
     if group.uses_best_rounds
       perc =  group.best_rounds_minimum.to_f / group.best_rounds_maximum.to_f
@@ -108,7 +130,6 @@ class Member < ActiveRecord::Base
     total = 0.0
     current_rounds = []
     cnt = 0
-    star = false
     # get quota, currenr_rounds and rounds used
     if round_count <=  0
       quota = self.quota # quota = initial_quota on new member
@@ -255,5 +276,7 @@ class Member < ActiveRecord::Base
     end
     return history
   end
+  
+  
 
 end

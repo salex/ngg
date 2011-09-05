@@ -1,1 +1,30 @@
-events
+<ul>
+  <li>
+    <strong>Deleting/Destroying Records</strong>
+    <p>
+      Sometimes you just need to delete records and associated items. If a member has quit the group, at some point you probably
+      want to delete their members record and rounds. Some safeguards have been implemented. Deleting members is a two stage
+      process. Deleting an "Active" member will first move them to a "Deleted" status, but will not delete any information. They will
+      only be seen by the coordinator is a special list on the members page. If you choose Destroy again while viewing a member in
+      Deleted status, all records will be permanently deleted. Sometimes people come back, so you can hide them until you are
+      sure they are gone.
+      
+    </p>
+    <p>
+      If an event and rounds have be entered in error (teams or places not set, wrong course etc). It is probably easier to destroy the 
+      event (which deletes the rounds) and renter the correct information.
+    </p>
+  </li>
+  <li>
+    <strong>Trimming Events/Rounds</strong>
+    <p>
+      The Coordinator can also Trim Events/Rounds over so many days old. The group preference trim_round_days controls how many days
+      will be used. It is limited to 180 or more days to prevent accidental deletion of rounds. If you wish, keeping rounds for about a year will
+      allow you to gather statics on members.
+      Once confirmed, that process will delete all events and rounds over that number of days. At the end, it will search
+      for member in Active status who no longer have any rounds. It will move those members to Deleted status. This allows you to delete
+      members who may have participated a few time, by have not played in a while.
+    </p>
+  </li>
+  
+</ul>

@@ -1,0 +1,16 @@
+<%= form_for(@member, :url => invite_member_path(@member)) do |f| %>
+
+<%= f.error_messages %>
+<h4>Invite member <%= @member.name%> </h4>
+<table class="label-data">
+  <%= label_data_row(f.label( :email, "Email Address"), f.text_field( :email))%>
+  <%= fields_for @user do |u| %>
+  <%= label_data_row(f.label( "roles"), role_select(u))%>
+  <% end %>
+</table>
+  <div class="action">
+    <%= f.submit "Invite Member" %>
+    <%= link_to 'Show (Cancel)', @member, :class => "show-button" %> 
+  </div>
+  
+<% end %>

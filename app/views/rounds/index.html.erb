@@ -9,8 +9,8 @@
         <th>Date</th>
         <th>C:T</th>
         <th>Quota</th>
-        <th>Pulled</th>
         <th>Points</th>
+        <th>Pulled</th>
         <th>Skins</th>
         <th>$ R/S/O</th>
         <th>Team</th>
@@ -28,8 +28,8 @@
         <td><%= round.date %></td>
         <td><%= round.tee.course.name[0..0] + ":" + round.tee.color[0..0] %></td>
         <td><%= round.quota %></td>
-        <td><%= round.points_pulled%></td>
         <td><%= round.plus_minus %></td>
+        <td><%= round.points_pulled%></td>
         <td><code><%= round.par_in %><%= round.par_out %></code></td>
         <td><%= round.round_quality %>/<%= round.skin_quality %>/<%= round.other_quality %></td>
         <td><%= round.team %></td>

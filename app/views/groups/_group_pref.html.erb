@@ -86,13 +86,13 @@
     <span class="annotate">[round_limit]</span>
   </div>
   <div class="show">
-    <span class="label">Are all round on new courses or tees limited to some +- points limit?</span><span class="data">
-      <%= check_box_tag :uses_new_course_limit, @group.uses_new_course_limit, @group.uses_new_course_limit %></span>
-      <span class="annotate">[uses_new_course_limit]</span>
+    <span class="label">Does the round limit also effect the gross points?</span><span class="data">
+      <%= check_box_tag :limit_gross_points, @group.limit_gross_points, @group.limit_gross_points %></span>
+      <span class="annotate">[limit_gross_points]</span>
   </div>
 
   <div class="show">
-    <span class="label">Do you  throw out the high and low round of the selected rounds?</span><span class="data">
+    <span class="label">Do you throw out the high and low round of the selected rounds?</span><span class="data">
       <%= check_box_tag :uses_high_low_rounds_rule, @group.uses_high_low_rounds_rule, @group.uses_high_low_rounds_rule %></span>
       <span class="annotate">[uses_high_low_rounds_rule]</span>
   </div>

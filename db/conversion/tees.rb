@@ -17,7 +17,7 @@ IO.foreach(inFile) {|line|
 	col['par_in'] = field[6] == '\N' ? nil : field[6]
 	col['par_out'] = field[7] == '\N' ? nil : field[7]
 	col['created_at'] = field[8] == '\N' ? nil : field[8]
-	col['updated_at'] = field[9] == '\N' ? nil : field[9]
+	col['updated_at'] = field[9].strip  == '\N' ? nil : field[9].strip 
   
 	rec = Tee.new
 	col.each {|k,v| 

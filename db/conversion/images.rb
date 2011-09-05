@@ -11,7 +11,7 @@ IO.foreach(inFile) {|line|
 
 	col['id'] = field[0] == '\N' ? nil : field[0]
 	col['imageable_type'] = field[2] == '\N' ? nil : field[2]
-	col['imageable_id'] = field[9] == '\N' ? nil : field[9]
+	col['imageable_id'] = field[9].strip  == '\N' ? nil : field[9].strip 
 	col['name'] = field[1] == '\N' ? nil : field[1]
 	col['photo_file_name'] = field[5] == '\N' ? nil : field[5]
 	col['photo_content_type'] = field[6] == '\N' ? nil : field[6]

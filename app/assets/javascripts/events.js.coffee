@@ -217,7 +217,9 @@ $(document).ready ->
  
       
   setParInOut = ->
-    scoreValues = [5,4,3,2,1,0]
+    #scoreValues = [5,4,3,2,1,0]
+    scoreValues = groupOpt["scoreValues"]
+    
     scoreTypes = ["Double Eagle","Eagle","Birdie","Par","Bogie","Double Bogie"]
     parInOut = [".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",]
     for i in [1..18]
@@ -229,9 +231,6 @@ $(document).ready ->
         pos = jQuery.inArray(type,scoreTypes)
         if pos >= 0
           parInOut[i] = scoreValues[pos]
-          
-          # body...
-        # body...
       
     parString = ""
     for i in [1..18]

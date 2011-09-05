@@ -27,12 +27,14 @@ class Round < ActiveRecord::Base
       rnd.plus_minus = params["round"]["points"][memb]
       rnd.points_pulled = params["round"]["pulled"][memb]
       rnd.gross_pulled = params["round"]["pulled"][memb]
-      rnd.net_pulled = rnd.quota + params["round"]["net_points"][memb].to_i
-    
-      if group.uses_round_limit
-        rnd.plus_minus = params["round"]["starpoints"][memb]
+      net_limit = rnd.quota + params["round"]["net_points"][memb].to_i
+      net_star = rnd.quota + params["round"]["starpoints"][memb].to_i
+      logger.info "#{net_limit} #{net_star} #{group.uses_round_limit} #{group.limit_gross_points}"
+      if group.uses_round_limit && group.limit_gross_points
+        rnd.plus_minus = params["round"]["net_points"][memb]
         rnd.points_pulled = rnd.quota + rnd.plus_minus
       end
+      rnd.net_pulled = [net_limit,net_star].min
       rnd.date = event.date
       rnd.tee_id = params["round"]["tee"][memb]
       rnd.team = params["round"]["team"][memb]
@@ -52,4 +54,15 @@ class Round < ActiveRecord::Base
     event.status = "Add"
   end
   
+  def point_hash
+    hash = {}
+    hash["quota"] = self.quota
+    hash["net_pulled"] = self.net_pulled
+    hash["net_points"] = self.net_pulled - quota
+    hash["gross_pulled"] = self.gross_pulled
+    hash["gross_points"] = self.gross_pulled - quota
+    test = hash["net_pulled"] - self.points_pulled 
+    hash["starred"] = ((hash["net_pulled"] + test) != hash["gross_pulled"])
+    return hash
+  end
 end

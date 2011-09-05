@@ -61,7 +61,7 @@
   <th>Quota:(Initial)</th>
   <td><%= @member.quota %> (<%=@member.initial_quota%>)<td>
 </tr>
-  <tr>
+<tr>
   <th>Limited:</th>
   <td><%= @member.limited %><td>
 </tr>
@@ -79,12 +79,8 @@
 <%= link_to 'Edit', edit_member_path(@member), :class => "edit-button"  if (can? :update, @member ) && is_my_group?(@member.group_id)%>
 <%= link_to 'Destroy', @member, confirm: 'Are you sure?', method: :delete, :class => "destroy-button" if (can? :destroy, @member) && is_my_group?(@member.group_id)  %>
 <% if (can? :invite, Member)  && @member.user.nil?%>
-  <% if (!@member.email.blank?) %>
     <%= link_to 'Invite', invite_member_path(@member), :class => "link-go-button" %>
-  <%else%>
-    <span class="hover" data-behavior="email-hover" title="eMail address must be updated before member can be invited. Edit member and add eMail address." onclick="alert(this.title)">?Invite?</span>
   <% end %>
-<% end %>
 
 <%if can? :update , Image%>
   <%= link_to 'Upload Photo', !@member.image.nil? ? edit_image_path(@member.image) : new_member_image_path(@member), :class => "link-button" %> |
@@ -134,6 +130,31 @@
 		  </tr>
 	  <%end%>		
 	</table>
+	<table >
+    <% stats = @member.quality_statistics %>
+		<tr class="list-header">
+      <th>Quality Stats (<%= stats[:rounds]%> rounds)</th><th>Dues</th><th>Quality Points</th><th>Balance</th>
+    </tr>
+    <tr>
+      <th>Rounds</th>
+      <td class="right"><%= format_money(stats[:round_dues])%></td>
+      <td class="right"><%= format_money(stats[:round_quality])%></td>
+      <td class="right"><%= format_money(stats[:round_bal])%></td>
+    </tr>
+    <tr>
+      <th>Skins</th>
+      <td class="right"><%= format_money(stats[:skins_dues])%></td>
+      <td class="right"><%= format_money(stats[:skin_quality])%></td>
+      <td class="right"><%= format_money(stats[:skins_bal])%></td>
+    </tr>
+    <tr>
+      <th>Skins</th>
+      <td class="right"><%= format_money(stats[:other_dues])%></td>
+      <td class="right"><%= format_money(stats[:other_quality])%></td>
+      <td class="right"><%= format_money(stats[:other_bal])%></td>
+    </tr>
+    </table>
+  
 </div>
 <% end %>
 </fieldset>

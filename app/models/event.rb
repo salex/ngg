@@ -33,8 +33,9 @@ class Event < ActiveRecord::Base
       round.par_out = round.par_out.nil? ? "........." : round.par_out
       par = round.par_in + round.par_out
       tee = round.tee_id
-      starpoints =  round.gross_pulled.nil? ? pulled - quota : round.gross_pulled - quota
-      net_points =  round.net_pulled.nil? ? pulled : round.net_pulled
+      #starpoints =  round.gross_pulled.nil? ? pulled - quota : round.gross_pulled - quota
+      net_points =  starpoints = round.net_pulled.nil? ? pulled - quota : round.net_pulled - quota
+      logger.info "RRRRRRRRRRR #{teamID} #{starpoints}    #{net_points}"
       otherquality = round.other_quality
       
 
@@ -80,7 +81,7 @@ class Event < ActiveRecord::Base
         teams["team"][teamID]["tee"].push(tee)
         teams["team"][teamID]["otherquality"].push(otherquality)
       end
-      self.set_skins(par,membID)
+      self.set_skins(par,membID,group.points_birdie)
     end
     teams["skins"] = @skins
     teams['skinswho'] =   @skinWho
@@ -110,6 +111,7 @@ class Event < ActiveRecord::Base
     
       teams = self.pay_teams(teams)
     end
+    logger.info teams.inspect
     return teams
   end
   
@@ -189,7 +191,7 @@ class Event < ActiveRecord::Base
           teams["team"][teamID]["otherquality"].push(otherquality)
           
         end
-        self.set_skins(par,membID)
+        self.set_skins(par,membID,group.points_birdie)
       end
     }
     
@@ -274,7 +276,7 @@ class Event < ActiveRecord::Base
     return teams
   end
   
-  def self.set_skins(par,membID)
+  def self.set_skins(par,membID,birdie)
     if par.length != 18
       return
     end
@@ -282,7 +284,7 @@ class Event < ActiveRecord::Base
       char = par[i..i]
       if char != '.' #no skin
         pts = char.to_i
-        if pts >= 3
+        if pts >= birdie
           if @skins[i] == 0 #set skin
             @skins[i] = 1
             @skinType[i] = pts

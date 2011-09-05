@@ -151,5 +151,16 @@ module ApplicationHelper
     return "<div class=\"markdown\">#{html}</div>".html_safe
   end
   
+  def format_money(value,dollar=false)
+    if value.nil?
+      return 
+    end
+    if dollar
+      result = number_to_currency(value)
+    else
+      result = ("%0.2f" % value)
+    end
+  end
+  
   
 end
