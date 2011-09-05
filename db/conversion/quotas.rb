@@ -13,7 +13,7 @@ IO.foreach(inFile) {|line|
 	col['tee_id'] = field[2] == '\N' ? nil : field[2]
 	col['quota'] = field[3] == '\N' ? nil : field[3]
 	col['last_played'] = field[cno.index('lastplayed')] == '\N' ? nil : field[cno.index('lastplayed')]
-	col['history'] = field[8] == '\N' ? nil : field[8]
+	col['history'] = field[8].strip  == '\N' ? nil : field[8].strip 
 	col['limited'] = field[cno.index('stared')] == '\N' ? nil : field[cno.index('stared')]
 	col['created_at'] = field[6] == '\N' ? nil : field[6]
 	col['updated_at'] = field[7] == '\N' ? nil : field[7]

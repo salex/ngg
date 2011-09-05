@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110828132347) do
+ActiveRecord::Schema.define(:version => 20110905133803) do
 
   create_table "articles", :force => true do |t|
     t.integer  "group_id"
@@ -88,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20110828132347) do
     t.integer  "points_double_bogey"
     t.string   "pot_splits"
     t.integer  "trim_round_days"
+    t.boolean  "limit_gross_points"
   end
 
   create_table "images", :force => true do |t|

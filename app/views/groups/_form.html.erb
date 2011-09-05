@@ -87,15 +87,14 @@
     <span class="labelr"><%= f.label :round_limit %></span>
     <span class="data"><%= f.text_field :round_limit, :size => 4 %></span>
   </div>
-  
   <div class="show">
-    <span class="label">Are all round on new courses or tees limited to some +- points limit?</span><span class="data">
-      Yes <%= f.radio_button :uses_new_course_limit,true %> No <%= f.radio_button :uses_new_course_limit,false %>
+    <span class="label">Does the round limit also effect the gross points?</span><span class="data">
+      Yes <%= f.radio_button :limit_gross_points,true %> No <%= f.radio_button :limit_gross_points,false %>
       </span>
   </div>
 
   <div class="show">
-    <span class="label">Do you  throw out the high and low round of the selected rounds?</span><span class="data">
+    <span class="label">Do you throw out the high and low round of the selected rounds?</span><span class="data">
       Yes <%= f.radio_button :uses_high_low_rounds_rule,true %> No <%= f.radio_button :uses_high_low_rounds_rule,false %>
       </span>
   </div>

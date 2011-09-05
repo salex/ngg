@@ -67,6 +67,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.update_attributes(params[:group])
+        @group.recompute_members_quotas
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
         format.json { head :ok }
       else

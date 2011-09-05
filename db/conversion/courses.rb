@@ -13,7 +13,7 @@ IO.foreach(inFile) {|line|
 	col['name'] = field[2] == '\N' ? nil : field[2]
 	col['address'] = field[3] == '\N' ? nil : field[3]
 	col['phone'] = field[4] == '\N' ? nil : field[4]
-	col['link'] = field[7] == '\N' ? nil : field[7]
+	col['link'] = field[7].strip  == '\N' ? nil : field[7].strip 
 	col['created_at'] = field[5] == '\N' ? nil : field[5]
 	col['updated_at'] = field[6] == '\N' ? nil : field[6]
  

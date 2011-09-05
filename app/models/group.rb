@@ -5,6 +5,7 @@ class Group < ActiveRecord::Base
   has_many :articles, :order => 'published_at DESC', :dependent => :destroy
   has_many :events, :order => 'date DESC', :dependent => :destroy
   has_many :images, :as => :imageable, :dependent => :destroy
+  validates_numericality_of :trim_round_days,  :only_integer => true, :greater_than => 179
   
   
   validates_presence_of :subdomain
@@ -60,18 +61,20 @@ class Group < ActiveRecord::Base
 		options["points_par"] = self["points_par"]
 		options["points_bogey"] = self["points_bogey"]
 		options["points_double_bogey"] = self["points_double_bogey"]
+		options["scoreValues"] = [self["points_double_eagle"],self["points_eagle"],self["points_birdie"],self["points_par"],self["points_bogey"],self["points_double_bogey"]]
 		options["pot_splits"] = self["pot_splits"]
+		options["trim_round_days"] = self["trim_round_days"]
 		return options
 	end
 	
-	def recompute_user_quotas
-    users = User.where(:group_id => self.id)
-    users.each do |user|
-      tees = Round.where(:user_id => user.id).select("DISTINCT(tee_id)")
+	def recompute_members_quotas
+    members = self.members
+    members.each do |member|
+      tees = Round.where(:member_id => member.id).select("DISTINCT(tee_id)")
       tees.each do |tee|
-        user.compute_tee_quota(tee.tee_id)
+        member.compute_tee_quota(tee.tee_id)
       end
-      user.update_quota
+      member.update_quota
     end
     return true
   end

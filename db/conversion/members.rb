@@ -23,7 +23,7 @@ IO.foreach(inFile) {|line|
 	col['last_played'] = field[cno.index('lastplayed')] == '\N' ? nil : field[cno.index('lastplayed')]
 	col['quota'] = field[12] == '\N' ? 18 : field[12].to_i
 	col['limited'] = field[cno.index('stared')] == '\N' ? nil : field[cno.index('stared')] == 't'
-	col['initial_quota'] = field[17] == '\N' ? col['quota'] : field[17].to_i
+	col['initial_quota'] = field[17].strip  == '\N' ? col['quota'] : field[17].strip
 	col['initial_quota'] = 1 if col['initial_quota'] == 0
 	col['tee'] = field[10] == '\N' ? nil : field[10]
 	

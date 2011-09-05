@@ -19,7 +19,7 @@ IO.foreach(inFile) {|line|
 	col['places'] = field[7] == '\N' ? nil : field[7]
 	col['place_percent'] = field[8] == '\N' ? nil : field[8]
 	col['created_at'] = field[9] == '\N' ? nil : field[9]
-	col['updated_at'] = field[10] == '\N' ? nil : field[10]
+	col['updated_at'] = field[10].strip  == '\N' ? nil : field[10].strip 
  
 	rec = Event.new
 	col.each {|k,v| 

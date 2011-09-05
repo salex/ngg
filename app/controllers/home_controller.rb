@@ -33,7 +33,7 @@ class HomeController < ApplicationController
           @articles = @current_group.articles.where(:published => true).limit(2)
         else
           @welcome = "Welcome article missing"
-          @articles = nil
+          @articles = []
         end
       
       end

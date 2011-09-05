@@ -100,7 +100,15 @@ class MembersController < ApplicationController
   # DELETE /members/1.json
   def destroy
     #@member = Member.find(params[:id])
-    @member.destroy
+    if @member.status == "Deleted"
+      @member.destroy
+      flash[:notice] = "Member #{@member.name} has been permanently deleted."
+    else
+      @member.status = "Deleted"
+      @member.save
+      flash[:notice] = "Member #{@member.name} has been moved to a deleted status. Choosing destroy again will permanently delete them. "
+      
+    end
 
     respond_to do |format|
       format.html { redirect_to members_url }
@@ -117,14 +125,23 @@ class MembersController < ApplicationController
   end
   
   def invite
+    
     if @member.user
       flash[:error] = 'Member already a user.'
-    else
-      @member.invite_user
-      flash[:notice] = "Member Invited #{@member.name}"
+      redirect_to member_path(@member)
       
+    else
+      if params[:_method]
+        result = @member.invite_user(params)
+        if result
+          flash[:notice] = "Member Invited #{@member.name}"
+        else
+          flash[:error] = 'Error: Member not invited.'
+        end
+        redirect_to member_path(@member)
+      end
+      @user = User.new
     end
-    redirect_to member_path(@member)
   end
 
   def teeopt
