@@ -110,6 +110,7 @@ class Event < ActiveRecord::Base
     
       teams = self.pay_teams(teams)
     end
+    logger.info teams.inspect
     return teams
   end
   
