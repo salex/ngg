@@ -35,7 +35,6 @@ class Event < ActiveRecord::Base
       tee = round.tee_id
       #starpoints =  round.gross_pulled.nil? ? pulled - quota : round.gross_pulled - quota
       net_points =  starpoints = round.net_pulled.nil? ? pulled - quota : round.net_pulled - quota
-      logger.info "RRRRRRRRRRR #{teamID} #{starpoints}    #{net_points}"
       otherquality = round.other_quality
       
 
@@ -111,7 +110,6 @@ class Event < ActiveRecord::Base
     
       teams = self.pay_teams(teams)
     end
-    logger.info teams.inspect
     return teams
   end
   

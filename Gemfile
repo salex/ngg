@@ -18,6 +18,7 @@ gem 'cancan'
 gem 'will_paginate', '~> 3.0.pre4'
 gem 'redcarpet'
 gem 'pg'
+gem 'thin'
 
 # Use unicorn as the web server
 # gem 'unicorn'
