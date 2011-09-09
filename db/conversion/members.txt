@@ -12,7 +12,7 @@
 979	1	Cleve Hendrix	Cleve				Active	t		B	2011-06-18	17	Member	2011-01-21 19:59:40.34771	2011-06-18 20:48:28.108199	f	18
 981	1	Dwayne Richardson					Active	t		B	2011-07-02	23	Member	2011-07-04 01:16:32.391255	2011-07-04 01:23:13.317932	t	26
 980	1	Larry Deavers					Active	t		M	2011-08-10	26	Member	2011-01-24 21:35:47.598134	2011-08-10 17:20:46.54251	f	30
-970	1	Tom Brown					Active	t		P	2011-08-19	24	Member	2010-07-09 17:44:29.540005	2011-08-19 17:31:05.107614	f	24
+970	1	Tom Brown					Active	t		P	2011-09-02	23	Member	2010-07-09 17:44:29.540005	2011-09-02 18:22:56.94958	f	24
 941	1	Daniel Blazich					Active	t		P	2008-11-24	16	Member	2010-07-06 12:42:41	2010-07-06 20:32:48.632249	t	\N
 977	1	Donald Cole					Active	t		B	2010-10-01	17	Member	2010-10-01 20:28:21.583435	2010-10-01 20:34:17.353057	t	18
 820	1	Chad Boyd		\N	\N	\N	Active	t		B	2011-07-04	22	Member	2010-07-06 12:42:46	2011-07-04 19:47:11.165211	f	\N
@@ -26,7 +26,7 @@
 969	1	Brandon Pate					Active	t		B	2010-07-02	21	Member	2010-07-06 12:42:47	2010-07-06 20:38:07.884207	t	\N
 581	1	Chuck Lerner					Active	t	ChuckLernerCombo.jpg	F	2010-11-01	19	Member	2010-07-06 12:42:47	2010-11-01 17:23:35.44292	f	\N
 839	1	Bob East Sr					Hidden	t		M	2009-05-15	29	Member	2010-07-06 12:42:42	2010-07-06 20:46:55.33208	f	\N
-580	1	Chris Davis		205.755.6340	205.294.1717	104 Round Forest Dr.\\r\\nClanton, AL 35045	Active	t	ChrisDavisCombo.jpg	M	2011-08-26	29	Scorer	2010-07-06 12:42:46	2011-08-26 18:30:35.118084	f	\N
+615	1	Wes Pasley					Active	t	WesPasleyCombo.jpg	F	2011-09-03	29	Member	2010-07-06 12:42:48	2011-09-03 18:39:00.520069	f	\N
 953	1	Bill Anderson					Active	t		B	2009-08-22	24	Member	2010-07-06 12:42:43	2010-07-06 13:19:30.21866	f	\N
 951	1	Rob  Spivey					Active	t		B	2009-08-22	18	Member	2010-07-06 12:42:43	2010-07-06 13:19:31.121516	t	\N
 948	1	Derrick Perciual					Active	t		B	2009-08-23	16	Member	2010-07-06 12:42:43	2010-07-06 13:19:31.514079	f	\N
@@ -34,7 +34,7 @@
 944	1	Ed Taylor					Active	t		B	2009-09-13	23	Member	2010-07-06 12:42:43	2010-07-06 13:19:32.631633	f	\N
 814	1	Rico Johnson					Deleted	t	RicoJohnsonCombo.jpg	P	2009-01-28	29	Member	2010-07-06 12:42:41	2010-07-06 20:47:46.87294	f	\N
 968	1	Ryan Darnell					Active	t		M	2010-06-12	21	Member	2010-07-06 12:42:46	2010-07-06 20:33:04.344926	t	\N
-595	1	Jerry Lovejoy		\N	\N	\N	Active	t	JerryLovejoyCombo.jpg	M	2011-08-26	33	Member	2010-07-06 12:42:49	2011-08-26 18:30:35.887845	f	\N
+579	1	Charlie Crysel		\N	\N	\N	Active	t	CharlieCryselCombo.jpg	M	2011-09-07	27	Member	2010-07-06 12:42:48	2011-09-07 17:28:12.247506	f	\N
 954	1	Brian Steward					Active	t		B	2010-01-20	28	Member	2010-07-06 12:42:44	2010-07-06 13:19:34.294051	f	\N
 965	1	Steve Lewis					Active	t		B	2010-01-23	19	Member	2010-07-06 12:42:44	2010-07-06 20:40:49.026611	t	\N
 610	1	Rusty Dodd					Active	t	RustyDoddCombo.jpg	F	2010-03-08	21	Member	2010-07-06 12:42:44	2010-07-06 13:19:36.10293	f	\N
@@ -43,38 +43,38 @@
 589	1	Fred Lindstrom					Active	t	FredLindstromCombo.jpg	B	2010-05-14	26	Scorer	2010-07-06 12:42:45	2010-07-06 13:19:38.596053	f	\N
 956	1	Bob Beno					Active	t		B	2010-05-22	14	Member	2010-07-06 12:42:45	2010-07-06 13:19:40.08277	f	\N
 586	1	Dennis Thompson	Twist-O-Flex	\N	\N	\N	Active	t	DennisThompsonCombo.jpg	M	2010-05-29	23	Member	2010-07-06 12:42:45	2010-07-06 13:19:40.434155	f	\N
-578	1	Charlie Moore					Active	t	CharlieMooreCombo.jpg	B	2011-08-24	24	Upload	2010-07-06 12:42:48	2011-08-24 18:53:26.872508	f	\N
+942	1	Andy  Wilkes					Active	t		B	2011-08-29	22	Member	2010-07-06 12:42:47	2011-09-02 18:18:43.867221	f	\N
 961	1	Tim Wilsford					Active	t		B	2009-08-16	23	Member	2010-07-06 12:42:43	2010-07-06 20:38:01.038286	t	\N
 904	1	Bill Long		\N	\N	\N	Active	t		B	2011-08-26	25	Member	2010-07-06 12:42:48	2011-08-26 18:30:36.028488	f	\N
-585	1	Dave Roll		\N	\N	\N	Active	t	DaveRollCombo.jpg	M	2011-08-20	31	Member	2010-07-06 12:42:46	2011-08-20 18:12:04.195364	f	\N
+578	1	Charlie Moore					Active	t	CharlieMooreCombo.jpg	B	2011-09-03	24	Upload	2010-07-06 12:42:48	2011-09-03 18:38:59.631493	f	\N
 962	1	Rick  Magers					Active	t		B	2011-06-17	31	Member	2010-07-06 12:42:45	2011-06-17 17:25:54.412349	f	\N
 940	1	Jim Valigura					Deleted	t		B	2009-08-01	28	Member	2010-07-06 12:42:43	2010-07-09 18:47:44.740851	f	\N
 982	1	Jason Wallace					Active	t		M	2011-08-13	26	Member	2011-07-09 19:06:33.278522	2011-08-13 20:44:14.094315	f	30
 611	1	Steve Adams		\N	\N	\N	Active	t	SteveAdamsCombo.jpg	M	2010-09-11	25	Member	2010-07-06 12:42:45	2010-09-12 16:43:58.020002	f	\N
 706	1	Rex Davis		\N	\N	\N	Active	t		B	2011-04-02	18	Member	2010-07-06 12:42:44	2011-04-02 18:32:21.329513	f	\N
 842	1	Justin Boyd		\N	\N	\N	Active	t		B	2011-04-24	27	Member	2010-07-06 12:42:46	2011-04-25 20:31:52.996871	f	\N
+603	1	Mike Luna		334 272-8253	334 546-9219	106 Fox Hollow Rd.\\r\\nMontgomery, Al. 36109	Active	t	mikelunacombo.jpg	F	2011-09-07	28	Coordinator	2010-07-06 12:42:46	2011-09-07 17:28:12.592064	f	\N
 633	1	Randy Boyd		\N	\N	\N	Active	t		B	2011-07-04	25	Member	2010-07-06 12:42:46	2011-07-04 19:47:10.829836	f	\N
 669	1	Jason Davis		\N	\N	\N	Active	t		B	2011-08-26	23	Member	2010-07-06 12:42:47	2011-08-26 18:30:35.440072	f	\N
 612	1	Steve Alex	Wonder	256 467-4348	334 294-6026		Active	t	stevealexcombo.jpg	M	2011-08-13	16	Admin	2010-07-06 12:42:44	2011-08-13 20:44:11.941355	f	\N
 960	1	Seth Olson					Active	t		P	2009-08-23	26	Member	2010-07-06 12:42:43	2010-07-06 20:38:02.684798	t	\N
-942	1	Andy  Wilkes					Active	t		B	2011-07-04	22	Member	2010-07-06 12:42:47	2011-07-04 19:47:11.642125	f	\N
+617	1	Weylon Wilkes					Active	t		F	2011-09-07	22	Member	2010-07-06 12:42:49	2011-09-07 17:28:12.757941	f	\N
 967	1	Morris Wilson					Active	t		F	2010-10-30	25	Member	2010-07-06 12:42:47	2010-10-30 19:29:59.08067	f	\N
-579	1	Charlie Crysel		\N	\N	\N	Active	t	CharlieCryselCombo.jpg	M	2011-08-26	28	Member	2010-07-06 12:42:48	2011-08-26 18:30:34.947186	f	\N
+957	1	Clark  Alexander					Active	t		P	2011-09-03	33	Member	2010-07-06 12:42:46	2011-09-03 18:39:00.663455	f	\N
 903	1	Trent Pate		\N	\N	\N	Active	t		B	2010-07-02	17	Member	2010-07-06 12:42:48	2010-07-06 13:19:57.706311	f	\N
 572	1	Benny Loftis					Active	t	BennyLoftisCombo.jpg	P	2010-09-03	34	Member	2010-07-06 12:42:46	2010-09-03 18:42:47.425027	f	\N
-574	1	Bob  Smith		334.281.8829	334 300 3627	3500 Halston Ct.\\r\\nMontgomery, AL 36111	Active	t	BobSmithCombo.jpg	F	2011-08-10	13	Scorer	2010-07-06 12:42:49	2011-08-10 17:20:46.857063	f	\N
+585	1	Dave Roll		\N	\N	\N	Active	t	DaveRollCombo.jpg	M	2011-09-03	31	Member	2010-07-06 12:42:46	2011-09-03 18:39:01.154601	f	\N
 963	1	Scott  Mc xxxx					Deleted	t		B	2009-09-20	31	Member	2010-07-06 12:42:43	2010-07-06 20:45:44.380142	t	\N
 938	1	George  Hock					Active	t		B	2010-08-08	24	Member	2010-07-06 12:42:41	2010-08-08 21:51:54.921829	f	\N
-615	1	Wes Pasley					Active	t	WesPasleyCombo.jpg	F	2011-08-26	29	Member	2010-07-06 12:42:48	2011-08-26 18:30:35.594563	f	\N
 629	1	Ron Peacock		\N	\N	\N	Active	t	RonPeacockCombo.jpg	M	2011-02-26	27	Member	2010-07-06 12:42:47	2011-02-26 18:48:28.174694	f	\N
-851	1	Mik Beno					Active	t		B	2011-08-20	30	Member	2010-07-06 12:42:45	2011-08-20 18:12:04.361973	f	\N
-810	1	Bob White	Bob	244-4034	207-2382	4369 Liztame Dr. 36106	Active	t	BobWhiteCombo.jpg	F	2011-08-26	26	Member	2010-07-06 12:42:47	2011-08-26 18:30:34.211171	f	\N
+810	1	Bob White	Bob	244-4034	207-2382	4369 Liztame Dr. 36106	Active	t	BobWhiteCombo.jpg	F	2011-09-07	26	Member	2010-07-06 12:42:47	2011-09-07 17:28:12.031658	f	\N
+580	1	Chris Davis		205.755.6340	205.294.1717	104 Round Forest Dr.\\r\\nClanton, AL 35045	Active	t	ChrisDavisCombo.jpg	M	2011-09-07	30	Scorer	2010-07-06 12:42:46	2011-09-07 17:28:12.430881	f	\N
 873	1	Ken Brothers		\N	\N	\N	Active	t		B	2010-07-05	26	Member	2010-07-06 12:42:49	2010-07-06 13:20:05.216224	f	\N
 602	1	Mike Emerton					Active	t	mikeemertoncombo.jpg	B	2011-06-20	19	Member	2010-07-06 12:42:48	2011-06-20 16:37:01.536103	f	\N
 949	1	Greg Thigpen					Active	t		B	2009-03-06	20	Member	2010-07-06 12:42:41	2010-07-06 20:32:46.366615	t	\N
 605	1	Pete Gillespie					Active	t		F	2011-03-12	22	Member	2010-07-06 12:42:47	2011-03-14 17:06:33.809178	f	\N
 952	1	Skip Lieder					Active	t		M	2011-07-30	22	Member	2010-07-06 12:42:43	2011-07-30 18:09:52.842694	f	\N
-957	1	Clark  Alexander					Active	t		P	2011-08-20	32	Member	2010-07-06 12:42:46	2011-08-20 18:12:03.710214	f	\N
-617	1	Weylon Wilkes					Active	t		F	2011-08-26	22	Member	2010-07-06 12:42:49	2011-08-26 18:30:35.741033	f	\N
+595	1	Jerry Lovejoy		\N	\N	\N	Active	t	JerryLovejoyCombo.jpg	M	2011-09-03	34	Member	2010-07-06 12:42:49	2011-09-03 18:39:00.832381	f	\N
+851	1	Mik Beno					Active	t		B	2011-09-03	28	Member	2010-07-06 12:42:45	2011-09-03 18:39:01.354408	f	\N
 959	1	Brent Pierce					Active	t		B	2011-08-06	28	Member	2010-07-06 12:42:47	2011-08-06 21:30:49.768185	f	\N
-603	1	Mike Luna		334 272-8253	334 546-9219	106 Fox Hollow Rd.\\r\\nMontgomery, Al. 36109	Active	t	mikelunacombo.jpg	F	2011-08-26	27	Coordinator	2010-07-06 12:42:46	2011-08-26 18:30:35.28357	f	\N
+574	1	Bob  Smith		334.281.8829	334 300 3627	3500 Halston Ct.\\r\\nMontgomery, AL 36111	Active	t	BobSmithCombo.jpg	F	2011-09-07	11	Scorer	2010-07-06 12:42:49	2011-09-07 17:28:12.914188	f	\N
