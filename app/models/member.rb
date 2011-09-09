@@ -77,7 +77,7 @@ class Member < ActiveRecord::Base
   end
   
   def invite_user(params)
-    self.email = params["email"]
+    self.email = params["member"]["email"]
     user = self.build_user(:group_id => self.group_id,:email => self.email, :member_id => self.id)
     user.roles = params["user"]["roles"]
     user.email = self.email

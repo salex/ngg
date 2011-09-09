@@ -22,7 +22,7 @@ require File.expand_path('../conversion/members', __FILE__)
 #require File.expand_path('../conversion/courses', __FILE__)
 #require File.expand_path('../conversion/tees', __FILE__)
 require File.expand_path('../conversion/quotas', __FILE__)
-#require File.expand_path('../conversion/images', __FILE__)
+require File.expand_path('../conversion/images', __FILE__)
 require File.expand_path('../conversion/events', __FILE__)
 require File.expand_path('../conversion/rounds', __FILE__)
 
@@ -38,3 +38,13 @@ ActiveRecord::Base.connection.reset_pk_sequence!('comments')
 ActiveRecord::Base.connection.reset_pk_sequence!('events')
 ActiveRecord::Base.connection.reset_pk_sequence!('users')
 
+groups = Group.all
+groups.each do |group|
+  a = Article.new
+  a.group_id = group.id
+  a.user_id = 1
+  a.body = "**Who**\r\n\r\n**What**\r\n\r\n**Where**\r\n\r\n**When**\r\n\r\n**Why**\r\n"
+  a.title = "About " + group.name
+  a.type_article = "Welcome"
+  a.save
+end
