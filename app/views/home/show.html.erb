@@ -18,8 +18,12 @@
     <% if can? :invite, Member %>
     <h4>Other Links</h4>
     <ul>
-      <li><%= link_to "Group Articles(#{@art_count})" ,articles_path if can? :manage, Article %></li>
-      <li><%= link_to "Group Images" ,images_path if can? :upload, Image %></li>
+      <% if can? :create, Article %>
+      <li><%= link_to "Group Articles(#{@art_count})" ,articles_path  %></li>
+      <% end%>
+      <% if can? :upload, Image%>
+      <li><%= link_to "Group Images" ,images_path %></li>
+      <% end %>
     </ul>
     <% end %>
     <% if current_user.role?(["coordinator","super"])%>

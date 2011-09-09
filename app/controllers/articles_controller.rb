@@ -86,7 +86,7 @@ class ArticlesController < ApplicationController
   end
   
   def poster
-    if cannot? :post, :article
+    if cannot? :post, Article
       redirect_to "/opps" , :alert => "Sorry, not authorized"
     end
   end

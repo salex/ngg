@@ -30,7 +30,8 @@ class Ability
       can [:update, :create, :invite,:teeopt], Member  
       #can [:update, :create], Course  
       can [:update, :create], [Round,Event]
-      can [:update, :create, :upload], Image
+      can [:manage,:upload], Image
+      can [:manage, :post], Article
     end
     if  user.role? [:coordinator]
       can :manage, :all
