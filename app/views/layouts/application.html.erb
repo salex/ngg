@@ -17,8 +17,10 @@
 			 		| <%= link_to "Edit profile", edit_user_path("current")  %>  
 			    |
 			    <%= link_to "Log out", logout_path %>  
-			  <% else %>  
-			    <%= link_to "Sign up", signup_path %> or   
+			  <% else %> 
+			  <% if is_root_domain? %> 
+			    <%= link_to "Sign up", signup_path %> or  
+			    <% end %> 
 			    <%= link_to "Log in", login_path %>  
 			  <% end %>  
 			  
