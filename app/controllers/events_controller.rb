@@ -20,7 +20,7 @@ class EventsController < ApplicationController
     @teams = Event.form_event_teams(@event,@current_group,@rounds) if @rounds
     respond_to do |format|
       
-      if @event.status == "New"
+      if (@event.status == "New") && (can? :create, Event)
         @members = Member.get_active_members(@current_group) #@current_group.members.order('name ASC') #
         @imembers = Member.get_inactive_members(@current_group) #@current_group.members.order('name ASC') #
         format.html { render action: "add" }
@@ -104,6 +104,7 @@ class EventsController < ApplicationController
     @event = Event.new(params[:event])
     @event.group_id = @current_group.id
     @event.status = "New"
+    session[:paying] = params[:paying]
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }

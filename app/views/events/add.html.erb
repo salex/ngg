@@ -9,18 +9,16 @@
   
   <fieldset> 
   	<legend>Add Member to Event
-  	<span class="annotate">Add required date and team information. Select members using the checkbox next to their name. <br />Enter score info in opened form. Click the "Continue" button after selections.</span>
+  	<span class="annotate">Select members using the checkbox next to their name. <br />Enter score info in opened form. Click the "Continue" button after selections.</span>
+	  
   	</legend> 
   	<table class="g-table w100">
-  		<tr class="title">
+  		<tr class="action">
   			<th>
   				Date: <%=@event.date%>
-  				Teams: <%=@event.teams%>
-  				Places: <%=@event.places%>
-  				Members: <%=@event.attendees %>
   				Course: <%=Course.find(@event.course_id).name%>
-  				<%= form.hidden_field(:course_id)%>
-  				Teams: <%= check_box_tag( :event_teams, 0, @event.teams != @event.attendees)%>
+  		    <%= submit_tag "Continue", :class => "submit" %> 
+  				
   			</th>
   			<th>
   			   Add/Cancel Status
@@ -28,10 +26,19 @@
   		</tr>
   		<tr>
   		  <td class="greenbox">
-  		    <%= submit_tag "Continue", :class => "submit" %>  
+  		    <table class="show-list">
+  		      <tr><th>Teams</th><td><%=@event.teams%></td>
+  				  <th>Places</th><td><%=@event.places%></td>
+  				  </tr>
+  				  <tr><th>Members</th><td><%=@event.attendees %></td>
+  				  <th>Paying Teams</th>
+  				  <td><%= check_box_tag( :event_teams, 0, ((session[:paying] && session[:paying] == "teams") || (@event.teams != @event.attendees)))%></td>
+  				  </tr>
+  				  </table>
+  				<%= form.hidden_field(:course_id)%>
   		  </td>
   		  <td class="greenbox">
-  		    <textarea rows="5" cols="30" id="addStatus" ></textarea>
+  		    <textarea rows="4" cols="30" id="addStatus" ></textarea>
   		  </td>
   		</tr>
   	</table>

@@ -15,10 +15,6 @@
     <% end %>
     <table class="label-data">
       <tr class="field">
-        <th><%= f.label :group_id %></th>
-        <td><%= @current_group.id %></td>
-      </tr>
-      <tr class="field">
         <th><%= f.label :course_id %></th>
         <td><%= f.collection_select(:course_id,@current_group.courses,:id,:name,{:prompt => true})  %></td>
       </tr>
@@ -31,6 +27,13 @@
         <td><%= f.text_area :remarks , :rows => 4, :cols => 40%></td>
       </tr>
       <tr class="field">
+        <th><%= f.label "Paying" %></th>
+        <td>
+          <%= radio_button_tag "paying","individual",true%> Individuals<br />
+          <%= radio_button_tag "paying","team" %> Teams
+        </td>
+      </tr>
+      <tr class="field">
         <th><%= f.label :attendees %></th>
         <td><%= f.text_field :attendees, :size => 3 %><span class="annotate">The number of members attending this event</span></td>
       </tr>
@@ -40,17 +43,13 @@
       </tr>
       <tr class="field">
         <th><%= f.label :places %></th>
-        <td><%= f.text_field :places, :size => 3  %><span class="annotate">The number of teams that will be paid</span></td>
-      </tr>
-      <tr class="field">
-        <th><%= f.label :status %></th>
-        <td>New</td>
+        <td><%= f.text_field :places, :size => 3 , :class => "required" %><span class="annotate">The number of teams that will be paid</span></td>
       </tr>
       
       
     </table>
     <div class="action">
-      <%= f.submit %> <%= link_to 'Events (cancel)', events_path, :class => "breadcrumb" %>
+      <%= f.submit( "Create and Continue" )%> <%= link_to 'Events (cancel)', events_path, :class => "breadcrumb" %>
       
     </div>
   </fieldset>

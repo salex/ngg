@@ -17,19 +17,19 @@ body.events {
   display:none;
 }
 #dialog .window {
-  position:absolute;
+  position:absolute;
   border:solid 1px green;
-  width:440px;
-  height:200px;
-  z-index:9999;
-  padding:20px;
+  width:440px;
+  height:200px;
+  z-index:9999;
+  padding:20px;
 }
 
 
 /* Customize your modal window here, you can add background image too */
 #content #dialog {
-  width:375px; 
-  height:203px;
+  width:375px; 
+  height:203px;
 }
 
 /* line 775, compass/src/screen.sass */

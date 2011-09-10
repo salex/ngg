@@ -103,6 +103,8 @@ $alt-green: #e7ffe7;
 
 .col-32 { width: 960px; padding-right: 10px; }
 
+input.required, input.validate-one-name { background-color: #F7EFCC; }
+
 #content fieldset { position: relative; 
     margin-right: auto; margin-left: auto; margin-top: 4px; margin-bottom: 4px; background: #e8ffe8; padding: 4px;border: 1px solid; border-color: $medium-green;
     @include rounded-corners(5px);
@@ -119,11 +121,11 @@ $alt-green: #e7ffe7;
 
 #navbar { background: green; padding: 2px; }
 
-#container { background: #cceecc; width: 960px; margin: auto;   z-index:1;position:relative}
+#container { background: #cceecc; width: 960px; margin: auto;position:relative}
 
 #content { padding: 1em; background: transparent;}
 
-h4 {font-size:1.25em;font-wight:bold;border-bottom:$darker-green;font-variant: small-caps;}
+h4 {font-size:1.25em;font-weight:bold;border-bottom:$darker-green;font-variant: small-caps;}
 
 .links a, #content a { text-decoration: none; color: blue;font-size:0.9em; }
 .links a:hover, #content a:hover { color: red !important;}

@@ -4,15 +4,16 @@
 
   <table class="g-table">
     <tr class="hdr">
-      <th>Name</th>
+      <th>Visit Group</th>
       <th>Subdomain</th>
+      <th>Visit</th>
     </tr>
   <% altswitch = false %>
   <% @groups.each do |group| %>
     <% altswitch = !altswitch %>
     <% altclass = altswitch ? "" : "class=\"alt\"".html_safe %>
     <tr <%= altclass %>>
-      <td><%= link_to group.name, group, :class => "link-go-button" %></td>
+      <td><%= link_to group.name, root_url( :group => group.subdomain), :class => "link-go-button" %></td>
       <td><%= group.subdomain %></td>
     </tr>
   <% end %>

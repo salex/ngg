@@ -9,7 +9,7 @@
 
 <div class="relations">
 	<div id="related">
-	  <% if @event.status == "New" %>
+	  <% if( @event.status == "New") && (can? :create, Event) %>
 	  <%= render :template => "events/add"%>
 	  <% else %>
 	  <%= render :template => "rounds/index"%>
