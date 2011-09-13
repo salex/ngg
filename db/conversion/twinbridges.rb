@@ -6,7 +6,7 @@ def create_member(line)
   m.last_name = c[0]
   m.first_name = c[1]
   m.quota = c[2].to_i
-	g = 5
+	g = 6
   tee = c[4]
   if tee.blank?
     if m.quota > 32
@@ -30,7 +30,7 @@ end
 
 def create_rounds(member,rounds)
 	cd = Date.today
-	thash = {"P" => 11, "B" => 12, "M" => 13, "F" => 14, "C" => "15"}
+	thash = {"P" => 10, "B" => 12, "M" => 14, "F" => 15, "C" => 16}
 
   rounds.each do |points|
 	  cd -= 1
@@ -102,5 +102,5 @@ lines.each do |line|
   create_member(line)
 end
 
-g = Group.find(5)
+g = Group.find(6)
 g.recompute_members_quotas
