@@ -13,6 +13,7 @@ class Member < ActiveRecord::Base
   validates_presence_of :first_name
   validates_presence_of :last_name
   before_validation :set_defaults
+  before_create :create_defaults
   
   #has_one :image, :as => :imageable
  # has_many :rounds, :order => "date DESC", :dependent => :destroy
@@ -34,6 +35,10 @@ class Member < ActiveRecord::Base
  # validates_presence_of   :last_played 
  # validates_numericality_of :quota,  :only_integer => true, :greater_than => 1, :less_than => 45
 
+  def create_defaults
+    self.last_name.capitalize!
+    self.first_name.capitalize!
+  end
   
   def set_defaults
     self.status = "Active" if self.status.nil?

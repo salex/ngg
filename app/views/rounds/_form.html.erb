@@ -24,7 +24,8 @@
         </tr>
         <tr class="field">
           <th><%= f.label :tee_id %></th>
-          <td><%= f.text_field :tee_id %></td>
+          <td><%= f.select :tee_id,  group_tees(@round.tee_id),{},{ :class => "rtees"}%></td>
+          
         </tr>
         <tr class="field">
           <th><%= f.label :date %></th>

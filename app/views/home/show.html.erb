@@ -9,23 +9,25 @@
     <li><%= link_to "Notices/Articles" ,home_path( :info ) %></li>
     <li><%= link_to "Group Photos" ,home_path( :photos ) %></li>
     <li><%= link_to "Terminology" ,home_path( :term ) %></li>
-    <%if can? :update, Image %>
-      <li><%= link_to  "Upload Photo", new_group_image_path(current_group.id) %></li>
-    <%end%>
   </ul>
   
   <% if logged_in? %>
-    <% if can? :invite, Member %>
     <h4>Other Links</h4>
     <ul>
-      <% if can? :create, Article %>
-      <li><%= link_to "Group Articles(#{@art_count})" ,articles_path  %></li>
-      <% end%>
-      <% if can? :upload, Image%>
-      <li><%= link_to "Group Images" ,images_path %></li>
+      <%if can? :update, Image %>
+        <li><%= link_to  "Upload Photo", new_group_image_path(current_group.id) %></li>
+      <%end%>
+      <% if can? :invite, Member %>
+      
+        <% if can? :create, Article %>
+        <li><%= link_to "Group Articles(#{@art_count})" ,articles_path  %></li>
+        <% end%>
+        <% if can? :upload, Image%>
+        <li><%= link_to "Group Images" ,images_path %></li>
+        <% end %>
       <% end %>
+      
     </ul>
-    <% end %>
     <% if current_user.role?(["coordinator","super"])%>
       <h4>Maintenance Links</h4>
       <ul>

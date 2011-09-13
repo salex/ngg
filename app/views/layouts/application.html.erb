@@ -28,9 +28,9 @@
 			<div class="f-clear"></div>
 
 	    <div id="header">
-	      <%= image_tag("flygooseL.gif",:height => '50', :class => 'f-left', :style => 'margin-top:-5px') %>
+	      <%= image_tag(asset_path( "flygooseL.gif"),:height => '50', :class => 'f-left', :style => 'margin-top:-5px') %>
 
-	      <%= image_tag("flygooseR.gif",:height => '50', :class => 'f-right', :style => 'margin-top:-5px') %>
+	      <%= image_tag(asset_path( "flygooseR.gif"),:height => '50', :class => 'f-right', :style => 'margin-top:-5px') %>
 	      Welcome to <%= (@current_group.subdomain + ".") if @current_group  %>GolfGaggle.com
 
 	    </div>

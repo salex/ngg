@@ -169,14 +169,6 @@ span.hover:hover { color: red !important;}
 .stuff { float: left; margin-left: 10px; border: 2px outset buttonface; background: #dddddd; padding: 5px; }
 
 .clear { clear: both; }
-a.edit-button { background: url(application_edit.png) no-repeat center left; padding: 1px 4px 1px 18px; }
-a.show-button { background: url(application_show.png) no-repeat center left; padding: 1px 4px 1px 18px; }
-a.print-button { background: url(printer.png) no-repeat center left; padding: 1px 4px 1px 18px; }
-a.destroy-button { background: url(application_delete.png) no-repeat center left; padding: 1px 4px 1px 18px; }
-a.link-button { background: url(application_go.png) no-repeat center left; padding: 1px 4px 1px 18px; }
-a.link-go-button { background: url(link_go.png) no-repeat center left; padding: 1px 4px 1px 18px; }
-a.new-button { background: url(application_add.png) no-repeat center left; padding: 1px 4px 1px 18px; }
-a.breadcrumb { background: url(resultset_previous.png) no-repeat center left; font-style: italic; text-decoration: none;  font-size: 0.8em; font-weight: bold; margin-left: 4px; padding: 1px 4px 1px 15px; border: none; }
 
 /* line 172, compass/src/screen.sass */
 .navspan { display: block; padding-left: 4px; background: transparent; }
@@ -265,11 +257,6 @@ table.g-table  tr.alt {
 	background-color:#e7ffe7;
 }
 
-table.g-table tr.hdr {
-	background-image: url(ggrad.gif);
-	background-repeat: y;
-	
-}
 
 table.g-table tr.hdr * {
 	font-weight:bold;

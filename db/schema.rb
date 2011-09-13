@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110905133803) do
+ActiveRecord::Schema.define(:version => 20110913113659) do
 
   create_table "articles", :force => true do |t|
     t.integer  "group_id"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(:version => 20110905133803) do
     t.integer  "high_low_rounds_effective"
     t.float    "round_dues"
     t.float    "skins_dues"
-    t.float    "other_game"
+    t.string   "other_game"
     t.float    "other_dues"
     t.integer  "points_double_eagle"
     t.integer  "points_eagle"

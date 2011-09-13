@@ -1,3 +1,5 @@
+require File.expand_path('../smtp.private.rb', __FILE__)
+
 Ngg::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -42,14 +44,7 @@ Ngg::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :domain               => 'golfgaggle.com',
-    :user_name            => 'appleii717',
-    :password             => 'gm.sva.1710',
-    :authentication       => 'plain',
-    :enable_starttls_auto => true  }
+  config.action_mailer.smtp_settings = prod_smtp_settings
 
   # Enable threaded mode
   # config.threadsafe!
