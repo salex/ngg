@@ -35,11 +35,11 @@
         <td><%= round.team %></td>
         <td><%= round.place %></td>
         <td class="actions">
-        <%= link_to 'Show', round, :class => "show-button" %>
+        <%= link_to 'Show', round, :class => "show-button" if logged_in? %>
         <%if can? :update , round%>
         <%= link_to 'Edit', edit_round_path(round), :class => "edit-button" %> 
         <%end%>
-        <%if can? :destrot , round %>
+        <%if can? :destroy , round %>
         <%= link_to 'Destroy', round, :confirm => 'Are you sure?', :method => :delete, :class => "destroy-button" %>
         <%end%>
         
@@ -49,7 +49,7 @@
   
   </table>
   <% %>
-  <%= will_paginate @rounds if params[:controller] == "members" %>
+  <%= will_paginate @rounds if params[:controller] == "members"  if logged_in? %>
   
 </div>
 

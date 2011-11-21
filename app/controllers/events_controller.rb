@@ -56,6 +56,8 @@ class EventsController < ApplicationController
 
   def add
     @event = Event.find(params[:id])
+    #hash = @event.set_session(params)
+    #logger.info hash.inspect
     @teams = Event.form_teams(params,@current_group, @event) 	
     
     respond_to do |format|
@@ -81,19 +83,20 @@ class EventsController < ApplicationController
       end
     end
     avg = tot / cnt
+    @event.transaction do
+      @event.remarks =  params["event"]["remarks"] +" {High:"+maxp.to_s+", Low:"+minp.to_s+ ", Average:"+avg.to_s+"}"
+      Round.create_from_event(@event,params,@current_group)
     
-    @event.remarks =  params["event"]["remarks"] +" {High:"+maxp.to_s+", Low:"+minp.to_s+ ", Average:"+avg.to_s+"}"
-    Round.create_from_event(@event,params,@current_group)
     
-    
-    respond_to do |format|
-      if @event.save
-        flash[:notice] = 'Members was successfully added to Event.'
-        format.html { redirect_to(@event) }
-        format.json  { render :json => @event, :status => :created, :location => @event }
-      else
-        format.html { redirect_to(@event) }
-        format.json  { render :json => @event.errors, :status => :unprocessable_entity }
+      respond_to do |format|
+        if @event.save
+          flash[:notice] = 'Members was successfully added to Event.'
+          format.html { redirect_to(@event) }
+          format.json  { render :json => @event, :status => :created, :location => @event }
+        else
+          format.html { redirect_to(@event) }
+          format.json  { render :json => @event.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end

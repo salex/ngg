@@ -410,4 +410,61 @@ class Event < ActiveRecord::Base
   end
   
   
+  def set_session(params)
+    evt = self.id.to_s
+    group = self.group
+    hash = {"id" => evt  , "attendees" => {}, "teams" => {}}
+    params["memb"].each { |key,memb| 
+      if memb != ""
+        logger.info "jjjjjjj #{memb} memb"
+        data = memb.split(":")
+        team = data[1]
+        memb = data[0]
+        hash["attendees"][memb] = {
+        "team" => data[1].to_i,
+        "plus_minus" => data[2].to_i,
+        "quota" => data[3].to_i,
+        "points_pulled" => data[4].to_i,
+        "par" => data[5],
+        "tee_id" => data[6].to_i,
+        "gross_pulled" => data[7].to_i,
+        "net_pulled" => data[8].to_i,
+        "other_quality" => data[9].to_f,
+        "limited" => data[10] == "true" ? true : false
+      }
+      #quota = 0
+      hash["attendees"][memb]["gross_pulled"] = hash["attendees"][memb]["quota"] + hash["attendees"][memb]["plus_minus"]
+      hash["attendees"][memb]["net_pulled"] = hash["attendees"][memb]["gross_pulled"]
+      hash["attendees"][memb]["points_pulled"] = hash["attendees"][memb]["gross_pulled"]
+      if group["uses_round_limit"]
+        if hash["attendees"][memb]["plus_minus"] > group["round_limit"]
+          hash["attendees"][memb]["net_pulled"] = hash["attendees"][memb]["quota"] + group["round_limit"]
+        else
+          if hash["attendees"][memb]["plus_minus"] < (group["round_limit"] * -1)
+            hash["attendees"][memb]["net_pulled"] = (hash["attendees"][memb]["quota"] - group["round_limit"] )
+          end
+        end
+        if group["limit_gross_points"]
+          hash["attendees"][memb]["points_pulled"] = hash["attendees"][memb]["net_pulled"]
+        end
+      end      
+      if hash["attendees"][memb]["limited"] && group["uses_new_member_limit"]
+        if hash["attendees"][memb]["plus_minus"] > group["new_member_limit"]
+          hash["attendees"][memb]["net_pulled"] = hash["attendees"][memb]["quota"] + group["new_member_limit"]
+        else
+          if hash["attendees"][memb]["plus_minus"] < (group["new_member_limit"] * -1)
+            hash["attendees"][memb]["net_pulled"] = (hash["attendees"][memb]["quota"] - group["new_member_limit"])
+          end
+        end
+      end      
+      if hash["teams"][team]
+        hash["teams"][team] << memb
+      else
+        hash["teams"][team] = [memb]
+      end
+      end
+    }
+    return hash
+  end
+  
 end

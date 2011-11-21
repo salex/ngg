@@ -25,6 +25,7 @@ class Round < ActiveRecord::Base
       rnd.event_id = event.id
       rnd.quota = params["round"]["quota"][memb]
       rnd.plus_minus = params["round"]["points"][memb]
+      rnd.tee_id = params["round"]["tee"][memb]
       rnd.points_pulled = params["round"]["pulled"][memb]
       rnd.gross_pulled = params["round"]["pulled"][memb]
       net_limit = rnd.quota + params["round"]["net_points"][memb].to_i
@@ -36,7 +37,6 @@ class Round < ActiveRecord::Base
       end
       rnd.net_pulled = [net_limit,net_star].min
       rnd.date = event.date
-      rnd.tee_id = params["round"]["tee"][memb]
       rnd.team = params["round"]["team"][memb]
       rnd.round_quality = params["round"]["roundquality"][memb]
       rnd.skin_quality = params["round"]["skinquality"][memb]

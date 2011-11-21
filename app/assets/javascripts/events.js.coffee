@@ -116,12 +116,13 @@ $(document).ready ->
       teeSelect = $('#tee')
       tee = membOpt[teeSelect.val()] # get array elem
       teeID = tee.tee
+      limited = tee.limited
       starpoints = $('#starpoints').val()
       net_points = $('#net_points').val()
       otherquality = $('#otherquality').val()
       
       membID = @membID
-      list =  membID + ":" + team + ":" +  points + ":" +  quota + ":" +  pulled + ":" +  par + ":" +  teeID + ":" +  starpoints + ":" +  net_points + ":" +  otherquality
+      list =  membID + ":" + team + ":" +  points + ":" +  quota + ":" +  pulled + ":" +  par + ":" +  teeID + ":" +  starpoints + ":" +  net_points + ":" +  otherquality + ":" +  limited
       ihtml =  "T" + team + ":" + points
       $('#memb_'+ membID).val(list)
       $('#mpts_'+ membID).html(ihtml)

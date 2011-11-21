@@ -9,7 +9,7 @@
 
     <%tbody = []%>
     <% @members.each do |member|
-      tbody << "<td>#{link_to member.name,member}</td><td>#{member.quota}</td>"
+      tbody << "<td>#{link_to member.name,member}</td><td>#{member.quota}#{member.limited ? "*" : ""}</td>"
     end %>
     <%=raw float_table_columns(tbody,4,"<tr class=\"list-header\"><th>Name</th><th>Quota</th></tr>","alt","f-left col-7 index-list")%>
 </fieldset>
@@ -17,7 +17,7 @@
     <legend>Inactive</legend>
     <%tbody = []%>
     <% @imembers.each do |member|
-      tbody << "<td>#{link_to member.name,member}</td><td>#{member.quota}</td>"
+      tbody << "<td>#{link_to member.name,member}</td><td>#{member.quota}#{member.limited ? "*" : ""}</td>"
     end %>
     <%=raw float_table_columns(tbody,4,"<tr class=\"list-header\"><th>Name</th><th>Quota</th></tr>","alt","f-left col-7 index-list")%>
     &nbsp;
@@ -29,7 +29,7 @@
 
     <%tbody = []%>
     <% @dmembers.each do |member|
-      tbody << "<td>#{link_to member.name,member}</td><td>#{member.quota}</td>"
+      tbody << "<td>#{link_to member.name,member}</td><td>#{member.quota}#{member.limited ? "*" : ""}</td>"
     end %>
     <%=raw float_table_columns(tbody,4,"<tr class=\"list-header\"><th>Name</th><th>Quota</th></tr>","alt","f-left col-7 index-list")%>
   &nbsp;

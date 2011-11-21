@@ -24,6 +24,10 @@ links = ""
       <th>Memb</th>
       <th>Teams</th>
       <th>Places</th>
+      <%if can? :create , Event%>
+        <th>Actions</th>
+      <% end -%>
+  	  
     </tr>
 
   <% 
@@ -41,10 +45,16 @@ links = ""
         
         <td><%= event.teams %></td>
         <td><%= event.places %></td>
+        <%if can? :create , Event%>
+        
+        <td><%= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete, :class => "destroy-button" if (can? :destroy, event) && is_my_group?(event.group_id)  %></td>
+        <% end -%>
+        
+        
     </tr>
   <% end %>
   </table>
-  <%= will_paginate @events %>
+  <%= will_paginate @events  if logged_in? %>
   
 </fieldset>
 
