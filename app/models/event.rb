@@ -2,11 +2,93 @@ class Event < ActiveRecord::Base
   belongs_to :group
   belongs_to :course
   has_many :rounds, :order => 'team', :dependent => :destroy
-  
-  validates_presence_of :date
+  accepts_nested_attributes_for :rounds
+  validates_presence_of :date, :places
   validates_uniqueness_of :date
   
+  def valid_teams(teams)
+    if teams.length > 1
+      if teams.include?("Indiv")
+        self.errors[:base] << "Members selected using both Team number and Individual selection - use one or the other"
+        return false
+      end
+    end
+    return true
+  end
   
+  def build_event(params)
+    ridx = 0
+    skins = get_skins(params[:add])
+    each_skin = params[:team][:skins_pot].to_f / skins["good"]
+    maxp = 0
+    minp = 0
+    tot = 0
+    
+    params[:add].each do |key,data|
+      self.rounds[ridx][:member_id] = data[:mid]
+      self.rounds[ridx][:tee_id] = data[:tee]
+      self.rounds[ridx][:date] = params[:event][:date]
+      self.rounds[ridx][:quota] = data[:quota]
+      self.rounds[ridx][:points_pulled] = data[:gross]
+      self.rounds[ridx][:plus_minus] = data[:plus_minus]
+      self.rounds[ridx][:round_quality] = params[:team][:share][data[:team]].to_f / params[:team][:size][data[:team]].to_i
+      self.rounds[ridx][:skin_quality] = skins[data[:mid].to_i] * each_skin if skins[data[:mid].to_i]
+      self.rounds[ridx][:other_quality] = data[:other_quality]
+      self.rounds[ridx][:place] = params[:team][:place][data[:team]]
+      self.rounds[ridx][:team] = data[:team]
+      self.rounds[ridx][:gross_pulled] = data[:gross]
+      self.rounds[ridx][:net_pulled] = data[:net]
+      #TODO if group["limit_gross_points"]
+      data[:skin_quality] = 0
+      data[:par] = ""
+      data[:hole].each do |k,s|
+        data[:par] += s
+      end
+      self.rounds[ridx][:par_in] = data[:par][0..8]
+      self.rounds[ridx][:par_out] = data[:par][9..17]
+      ridx += 1
+      pts = data[:plus_minus].to_i
+      tot += pts
+      if pts > maxp
+        maxp = pts
+      end
+      if pts < minp
+        minp = pts
+      end
+    end
+    avg = tot / ridx
+    self.remarks += " {H:"+maxp.to_s+", L:"+minp.to_s+ ", A:"+avg.to_s+"}"
+  end
+  
+  def get_skins(players)
+    skins = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    skinType = ['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.']
+    skinWho = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    pts = {"A" => 5, "E" => 4, "B" => 3, "P" => 2, "O" => 1, "D" => 0, "." => nil}
+    players.each do |key,player|
+      holes = player["hole"].values 
+      holes.each_index do |i|
+        if !(/(A|E|B)/ =~ holes[i]).nil? # birdie +
+          if skins[i] == 0 #set skin
+            skins[i] = 1
+            skinType[i] = holes[i]
+            skinWho[i] = player[:mid].to_i
+          elsif holes[i] == skinType[i] # skin cut
+            skins[i] += 1
+            skinWho[i] = 0
+          elsif pts[holes[i]] > pts[skinType[i]] # took skin away with eagle or better
+            skins[i] = 1
+            skinType[i] = holes[i]
+            skinWho[i] = player[:mid].to_i
+          end
+        end
+      end
+    end
+    count = skinWho.inject(Hash.new(0)) {|who, cnt| who[cnt]+=1; who}
+    count["good"] = (18 - count[0])
+    #logger.info "aaaaaaaaaaa #{skins.inspect} #{skinType.inspect} #{skinWho.inspect} #{count}"
+    return count
+  end
   
   def self.form_event_teams(event,group,rounds)
     @skins = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -32,6 +114,10 @@ class Event < ActiveRecord::Base
       round.par_in = round.par_in.nil? ? "........." : round.par_in
       round.par_out = round.par_out.nil? ? "........." : round.par_out
       par = round.par_in + round.par_out
+      #bridge band-aid
+      par.gsub!("B","3")
+      par.gsub!("E","2")
+      par.gsub!("A","1")
       tee = round.tee_id
       #starpoints =  round.gross_pulled.nil? ? pulled - quota : round.gross_pulled - quota
       net_points =  starpoints = round.net_pulled.nil? ? pulled - quota : round.net_pulled - quota
@@ -110,7 +196,7 @@ class Event < ActiveRecord::Base
     
       teams = self.pay_teams(teams)
     end
-    logger.info teams.inspect
+    #logger.info teams.inspect
     return teams
   end
   
@@ -414,13 +500,13 @@ class Event < ActiveRecord::Base
     evt = self.id.to_s
     group = self.group
     hash = {"id" => evt  , "attendees" => {}, "teams" => {}}
-    params["memb"].each { |key,memb| 
+    params["round"]["memb"].each { |key,memb| 
       if memb != ""
-        logger.info "jjjjjjj #{memb} memb"
         data = memb.split(":")
         team = data[1]
         memb = data[0]
         hash["attendees"][memb] = {
+        "member_id" => memb.to_i,
         "team" => data[1].to_i,
         "plus_minus" => data[2].to_i,
         "quota" => data[3].to_i,
@@ -432,7 +518,10 @@ class Event < ActiveRecord::Base
         "other_quality" => data[9].to_f,
         "limited" => data[10] == "true" ? true : false
       }
-      #quota = 0
+      if hash["attendees"][memb]["quota"] == 0
+        m = Member.find(hash["attendees"][memb]["member_id"])
+        hash["attendees"][memb]["quota"], hash["attendees"][memb]["limited"] = m.get_member_quota(hash["attendees"][memb]["tee_id"])
+      end
       hash["attendees"][memb]["gross_pulled"] = hash["attendees"][memb]["quota"] + hash["attendees"][memb]["plus_minus"]
       hash["attendees"][memb]["net_pulled"] = hash["attendees"][memb]["gross_pulled"]
       hash["attendees"][memb]["points_pulled"] = hash["attendees"][memb]["gross_pulled"]

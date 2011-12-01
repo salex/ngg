@@ -3,158 +3,171 @@
   <legend>Event</legend>
   <div class="show-listi">
 
-  	<table class="g-table w100">
-  		<tr class="title">
-  			<td colspan="7">
-  				Date: <%=@event.date%>
-  				Teams: <%=@event.teams%>
-  				Places: <%=@event.places%>
-  				Members: <%=teams["count"]%>
-  				Course: <%=Course.find(teams["course"]).name%>
-  			</td>
-  		</tr>
-  		<% if @teams["count"] > 0%>
-  		<tr class="title">
-  			<td colspan="7">
-  				Skins 
-  				<%good = 0.0
-  				1.upto(18) do |i|
-  					if teams["skins"][i-1] == 1
-  						checked = 'checked="checked"'
-  						good += 1.0
-  					else
-  						checked = ""
-  					end%>
-  					<%= i %><input type="checkbox" id="birdies_<%=i-1%>" value="<%=i%>"  <%=checked%> />
-  				<%end
-  					if good > 0
-  						skinvalue = (teams["skinspot"] / good).round_to(2)
-  						eachskin = "Each Skin: $"+skinvalue.to_s
-  					else
-  						eachskin = ""
-  					end
-  				%>
-  				<%=eachskin%>
-  			</td>
-  		</tr>
-  		<tr >
-  			<td colspan="7">
+    <table class="g-table w100">
+      <tr class="title">
+        <td colspan="7">
+          <b>Date:</b> <%=@event.date%>
+          <b>Teams:</b> <%=@event.teams%>
+          <b>Places:</b> <%=@event.places%>
+          <b>Members:</b> <%=teams["count"]%>
+          <b>Course:</b> <%=Course.find(teams["course"]).name%>
+        </td>
+      </tr>
+      <% if @teams["count"] > 0 %>
+      <tr class="title">
+        <td colspan="7">
+          <b>Skins</b> 
+          <%
+          good = 0.0
+          1.upto(18) do |i|
+            if teams["skins"][i-1] == 1
+              checked = 'checked="checked"'
+              good += 1.0
+            else
+              checked = ""
+            end
+            %>
+            <%= i %><input type="checkbox" id="birdies_<%=i-1%>" value="<%=i%>"  <%=checked%> />
+            <%
+          end
+          if good > 0
+            skinvalue = (teams["skinspot"] / good).round_to(2)
+            eachskin = "Each Skin: $"+skinvalue.to_s
+          else
+            eachskin = ""
+          end
+          %>
+          <%=eachskin%>
+        </td>
+      </tr>
+      <tr >
+        <td colspan="7">
 
-  				Team Pot: $<%=teams["teampot"] %> |
-  				Skins Pot: $<%=teams["skinspot"] %> |
-  				Teams Paid: <%=@event.places %> |
+          <b>Team Pot:</b> $<%=teams["teampot"] %> |
+          <b>Skins Pot:</b> $<%=teams["skinspot"] %> |
+          <b>Teams Paid:</b> <%=@event.places %> |
 
-  				  <% places = ""
-  				endval = teams["places"].length
-  				endval -= 1
-  				for item in 1..endval do
-  				    places += "P"+item.to_s+": $"+teams["places"][item].to_s+ " "
-  				end %>
-  				<%= places %>
-  			</td>
-  		</tr>
-  		<tr class="title">
-  			<th>Team Mates</th>
-  			<th class="right">Quota</th>
-  			<th class="right">Points</th>
-  			<th class="right">Pulled</th>
-  			<th class="right">Team +/-</th>
-  			<th>Team/Skins/Other $</th>
-  			<td class="right green"><b>Skins</b><br /><code>123456789012345678</code></td>
-  		</tr>
+            <% places = ""
+          endval = teams["places"].length
+          endval -= 1
+          for item in 1..endval do
+              places += "<b>P"+item.to_s+":</b> $"+teams["places"][item].to_s+ " "
+          end %>
+          <%= places.html_safe %>
+        </td>
+      </tr>
+      </table>
 
-  		<% 
-  		cnt = 0
-  		teams["team"].each { |t| 
-  			if t
-  				cnt += 1
-  				lcv = 0
-  				if t["quality"] > 0
-  					round_quality = (t["quality"]/t["count"])
-  					t['comment'] += ' (each $'+round_quality.to_s+")"
-  				else
-  					round_quality = 0
-  				end
- 					
-  				t["mate"].each { |id| 
-  					m = Member.where(:id => id).first
-  					if m.nil?
-  					  next
-					  end
-  					skins = 0
-  					skin_quality = 0
-  					for item in 0..17 do
+      <% 
+      cnt = 0
+      teams["team"].each do |t| 
+        if t
+          cnt += 1
+          lcv = 0
+          if t["quality"] > 0
+            round_quality = (t["quality"]/t["count"])
+            t['comment'] += ' (each $'+round_quality.to_s+")"
+          else
+            round_quality = 0
+          end%>
+          <fieldset class="index-list">
+            <legend>Team:<%= cnt%>
+              <span class="annotate">
+                Members: <%=t["count"]%> 
+                Team +-: <%=t['total']%>
+                <%=t['comment']%>
+              </span>
+            </legend>
+            <table>
+              <tr class="list-header">
+                <th>Team Mates</th>
+                <th class="right">Quota</th>
+                <th class="right">+- Points</th>
+                <th class="right">Pulled</th>
+                <th class="right">Team +/-</th>
+                <th>Team/Skins/Other $</th>
+                <td class="right green">Skins &nbsp;<code style="font-weight:normal">123456789012345678</code></td>
+              </tr>
+          <%
+          t["mate"].each do |id| 
+            m = Member.where(:id => id).first
+            if m.nil?
+              next
+            end
+            skins = 0
+            skin_quality = 0
+            for item in 0..17 do
 
-  					  if teams['skinswho'][item] == id
-  					  	skins += 1
-  					  end
-  					end
-  					if skins > 0
-  						skin_quality += (skins * skinvalue)
-  						t['par'][lcv]
+              if teams['skinswho'][item] == id
+                skins += 1
+              end
+            end
+            if skins > 0
+              skin_quality += (skins * skinvalue)
+              t['par'][lcv]
 
-  					end
-  					tee = "?"
-  					otherquality = t['otherquality'][lcv].to_i
-  					
-  					quality = skin_quality + round_quality
+            end
+            tee = "?"
+            otherquality = t['otherquality'][lcv].to_i
+            
+            quality = skin_quality + round_quality
              %>
           <tr>
-  					<td><%= m.name %> 
-  					</td>
+            <td><%= m.name %> 
+            </td>
 
-  					<td class="right">
-  						<%= t['quota'][lcv]%>
-  					</td>
-  					<td class="right">
-  						<%= t['points'][lcv]%>
+            <td class="right">
+              <%= t['quota'][lcv]%>
+            </td>
+            <td class="right">
+              <%= t['points'][lcv]%>
 
-    					<td class="right">
-  					<%=t['pulled'][lcv]%>
-  					</td>
-  					<td class="right">
-  					  <%=t['starpoints'][lcv]%>
+              <td class="right">
+            <%=t['pulled'][lcv]%>
+            </td>
+            <td class="right">
+              <%=t['starpoints'][lcv]%>
 
-  					</td>
-  					<td>
-  					  <%if round_quality > 0 %>
-  					    $<%=round_quality%>
-  					  <%else%>
-  					  --
-  					  <%end%>
-  					  /
-  					  <%if skin_quality > 0 %>
-  					    $<%=skin_quality.round(2)%>
-  					  <%else%>
-  					  --
-  					  <%end%>
-  					  /
-  					  <%if  otherquality > 0 %>
-  					    $<%= otherquality.round(2)%>
-  					  <%else%>
-  					  --
-  					  <%end%>
-  					  
+            </td>
+            <td>
+              <%if round_quality > 0 %>
+                $<%=round_quality%>
+              <%else%>
+              --
+              <%end%>
+              /
+              <%if skin_quality > 0 %>
+                $<%=skin_quality.round(2)%>
+              <%else%>
+              --
+              <%end%>
+              /
+              <%if  otherquality > 0 %>
+                $<%= otherquality.round(2)%>
+              <%else%>
+              --
+              <%end%>
+              
 
-  					</td>
-  					<td class="right"><code><%=t['par'][lcv]%></code>
-  					</td>
-  				</tr>
-  				<% lcv += 1
-  				 }%>
-  				<tr class="hdr">
-  					<td colspan="3">
-  						&uarr;Team:<%= cnt%> Members: <%=t["count"]%> 
-  					</td>
-  					<td>Total</td>
-  					<td class="right"><%=t['total']%></td>
-  					<td colspan="2"><span id="place_<%=cnt%>" ><%=t['comment']%></span></td>
-  				</tr>
-    			<% end }%>
+            </td>
+            <%
+            par = t['par'][lcv]
+            par.gsub!("3","B")
+            par.gsub!("2","E")
+            par.gsub!("1","A")
+            %>
+            <td class="right"><code><%= par %></code>
+            </td>
+          </tr>
+          <% lcv += 1
+           end %>
+           </table>
+          </fieldset>
+          <% end %>
+        <% end %>
 
-  			<% end %>
-  	</table>
-  	<% #= teams.inspect%>
+        <% end %>
+    <% #= teams.inspect%>
   </div>
   
 

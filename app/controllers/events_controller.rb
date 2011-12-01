@@ -18,104 +18,59 @@ class EventsController < ApplicationController
     params[:event_id] = params[:id]
     @rounds = Round.search(params)
     @teams = Event.form_event_teams(@event,@current_group,@rounds) if @rounds
-    respond_to do |format|
-      
-      if (@event.status == "New") && (can? :create, Event)
-        @members = Member.get_active_members(@current_group) #@current_group.members.order('name ASC') #
-        @imembers = Member.get_inactive_members(@current_group) #@current_group.members.order('name ASC') #
-        format.html { render action: "add" }
-        format.json { render json: @event }
-      else
-        format.html # show.html.erb
-        format.json { render json: @event }
-      end
-    end
   end
 
   # GET /events/new
   # GET /events/new.json
   def new
     @event = Event.new
-    @event.group_id = @current_group.id
-    if !params[:cid]
-      params[:cid] = @current_group.courses.first
-    end
-    @event.course_id = params[:cid]
-
+    new_defaults
     respond_to do |format|
-      format.html # new.html.erb
+      format.html {render :action => "select"}
       format.json { render json: @event }
     end
   end
 
+  
   # GET /events/1/edit
   def edit
     @event = Event.find(params[:id])
     @rounds = @event.rounds
   end
 
-  def add
-    @event = Event.find(params[:id])
-    #hash = @event.set_session(params)
-    #logger.info hash.inspect
-    @teams = Event.form_teams(params,@current_group, @event) 	
-    
-    respond_to do |format|
-      format.html { render action: "verify" } # new.html.erb
-      format.json  { render :json => @event }
-    end
-  end
-  
-  def verify
-    @event = Event.find(params[:id])
-    maxp = 0
-    minp = 0
-    tot = 0
-    cnt = params["round"]["points"].length
-    params["round"]["points"].each do |key,val|
-      pts = val.to_i
-      tot += pts
-      if pts > maxp
-        maxp = pts
-      end
-      if pts < minp
-        minp = pts
-      end
-    end
-    avg = tot / cnt
-    @event.transaction do
-      @event.remarks =  params["event"]["remarks"] +" {High:"+maxp.to_s+", Low:"+minp.to_s+ ", Average:"+avg.to_s+"}"
-      Round.create_from_event(@event,params,@current_group)
-    
-    
-      respond_to do |format|
-        if @event.save
-          flash[:notice] = 'Members was successfully added to Event.'
-          format.html { redirect_to(@event) }
-          format.json  { render :json => @event, :status => :created, :location => @event }
-        else
-          format.html { redirect_to(@event) }
-          format.json  { render :json => @event.errors, :status => :unprocessable_entity }
-        end
-      end
-    end
-  end
-
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(params[:event])
-    @event.group_id = @current_group.id
-    @event.status = "New"
-    session[:paying] = params[:paying]
-    respond_to do |format|
-      if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
-        format.json { render json: @event, status: :created, location: @event }
+    if params[:commit] != "Create"
+      
+      @event = Event.new(params[:event])
+      _teams(params[:memb])
+      if @event.valid? && @event.valid_teams(@teams)        
+        render :action => "add"
       else
-        format.html { render action: "new" }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        params[:cid] = @event.course_id
+        new_defaults
+        render :action => "select"
       end
+    else
+      @event = Event.new(params[:event])
+      params[:event][:attendees].to_i.times do
+        round = @event.rounds.build
+      end
+      
+      @event.build_event(params)
+      @event.status = "Add"
+      @event.group_id = @current_group.id
+      respond_to do |format|
+        if @event.save
+          format.html { redirect_to @event, notice: 'Event was successfully created.' }
+          format.json { render json: @event, status: :created, location: @event }
+        else
+          format.html { render action: "add" }
+          format.json { render json: @event.errors, status: :unprocessable_entity }
+        end
+      end
+      
     end
   end
 
@@ -145,5 +100,42 @@ class EventsController < ApplicationController
       format.html { redirect_to events_url }
       format.json { head :ok }
     end
+  end
+  private
+  
+  def new_defaults
+    
+    @event.group_id = @current_group.id
+    @members = Member.get_active_members(@current_group) #@current_group.members.order('name ASC') #
+    @imembers = Member.get_inactive_members(@current_group) #@current_group.members.order('name ASC') #
+    
+    if !params[:cid]
+      params[:cid] = @current_group.courses.first
+    end
+    @event.course_id = params[:cid]
+  end
+  
+  def _teams(memb)
+    teams = {}
+    indv = 0
+    members = 0
+    memb.each do |key,value|
+      if value != ""
+        members += 1
+        if value == "Indiv"
+          indv += 1
+          value = indv.to_s
+        end
+        memb_id = key.to_i
+        if teams.has_key?(value)
+          teams[value] << memb_id
+        else
+          teams[value] = [memb_id]
+        end
+      end
+    end
+    pot = @current_group.splitPot(members,params[:event][:places].to_i)
+    @pots = {members: members, team_pot: pot, skins_pot: (@current_group.skins_dues * members)}
+    @teams = teams
   end
 end

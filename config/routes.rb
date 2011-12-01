@@ -67,9 +67,7 @@ Ngg::Application.routes.draw do
     resources :rounds, :only => [:index, :new] 
     
     member do
-      put :verify
-      put :add
-      get :ok
+      put :select
     end
   end
  

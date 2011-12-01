@@ -11,4 +11,14 @@ module GroupsHelper
     end
     return opt.html_safe
   end
+  
+  def team_opt(memb="")
+    t = %w(Indiv 1 2 3 4 5 6 7 8)
+    opt = "<option value=\"\"></option>"
+    t.each do |i|
+      sel = memb == i ? "selected=\"selected\"" : ""
+      opt << "<option #{sel} value=\"#{i}\">#{i}</option>"
+    end
+    return opt.html_safe
+  end
 end

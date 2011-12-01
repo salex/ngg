@@ -31,7 +31,13 @@ body.events {
   width:375px; 
   height:203px;
 }
+.lbox {width:1.4em;height:1.2em;text-align:center;border-left:solid 1px black;float:left;}
+.lboxr {width:1.4em;height:1.2em;text-align:center;border-left:solid 1px black;float:left;color:red;}
+.lboxg {width:1.4em;height:1.2em;text-align:center;border-left:solid 1px black;float:left;color:green;}
 
+.lbox-box {border:solid 1px black;border-left:none;display:inline-block;background:#e7ffe7;}
+.lbox-boxg {border:solid 1px black;border-left:none;display:inline-block;background:#99dd99;}
+.lbox-boxr {border:solid 1px black;border-left:none;display:inline-block;background:pink;}
 /* line 775, compass/src/screen.sass */
 .popup-list table { border: solid 1px #88aa88; }
 /* line 778, compass/src/screen.sass */

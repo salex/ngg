@@ -1,0 +1,59 @@
+<%= form_for(@event) do |f| %>
+  <fieldset class="form-list">
+  	<legend>New Event</legend>
+
+    <% if @event.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+        <ul>
+        <% @event.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <table class="label-data">
+      <tr class="field">
+        <th><%= f.label :course_id %>:</th>
+        <td><%= f.hidden_field :course_id %><%= Course.find(@event.course_id).name  %></td>
+        <th><%= f.label :places %></th>
+        <td><%= f.text_field :places, :size => 3 , :class => "required" %>
+        <th><%= f.label :date %></th>
+        <td><%= f.date_select :date %></td>
+        <th><%= f.label :remarks %></th>
+        <td><%= f.text_area :remarks , :rows => 3, :cols => 30%></td>
+        
+      </tr>
+    </table>
+    <div class="action">
+      <%= f.submit( "Continue" )%> <%= link_to 'Events (cancel)', events_path, :class => "breadcrumb" %>
+      <%= content_tag :span, "Complete above form then select members team number from pulldowns, then click continue", :class => "annotate"%>
+    </div>
+    
+  </fieldset>
+  <fieldset class="index-list">
+    <legend >Active Members 
+    </legend>
+
+      <%tbody = []%>
+      <% @members.each do |member|
+        mteam = params.has_key?(:memb) ? params[:memb][member.id.to_s] : ""
+        tbody << "<td>#{link_to member.name,member}</td><td>#{select_tag "memb[#{member.id}]", team_opt(mteam)}</td>"
+      end %>
+      <%=raw float_table_columns(tbody,4,"<tr class=\"list-header\"><th>Name</th><th>Team/Indv</th></tr>","alt","f-left col-7 index-list")%>
+  </fieldset>
+  <fieldset class="actions">
+      <legend>Inactive</legend>
+      <%tbody = []%>
+      <% @imembers.each do |member|
+        mteam = params.has_key?(:memb) ? params[:memb][member.id.to_s] : ""
+        
+        tbody << "<td>#{link_to member.name,member}</td><td>#{select_tag "memb[#{member.id}]", team_opt(mteam)}</td>"
+      end %>
+      <%=raw float_table_columns(tbody,4,"<tr class=\"list-header\"><th>Name</th><th>Team/Indv</th></tr>","alt","f-left col-7 index-list")%>
+      &nbsp;
+  </fieldset>
+  
+  
+<% end %>

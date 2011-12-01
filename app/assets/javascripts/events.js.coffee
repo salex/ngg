@@ -10,26 +10,13 @@ $(document).ready ->
   Behaviors Most behaviors responding to an event will call
   a function in events
   ###
-  $('[data-behavior="addMember"]').click (e) ->
-    events.addMember(this,e)
-  
-  $('[data-behavior="setMember"]').click (e) ->
-    events.setMember(this,e)
-      
-  $('[data-behavior="cancelAdd"]').click (e) ->
-    events.cancelAdd(this,e)
-  
-  $('[data-behavior="setPoints"]').click (e) ->
-    events.setPoints(this,e)
     
-  $('[data-behavior="setTeam"]').click (e) ->
-    events.setTeam(this,e)
+  $('[data-behavior="set_plus_minus"]').change (e) ->
+    events.set_plus_minus(this,e)
     
-  $('[data-behavior="setQuota"]').click (e) ->
-    events.setQuota(this,e)
     
-  $('[data-behavior="selectTee"]').change (e) ->
-    events.selectTee(this,e)
+  $('[data-behavior="select_tee"]').change (e) ->
+    events.select_tee(this,e)
     
   $('[data-behavior="clear_radio"]').click (e) ->
     events.clear_radio(this,e)
@@ -40,100 +27,19 @@ $(document).ready ->
   $('[data-behavior="set_score"]').click (e) ->
     setParInOut()
 
+  $('[data-behavior="set_hole"]').click (e) ->
+    set_hole(this,false)
+    
+  $('[data-behavior="validate"]').submit (e) ->
+    events.validate_stuff(this,e)
+
+  $('[data-behavior="clear_hole"]').click (e) ->
+    clear_hole(this)
+    
   $('#mask').click (e) ->
     events.cancelAdd(this,e)
   
   events =
-    addMember: (o,e) ->
-      anc = oid = o.id
-      x = anc.split('_')
-      membID = x[1]
-      @membID = membID
-      yy = '#mname_'+membID
-      membname = $(yy).val()
-      courseID = $('#event_course_id').val()
-
-      maskpopup = $('#maskpopup')
-      if !o.checked
-        $('#h_memb').val('')
-        pts = $('#mpts_'+ membID).html()
-        msg = sortText($('#addStatus').html() + "#{pts} #{membname} removed \n")
-
-        $('#addStatus').html(msg)
-      
-        $('#mpts_'+ membID).html("")
-        $('#memb_'+ membID).val('')
-        o.checked = false
-
-        return(true)
-
-      else
-        $('#h_memb').val(o.id)
-        $('#mname').html(membname)
-        $('#quota').val("")
-
-        setTeeOptions(membID,courseID,'tee')
-
-      if $('#event_teams').attr("checked")
-        el = $('select#team').get(0)
-        was = el.selectedIndex
-        el.selectedIndex = if was >= 0 then was else 0
-        $('#s_team').val(el.value)
-      else
-        el = $('select#team').get(0)
-        was = el.selectedIndex
-        el.selectedIndex = was+1
-        $('#s_team').val(el.value)
-      
-
-      $('#cb').val(oid)
-      $("#points").val("") 
-      $("#point_sel").get(0).selectedIndex = -1
-      $("#point_selm").get(0).selectedIndex = -1
-      for hole in [1..18]
-        ca = $("input[name='hole-#{hole}']")
-        for el in ca
-          el.checked = false
-
-      $("#parin").val(".........")
-      $("#parout").val(".........")
-      $("#pulled").val("")
-      $("#starpoints").val("")
-      $("#otherquality").val("")
-      
-      $("#net_points").val("")
-      $("#set").attr("disabled", true)
-    
-      events.showDialog('#maskpopup')
-      return(true)
-  
-    setMember: (o,e) ->
-      team = $('#s_team').val()
-      points = $('#points').val()
-      quota = $('#quota').val()
-      pulled = $('#pulled').val()
-      par = $('#parin').val() + $('#parout').val()
-      teeSelect = $('#tee')
-      tee = membOpt[teeSelect.val()] # get array elem
-      teeID = tee.tee
-      limited = tee.limited
-      starpoints = $('#starpoints').val()
-      net_points = $('#net_points').val()
-      otherquality = $('#otherquality').val()
-      
-      membID = @membID
-      list =  membID + ":" + team + ":" +  points + ":" +  quota + ":" +  pulled + ":" +  par + ":" +  teeID + ":" +  starpoints + ":" +  net_points + ":" +  otherquality + ":" +  limited
-      ihtml =  "T" + team + ":" + points
-      $('#memb_'+ membID).val(list)
-      $('#mpts_'+ membID).html(ihtml)
-      #$('addround').className = "app-form"
-      #$('member-list').style.display = "block"
-      msg = sortText($('#addStatus').html() + "T#{team} #{$('#mname_'+@membID).val()} (#{points}) added\n")
-      $('#addStatus').html(msg)
-
-      $('#mask').hide()
-      $('.window').hide()
-    
     set_radio: (o,e) ->
       type = o.id.replace("set_","")
       i = 1
@@ -149,123 +55,230 @@ $(document).ready ->
       ca = $("input[name='hole-#{hole}']")
       for el in ca
         el.checked = false
-        
-    selectTee: (o,e) ->
-      teeSelect = $('#tee')
-      tee = membOpt[teeSelect.val()] # get array elem
-      setQuota(tee)
+       
+    get_key: (o) ->
+      chunks = o.id.split("_")
+      key = chunks[0]+"_"+chunks[1]
+
+          
+    select_tee: (o,e) ->
+      #data = o.options(o.selectedIndex).dataset.quota
+      key = events.get_key(o)
+      #data_chunks = data.split(":")
+      data = events.getTee(key)
+      quota_id = key+"_quota"
+      $("#"+quota_id).val(data["quota"])
+      pm = $("#"+key+"_plus_minus")
+      if pm.val() != ""
+        events.calc_points(key)
       
     setPoints: (o,e) ->
       set_points(o.value)
-    
-    setTeam:  (o,e) ->
-      set_team(o.value)
-    
-    cancelAdd: (o,e) ->
-      msg = sortText($('#addStatus').html() + "ZZ #{$('#mname_'+@membID).val()} canceled \n")
       
-      $('#addStatus').html(msg)
-      $('#addmemb_'+ @membID).attr("checked",false)
-      $('#mask').hide()
-      $('.window').hide()
-         
       
-    showDialog:  (id) ->  
-      #Get the container height and width
-      maskHeight = $('#container').height()
-      maskWidth = $('#container').width()
-      winH = $(window).height()
-      winW = $(window).width()
-      #Set heigth and width to mask to fill up the content div
-      $('#mask').css({width: winW, height: maskHeight}) 
-      $('#mask').fadeIn(1000) 
-      $('#mask').fadeTo("slow",0.7) 
-      #Get the window height and width
-      #Set the popup window to center
-      $(id).css('top',  winH/2-$(id).height()/2)
-      $(id).css('left', maskWidth/2-$(id).width()/2)
-      #transition effect
-      $(id).fadeIn(500)
+    getTee: (key) ->
+      sel = $("#"+key+"_tee").get(0)
+      data = sel.options(sel.selectedIndex).dataset.quota.split(":")
+      h = {"quota" : Number(data[0]),"star" : data[1], "limit"  : Number(data[2])}
+      
+      
+    set_plus_minus: (o,e) ->
+      #if o.checked
+      key = events.get_key(o)
+      $("#"+key+"_plus_minus").val(o.value)
+      events.calc_points(key)
+        
+      
+    calc_points: (key) ->
+      data = events.getTee(key)
+      pm = Number($("#"+key+"_plus_minus").val())
+      gross = data["quota"] + pm
+      net = gross
+      netpm = pm
+      if pm > data["limit"]
+        netpm = data["limit"]
+        net = data["quota"] + netpm
+      if pm < (data["limit"] * -1)
+        netpm = data["limit"] * -1
+        net = data["quota"] + netpm
+      $("#"+key+"_gross").val(gross)
+      $("#"+key+"_net").val(net)
+      $("#"+key+"_netpm").val(netpm)
+      calc_team_results()
+      
+      
+    validate_stuff: (o,e) ->
+      members = $(".members")
+      for m in members
+        key = "add_"+m.value
+        gross = $("#"+key+"_gross").val()
+        if gross == ""
+          errdiv = $("#error_explanation")
+          $("#validation_errors").html("Score has not been entered for member(s)")
+          errdiv.show()
+          return(false)
+        disabled = $(".disabled")
+        for field in disabled
+          field.disabled = false
+      return( true)
       
         
-  set_team = (team) ->
-    $('#s_team').val(team)
-  
-  set_points = (points) ->
-    $('#points').val(points)
-    $("#set").attr("disabled", false)
-    calcPoints()
-        
-  setQuota = (teeOpt) ->
-    $('#quota').val(teeOpt.quota)
-    $('#limited').html(teeOpt.star)
-    calcPoints()
-
-  setTeeOptions = (memberID,courseID,elem) ->
-    $.get '/members/' +memberID + '/teeopt?course='+courseID,
-    {"shit": "brains"},
-    (data) ->
-      obj = jQuery.parseJSON(data)
-      teeSelect = $('#'+elem)
-      teeSelect.html(obj.teeopt)
-      membOpt = obj.membopt
-      window["membOpt"] = membOpt
-      window["groupOpt"] = obj.group
-      teeOpt = membOpt[teeSelect.val()] # get array elem
-      setQuota(teeOpt)
-      return(true)
-      
- 
-      
-  setParInOut = ->
-    #scoreValues = [5,4,3,2,1,0]
-    scoreValues = groupOpt["scoreValues"]
+  sort_num = (a,b) ->
+    b - a
     
-    scoreTypes = ["Double Eagle","Eagle","Birdie","Par","Bogie","Double Bogie"]
-    parInOut = [".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",]
-    for i in [1..18]
-      ca = $("input[name='hole-#{i}']:checked")
-      if ca.length is 1
-        type_hole = ca.val().split('-')
-        type = type_hole[0]
-        hole = type_hole[1]
-        pos = jQuery.inArray(type,scoreTypes)
-        if pos >= 0
-          parInOut[i] = scoreValues[pos]
-      
-    parString = ""
-    for i in [1..18]
-      parString += parInOut[i]
-      
-    $('#parin').val(parString.slice(0,9))
-    $('#parout').val(parString.slice(9))
-    return true
+  calc_team_results = ->
+    teams = $(".teams")
+    members = $(".members")
+    cnt = members.length
+    pay_places = Number($("#event_places").val())
     
-  calcPoints = ->
-    teeSelect = $('#tee')
-    tee = membOpt[teeSelect.val()] # get array elem
-    qq = Number($('#quota').val())
-    isLimited = tee.limited
-    points =  Number($('#points').val())
-    pulled = qq + points
-    $('#pulled').val(pulled)
-    $('#starpoints').val(points)
-    $('#net_points').val(points)
-    if groupOpt["uses_round_limit"]
-      if points > groupOpt["round_limit"]
-        $('#starpoints').val(groupOpt["round_limit"])
-        $('#net_points').val(groupOpt["round_limit"])
-      else
-        if points < (groupOpt["round_limit"] * -1)
-          $('#starpoints').val((groupOpt["round_limit"] * -1))
-          $('#net_points').val((groupOpt["round_limit"] * -1))
-    if isLimited
-      if points > groupOpt["new_member_limit"]
-        $('#starpoints').val(groupOpt["new_member_limit"])
-      else
-        if points < (groupOpt["new_member_limit"] * -1)
-          $('#starpoints').val((groupOpt["new_member_limit"] * -1))
+    team_scores = {}
+    for t in teams
+      team_scores[t.value] = 0
+    for m in members
+      key = "add_"+m.value
+      pm = $("#"+key+"_netpm").val()
+      cnt -= 1 if pm != ""
+      team = $("#"+key+"_team").val()
+      team_scores[team] += Number(pm)
+    if cnt == 0
+      $("#create_button").attr("disabled",false)
+    places = []
+    for key, value of team_scores
+      places[places.length] = value
+    places.sort(sort_num)
+    place_split = get_place_splits(places)
+    for key, value of team_scores
+      place = places.indexOf(value) + 1
+      if place > pay_places
+        won = "" 
+        $("#"+"team_share_"+key).val(0)    
+      else 
+        $("#"+"team_share_"+key).val(place_split[place]) 
+        size = $("#"+"team_size_"+key).val()
+        each = roundQuarter(place_split[place] / size)
+        won = "- Team: $#{place_split[place]} Each: $#{each}"
           
+      $("#"+"team_scores_"+key).html("+-Score: #{value} - Place: #{place} #{won}")
+      $("#"+"team_place_"+key).val(place)
+      $("#"+"team_score_"+key).val(value)    
+
+  get_place_splits = (team_places) ->
+    # get from dom
+    pot = jQuery.parseJSON($('#team_team_pot').val())
+    places = $('#event_places').val()
+    
+    #local
+    place_cnt = {1 : 0}
+    place_split = [0]
+    score = team_places[0]
+    team = 1
+    paid = 0
+    for team_score in team_places
+      if team_score == score
+        place_cnt[team]++
+      else
+        team++
+        place_cnt[team] = 1
+        score = team_score
+    for place, ties of place_cnt
+      if paid < places      
+        sum = 0
+        from = paid + 1
+        to = from + ties - 1
+        if to > places
+          to = places 
+        for i in [from..to]
+          sum += pot[i]
+          place_split[i] = 0
+        place_split[from] = roundQuarter(sum / ties)
+        paid += ties
+      else
+        #place_split[place] = 0
+    return place_split
+
+        
+  set_hole = (hole,down) ->
+    hole_id = hole.id
+    set_id = hole_id + "_s"
+    hide_id = hole_id
+    key = events.get_key(hole)
+    downa = $('#'+key+"_up_0")
+    down = downa.get(0).checked
+    #hide_id = hole_id + "_hole"
+    curr_val = hole.value #$('#'+hide_id).val()
+    new_val = "."
+    if down
+      switch curr_val
+        when '.' then new_val = 'P'
+        when 'P' then new_val = 'O'
+        when 'O' then new_val = 'D'
+        when 'D' then new_val = 'A'
+        when 'A' then new_val = 'E'
+        when 'E' then new_val = 'B'
+        when 'B' then new_val = '.'
+        else new_val = "?"
+    else
+      switch curr_val
+        when '.' then new_val = 'B'
+        when 'B' then new_val = 'E'
+        when 'E' then new_val = 'A'
+        when 'A' then new_val = 'D'
+        when 'D' then new_val = 'O'
+        when 'O' then new_val = 'P'
+        when 'P' then new_val = '.'
+        else new_val = "?"
+    
+    $('#'+set_id).html(new_val)
+    #$('#'+hide_id).val(new_val)
+    hole.value = new_val
+    if hole.value == "."
+      hole.checked = false
+    else
+      hole.checked = true
+      # body...
+    check_holes(hole_id)
+    
+  check_holes = (hole_id) ->
+    parts = hole_id.split("_")
+    hole = parts[2]
+    the_holes = $(".hole-#{hole}")
+    a = e = b = 0
+    for ahole in the_holes
+      if ahole.value == "A" then a++
+      if ahole.value == "E" then e++
+      if ahole.value == "B" then b++
+    if a == 1
+      mark_hole(the_holes,hole,"A")
+    else if e == 1
+        mark_hole(the_holes,hole,"E")
+    else if b == 1
+        mark_hole(the_holes,hole,"B")
+    else
+      mark_hole(the_holes,hole,".")
+      
+  mark_hole = (the_holes,hole,what) ->
+    for ahole in the_holes
+      key = events.get_key(ahole)
+      if (ahole.value == what)
+        $("##{key}"+"_"+hole+"_s").attr("class","lboxg")
+      if (ahole.value != what)
+        patt1 = new RegExp("(A|E|B)")
+        if (patt1.test(ahole.value))
+          $("##{key}"+"_"+hole+"_s").attr("class","lboxr")
+        else
+          $("##{key}"+"_"+hole+"_s").attr("class","lbox")
+  
+  clear_hole = (hole) ->
+    hole_id = hole.id
+    hide_id = hole_id.replace("_s","")
+    $('#'+hole_id).html(".")
+    o = $('#'+hide_id)
+    $('#'+hide_id).val(".")
+    $('#'+hide_id).attr("checked",false)
+    
+    check_holes(hole_id)
+    
   sortText = (s) ->
     temp = new Array()
     temp = s.split('\n')
@@ -274,6 +287,10 @@ $(document).ready ->
     for i in temp
       result += i + "\n" if i isnt ""
     return result
+    
+  roundQuarter = (num) ->
+    x = (num*4)  >> 0
+    y = x / 4
 
   
 

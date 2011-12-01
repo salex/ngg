@@ -67,6 +67,29 @@ class Group < ActiveRecord::Base
 		return options
 	end
 	
+	def splitPot(count,places)
+	  pot = self.round_dues * count
+    if places > 5
+      return []
+    end
+    arr = self.pot_splits
+    splits = eval("[#{arr}]")
+    split = splits[places - 1]
+    money = []
+    amt = 0
+    for i in 0..split.length-1 do
+      money[i] = ((split[i] / 100.0) * pot).round
+      amt += money[i]
+    end
+    if (amt != pot) 
+      dif = pot - amt
+      money[0] += dif
+    end
+    money.insert(0,pot)
+    return money
+  end
+  
+	
 	def recompute_members_quotas
     members = self.members
     members.each do |member|
