@@ -6,6 +6,7 @@ class Round < ActiveRecord::Base
   validates_numericality_of :tee_id, :greater_than => 0
   
   validates_presence_of :tee_id
+  after_save :update_quotas
   
   
   def self.search(params)
@@ -52,6 +53,12 @@ class Round < ActiveRecord::Base
     event.places = params["event"]["places"]
     event.attendees = params["team_members"]
     event.status = "Add"
+  end
+  
+  def update_quotas
+    self.member.compute_tee_quota(self.tee_id)
+    self.member.update_quota
+    
   end
   
   def point_hash

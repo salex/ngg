@@ -76,8 +76,8 @@ pd[11] = ""
     <tr>
       <td class="col-5"><%= member.first_name%> <%= member.last_name %> <br />
         <%= select_tag "add[#{member.id}][tee]", memb_tee_options(member,params[:event][:course_id]), "data-behavior" => "select_tee"%><br />
-        <%= hidden_field_tag "add[#{member.id}][team_quality]","",:size => 1, :disabled => true, :class => "disabled" %>
-        <%= hidden_field_tag "add[#{member.id}][skin_quality]","",:size => 1, :disabled => true, :class => "disabled" %>
+        <%= hidden_field_tag "add[#{member.id}][team_quality]",0 %>
+        <%= hidden_field_tag "add[#{member.id}][skin_quality]",0 %>
         <% if !@current_group.other_game.blank? %>
         Other$<%= text_field_tag "add[#{member.id}][other_quality]","",:size => 3, :class => "disabled" %>
         <% end%>
