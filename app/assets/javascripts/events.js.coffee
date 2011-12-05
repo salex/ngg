@@ -78,7 +78,7 @@ $(document).ready ->
       
     getTee: (key) ->
       sel = $("#"+key+"_tee").get(0)
-      data = sel.options[sel.selectedIndex].dataset.quota.split(":")
+      data = sel.options[sel.selectedIndex].title.split(":")
       h = {"quota" : Number(data[0]),"star" : data[1], "limit"  : Number(data[2])}
       
       

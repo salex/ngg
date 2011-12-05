@@ -22,7 +22,7 @@ module MembersHelper
         @quota = quota
       end
       #teeopt += '<option value="'+quota.to_s+star+'_'+tee.id.to_s+'" ' + sel + '>'+tee.color+":"+quota.to_s+star+'</option>'
-      teeopt += '<option value="'+ tee.id.to_s + '"' + sel+ ' data-quota="'+quota.to_s+":"+star+":"+limit.to_s+'">'+tee.color+":"+quota.to_s+star+'</option>'
+      teeopt += '<option value="'+ tee.id.to_s + '"' + sel+ ' title="'+quota.to_s+":"+star+":"+limit.to_s+'">'+tee.color+":"+quota.to_s+star+'</option>'
     end
     return teeopt.html_safe
   end
