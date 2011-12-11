@@ -19,7 +19,7 @@ class Event < ActiveRecord::Base
   def build_event(params)
     ridx = 0
     skins = get_skins(params[:add])
-    each_skin = params[:team][:skins_pot].to_f / skins["good"]
+    each_skin = skins["good"] > 0 ? params[:team][:skins_pot].to_f / skins["good"] : 0
     maxp = 0
     minp = 0
     tot = 0
@@ -33,11 +33,13 @@ class Event < ActiveRecord::Base
       self.rounds[ridx][:plus_minus] = data[:plus_minus]
       self.rounds[ridx][:round_quality] = params[:team][:share][data[:team]].to_f / params[:team][:size][data[:team]].to_i
       self.rounds[ridx][:skin_quality] = skins[data[:mid].to_i] * each_skin if skins[data[:mid].to_i]
-      self.rounds[ridx][:other_quality] = data[:other_quality]
+      self.rounds[ridx][:other_quality] = data[:other_quality] ||= 0
       self.rounds[ridx][:place] = params[:team][:place][data[:team]]
       self.rounds[ridx][:team] = data[:team]
       self.rounds[ridx][:gross_pulled] = data[:gross]
       self.rounds[ridx][:net_pulled] = data[:net]
+      #logger.info "bbbbbbbbbbb r #{self.rounds[ridx][:round_quality]} s #{self.rounds[ridx][:skin_quality]} o #{self.rounds[ridx][:other_quality]} "
+      
       #TODO if group["limit_gross_points"]
       data[:skin_quality] = 0
       data[:par] = ""
@@ -58,6 +60,7 @@ class Event < ActiveRecord::Base
     end
     avg = tot / ridx
     self.remarks += " {H:"+maxp.to_s+", L:"+minp.to_s+ ", A:"+avg.to_s+"}"
+    self.remarks += " No Skins!" if each_skin == 0
   end
   
   def get_skins(players)

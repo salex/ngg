@@ -7,6 +7,7 @@ class Round < ActiveRecord::Base
   
   validates_presence_of :tee_id
   after_save :update_quotas
+  after_destroy :update_quotas
   
   
   def self.search(params)
@@ -60,7 +61,7 @@ class Round < ActiveRecord::Base
     self.member.update_quota
     
   end
-  
+    
   def point_hash
     hash = {}
     hash["quota"] = self.quota

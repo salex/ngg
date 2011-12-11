@@ -75,8 +75,20 @@ class Member < ActiveRecord::Base
         self.compute_tee_quota(tee.tee_id)
       end
       self.update_quota
+      self.reset_member_quotas
     return true
   end  
+  
+  def reset_member_quotas
+    quotas = self.quotas
+    quotas.each do |quota|
+      r = Round.where(:member_id => quota.member_id, :tee_id => quota.tee_id)
+      if r.count == 0
+        quota.delete
+      end
+    end
+  end
+  
   def name
     self.first_name + " " + self.last_name
   end
@@ -175,16 +187,27 @@ class Member < ActiveRecord::Base
       end
     end
 
-=begin ** Comment **
+    # if limited, by course or new member, adjust quota by averaging initial or quota with computed quota
+    if star
+      if total_rounds < group.new_member_rounds_used  # new member
+        quota = ((quota * rounds_used) + self.initial_quota) / (rounds_used + 1) if (!self.initial_quota.nil? && (self.initial_quota > 0))
+      else # new course
+        quota = ((quota * rounds_used) + self.quota) / (rounds_used + 1)  if (!self.quota.nil? && (self.quota > 0))
+      end
+    end
+
+=begin ** Comment ** replaced with above if star
   if uses new member limit, average the computed quota with the inital quota until the new member rounds used is met
   this is both for course or overall
-=end
+
     if (total_rounds < group.new_member_rounds_used)  &&  !self.initial_quota.nil? && (self.initial_quota > 0) 
       # average claimed (or quota for all course) with single round score
       # for first round average of initial claimed and pulled
       # for 2nd+ average of computed quota and initial claimed
       quota = (quota + self.initial_quota) / 2
     end
+=end
+
     # round and normalize
     quota = (quota + 0.5).to_i
     if quota <= 0
@@ -202,6 +225,9 @@ class Member < ActiveRecord::Base
       q.last_played = last_played
       q.history = current_rounds.to_json
       q.save
+    else
+      q = Quota.find_by_member_id_and_tee_id(self.id,tee)
+      q.delete if q
     end
     return quota,star,last_played,current_rounds
 
