@@ -146,6 +146,7 @@ class Member < ActiveRecord::Base
     round_count = therounds.size
     total = 0.0
     current_rounds = []
+    current_quota = []
     cnt = 0
     # get quota, currenr_rounds and rounds used
     if round_count <=  0
@@ -156,6 +157,8 @@ class Member < ActiveRecord::Base
       min = 100
       for around in therounds
         current_rounds[cnt] = around.points_pulled.to_s
+        current_quota[cnt] = around.quota
+        
         if cnt < quota_limit # zero based
           if around.points_pulled != nil
             total += around.points_pulled
@@ -177,6 +180,7 @@ class Member < ActiveRecord::Base
     # if the star preferece is used, set the star to true or false.
     # star will always be false if preference not set 
 =end
+
     if tee > 0
       if group.uses_new_course_limit
         star = rounds_used < group.new_member_rounds_used ? true : false
@@ -192,7 +196,7 @@ class Member < ActiveRecord::Base
       if total_rounds < group.new_member_rounds_used  # new member
         quota = ((quota * rounds_used) + self.initial_quota) / (rounds_used + 1) if (!self.initial_quota.nil? && (self.initial_quota > 0))
       else # new course
-        quota = ((quota * rounds_used) + self.quota) / (rounds_used + 1)  if (!self.quota.nil? && (self.quota > 0))
+        quota = ((quota * rounds_used) + (current_quota[-1])) / (rounds_used + 1)  if current_quota.size > 0
       end
     end
 
