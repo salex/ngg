@@ -318,6 +318,7 @@ class Event < ActiveRecord::Base
     teams['teamtot'] = ts
     teamsToPay = teams["event"]["places"].to_i
     teamCount = teams["teamtot"].length
+    teamsToPay =  teamsToPay > teamCount ? teamCount : teamsToPay
     teamtot_idx = 0
     pot_idx = 1
     while teamsToPay > 0
