@@ -17,14 +17,13 @@ class HomeController < ApplicationController
       when "term"
         @path = "term"
       when "info"
-        @articles = @current_group.articles.where(:published => true).paginate(:per_page => 15, :page => params[:page])
+        @articles = @current_group.articles.where(:published => true).page(params[:page]).per(20)
         @path = "info"
       when "photos"
         @photos = @current_group.images
         @path = "photos"
       when "blog"
-        @articles = @current_group.articles.where(:published => true).paginate(:per_page => 15, :page => params[:page])
-        @path = "blog"
+        @articles = @current_group.articles.where(:published => true).page(params[:page]).per(20)
       else
         @art_count = @current_group.articles.where(:published => true).count
         welcome = @current_group.articles.find_by_type_article("Welcome")

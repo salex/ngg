@@ -23,11 +23,8 @@ class MembersController < ApplicationController
   # GET /members/1
   # GET /members/1.json
   def show
-    #@member = Member.find(params[:id])
-    #@member =  @current_group.members.find(params[:id])
-    #@rounds = @member.rounds.paginate(:per_page => 15, :page => params[:page])
     params[:member_id] = @member.id
-    @rounds = Round.search(params).paginate(:per_page => 15, :page => params[:page])
+    @rounds = Round.search(params).page(params[:page]).per(20)
     @user = @member.user
     if params[:tee]
       t = Tee.find(params[:tee])

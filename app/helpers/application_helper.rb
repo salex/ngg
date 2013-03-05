@@ -146,9 +146,13 @@ module ApplicationHelper
   end
   
   def markdown(text)
-    options = [:hard_wrap, :filter_html, :autolink, :no_intraemphasis, :fenced_code, :gh_blockcode]
-    html = Redcarpet.new(text, *options).to_html
-    return "<div class=\"markdown\">#{html}</div>".html_safe
+    renderer = Redcarpet::Render::HTML.new(:autolink => true, :hard_wrap => true, :fenced_code_blocks => true, :lax_spacing => true)
+    markdown = Redcarpet::Markdown.new(renderer)
+    
+    
+    # options = [:hard_wrap, :filter_html, :autolink, :no_intraemphasis, :fenced_code, :gh_blockcode]
+    # html = Redcarpet.new(text, *options).to_html
+    return "<div class=\"markdown\">#{markdown.render(text).html_safe}</div>".html_safe
   end
   
   def format_money(value,dollar=false)
