@@ -45,7 +45,7 @@ class EventsController < ApplicationController
       
       @event = Event.new(params[:event])
       _teams(params[:memb])
-      if @event.valid? && @event.valid_teams(@teams)        
+      if @event.valid? && @event.valid_teams(@teams,params[:event][:places].to_i)
         render :action => "add"
       else
         params[:cid] = @event.course_id

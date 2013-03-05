@@ -6,7 +6,11 @@ class Event < ActiveRecord::Base
   validates_presence_of :date, :places
   validates_uniqueness_of :date
   
-  def valid_teams(teams)
+  def valid_teams(teams,places)
+    if places > teams.length
+      self.errors[:base] << "You are trying to pay more places than you have teams - check your team selection"
+      return false
+    end
     if teams.length > 1
       if teams.include?("Indiv")
         self.errors[:base] << "Members selected using both Team number and Individual selection - use one or the other"
