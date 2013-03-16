@@ -10,5 +10,4 @@ doc/
 .DS_Store
 .sass-cache/
 *.tmproj
-*.private.rb
 
