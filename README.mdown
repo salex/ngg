@@ -1,0 +1,34 @@
+
+## NGG or the Newest version of GolfGaggle.com
+
+### What is this and where did it come from?
+
+Every golf group who has decided to keep their own scores has followed a pattern. First you use pencil and paper. Then someone say "Lets use a spreadsheet". Someone gets appointed as the scorekeeper. The members quibble over the rules. The rules become difficult to implement in the spreadsheet. The rules change and you discover "Spreadsheet abuse" - you are using the wrong tool - you need a database. Now the scorekeepers probably knows less about a database than spreadsheets and are ready to give up their job.
+
+I know this because I've been the scorekeeper for a group for over 20 years! I inherited a bunch of paper from the individual who kept the scores before me. He was amazing and kept statics that astonished me that they could be derived from pieces of paper. I then went through the spreadsheet phase. Fortunately my job was Information Technology and I tried to make a spreadsheet a database. I almost succeeded using "Resolve", a spreadsheet designed for NeXT computers and ported to the MacIntosh. When it was no longer supported, I converted to Excel and complained all the way. I eventually gave up and created a simple database. I tried several stand-alone databases, 4D or 4th Dimension was one we used at work and I had a personal copy. While it worked, it was just has hard to make changes when the rules changed and I was stuck with putting in the scores. If I was out of town, the scores didn't get entered.
+
+Sometime in the early 90's we started to experiment with the World Wide Web (http protocol) on the internet and developed a static web sites. I published a hidden page that I generated from the database so that the group could at least get the scores when I was out of town. Towards the end of the 90's dynamic databases on the web started to appear and I wrote my first version of a web based system using PHP and Mysql. Since one of my tasks at the state agency I worked at was to provide training in software development to the community, my gaggle database became my personal example of a problem that needed a solution. I created different solutions with different sets of tools (computer language, database). I am really not sure how many different languages and database I've tried, but quite a few.
+
+In about 2006, we started to experiment with a framework called "Ruby on Rails" or RoR. I managed to learn the frameworks and the programming language Ruby, converting my gaggle database to RoR. I liked it so much I converted the production version to RoR. RoR was at version 1.x and it is now at version 3.2 with 4.0 just around the corner. There was a version 2 that was a little better than the first version, but it was really just a conversion from the PHP version. With version 3.0 I decided to try to write a generic version that not only worked for my group, but others in the area. While I had some of the preferences defined that distinguished the different approaches, I never found another group that wanted to try my software and sort of lost interest.
+
+I forgot to mention that after the first web implementation, I was no longer "responsible" for entering scores - just to make sure it computed the right quota. That work was spread among several members who were given scoring roles. The web server is a little MacMini that sits on the corner of a table. I hardly every have to touch the software or the box - it just chugged away. I have since retired and have moved, by I still maintain the web site for the group I've been playing with for over 20 years. I still visit and occasionally play with them, but playing with a new group has rekindled my interest in the generic system. That RoR version is is Ngg - but still only one user:-( It can manage different groups by using subdomains. (maxwell.golfgaggle.com is the only user)
+
+My goal has never been to make money off of this, but I considered it at one time. The main goal was to see if I could stop "spreadsheet abuse" and let groups enjoy playing with their group and quit arguing about rules and points! It is also my leaning application if I want to try something new.
+
+
+### Database Structure
+
+Some insight into how the database works and the different tables used will help in understanding how the system work. The plural words below are the database tables used. Singular words just indicate that there is a reference to a record in a table. For instance Members have many Rounds and each round has information about what Tee (that belongs to a Course) was used and when the Event happened.
+
+    Groups
+      Courses   Articles     Images  Events       Members
+        Tees      Comments             Course       Events
+                                       Rounds       Rounds
+                                         Member       Tee
+                                         Tee          Event
+                                                    Quotas
+
+From a pure "Compute Quota" perspective, Group, Members, and Rounds are used (with references to tee). All quotas are based on Member and Tee and the rules for the Group. If you play from one tee in the summer and another in the winter. Two quotas are computed, but you don't have to use them since there is an overall quota. Events just keep track of who played when. It also allows you go gather other statistics as to teams, places etc. The rest of the tables (Images, Articles ) allow you to add some bells and whistles.
+
+ 
+
